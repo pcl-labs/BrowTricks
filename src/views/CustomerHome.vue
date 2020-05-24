@@ -24,12 +24,12 @@
           <template #title>
             Paul Chris Luke
           </template>
-          <template #subtitle>
+          <template #subtitle-primary>
             <span class="text-on-background-image text-opacity-medium">
               Microblading
             </span>
           </template>
-          <template #description>
+          <template #subtitle-secondary>
             <span class="text-on-background-image text-opacity-medium">
               Feb 12, 2020 - 5:00PM
             </span>

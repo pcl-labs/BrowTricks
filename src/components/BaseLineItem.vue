@@ -1,14 +1,14 @@
 <template>
   <div class="flex items-center w-full">
-    <div class="h-10 w-10 mr-2">
+    <div class="h-10 w-10 mr-2 flex-none">
       <slot name="image">
         <img :src="IconLineItemDefault" class="h-10 w-10" />
       </slot>
     </div>
-    <div class="text-left">
+    <div class="text-left flex-shrink truncate">
       <div class="tg-h3-mobile"><slot name="title" /></div>
-      <div class="tg-body-mobile"><slot name="subtitle" /></div>
-      <div class="tg-body-mobile"><slot name="description" /></div>
+      <div class="tg-body-mobile"><slot name="subtitle-primary" /></div>
+      <div class="tg-body-mobile"><slot name="subtitle-secondary" /></div>
     </div>
     <div class="ml-auto tg-caption-mobile">
       <a @click.prevent="$emit('detailClicked')">
