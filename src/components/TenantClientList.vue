@@ -43,10 +43,12 @@ export default {
     }
   },
   methods: {
+    // FIXME : This will be removed later, we will receive sorted results from back-end
     sortClients() {
       this.clients.forEach(client => {
         const firstLetter = client.name[0];
         if (firstLetter in this.sortedClients) {
+          // could do binary search and then insertion, just going to push and re-sort as the hardcoded clients list is short
           this.sortedClients[firstLetter].push(client);
           this.sortedClients[firstLetter].sort((client1, client2) => {
             return client1.name.localeCompare(client2.name);

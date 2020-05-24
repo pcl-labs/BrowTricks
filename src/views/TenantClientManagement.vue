@@ -43,6 +43,7 @@ export default {
     TenantClientListEmpty
   },
   methods: {
+    // FIXME : This will be removed later, it's just some dummy data to populate the client list.
     fetchClients() {
       fetch('https://jsonplaceholder.typicode.com/users', {
         method: 'GET'
