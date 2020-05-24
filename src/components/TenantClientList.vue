@@ -1,10 +1,7 @@
 <template>
   <div class="text-left">
     <div v-for="(letter, index) in letters" :key="index">
-      <hr
-        class="mb-1"
-        :class="{ 'bg-transparent': index === letters.length - 1 }"
-      />
+      <hr :class="[index === 0 ? 'border-transparent mb-2' : 'mb-1']" />
       <div class="px-6">
         <div class="uppercase tg-caption-mobile mb-4">{{ letter }}</div>
         <BaseLineItem
