@@ -5,14 +5,10 @@
       <span slot="content" class="pl-5">Clients</span>
       <IconAdd slot="detail-primary" class="h-6 w-6 fill-current" />
     </BaseHeader>
-    <div slot="content">
-      <div v-if="dataFetched">
-        <div v-if="clients.length > 0">
-          <TenantClientList :clients="clients" />
-        </div>
-        <div v-else class="mt-auto pb-20 px-8">
-          <TenantClientListEmpty />
-        </div>
+    <div slot="content" class="h-full">
+      <div v-if="dataFetched" class="h-full">
+        <TenantClientList v-if="clients.length > 0" :clients="clients" />
+        <TenantClientListEmpty v-else />
       </div>
     </div>
   </LayoutFixedScrollable>
