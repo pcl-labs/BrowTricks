@@ -11,6 +11,11 @@
             index === sortedClients[letter].length - 1 ? 'mb-4' : 'mb-8'
           ]"
         >
+          <img
+            slot="image"
+            :src="iconPlaceholder"
+            class="h-10 w-10 rounded-full"
+          />
           <span slot="title">{{ client.name }}</span>
           <div slot="subtitle-primary" class="opacity-medium truncate">
             {{ client.phone }} - {{ client.email }}
@@ -28,7 +33,9 @@ export default {
   name: 'TenantClientList',
   data() {
     return {
-      sortedClients: {}
+      sortedClients: {},
+      iconPlaceholder:
+        'https://res.cloudinary.com/whynotearth/image/upload/v1585738849/BrowTricks/avatar_placeholder_vl0vzp.png'
     };
   },
   components: {
