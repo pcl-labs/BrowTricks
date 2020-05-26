@@ -30,6 +30,11 @@ const routes = [
     component: () => import('@/views/TenantClientManagement.vue')
   },
   {
+    path: '/test-tenant-slug/client-management-empty-test',
+    name: 'TenantClientManagement',
+    component: () => import('@/views/TenantClientManagementEmptyTest.vue')
+  },
+  {
     path: '/',
     redirect: { name: 'CustomerHome' }
   }
