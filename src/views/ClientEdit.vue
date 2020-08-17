@@ -121,24 +121,6 @@
         <ImagesIcon slot="preIcon" class="h-6 w-6 fill-current" />
       </ExpansionPanel>
 
-      <!-- incompleted PMU -->
-      <!-- TODO: enable -->
-      <!-- <ExpansionPanel
-        v-if="isPmuIncomplete"
-        @click="
-          $router.push({
-            name: 'PmuSignMethods',
-            params: { clientId, tenantSlug }
-          })
-        "
-        title="PMU"
-        :middleText="client.pmuStatus"
-      >
-        <Document slot="preIcon" class="h-6 w-6 fill-current" />
-      </ExpansionPanel> -->
-
-      <!-- completed PMU -->
-      <!-- v-else -->
       <ExpansionPanel
         @click="
           $router.push({

@@ -64,6 +64,12 @@
         @clicked="submit"
         title="Get Started"
       ></Button>
+
+      <Button
+        class="rounded-full mb-6"
+        :title="`Text to ${client.phoneNumber}`"
+        @clicked="sendSms"
+      />
     </template>
 
     <template v-else-if="pmuPdfUrl">
@@ -120,7 +126,12 @@ export default {
   },
   methods: {
     ...mapActions('client', ['fetchClient']),
-    ...mapActions('PMU', ['setCustomQuestions', 'submitSign', 'signed']),
+    ...mapActions('PMU', [
+      'setCustomQuestions',
+      'submitSign',
+      'signed',
+      'notify'
+    ]),
 
     async _fetchClient() {
       this.client = await this.fetchClient({
@@ -184,6 +195,26 @@ export default {
     },
     prepareQuestions() {
       return this.questions.filter(q => q.value.length > 0).map(q => q.value);
+    },
+
+    sendSms() {
+      const path = this.$router.resolve({
+        name: 'PmuSignFromNotify'
+      }).href;
+      const callbackUrl = `${window.location.origin}${path}`;
+      console.log('callbackUrl', callbackUrl);
+      this.notify({
+        params: {
+          clientId: this.clientId,
+          tenantSlug: this.tenantSlug,
+          callbackUrl
+        }
+      }).then(() => {
+        showOverlayAndRedirect({
+          title: 'Message Sent Successfully!',
+          route: { name: 'ClientEdit' }
+        });
+      });
     }
   }
 };
