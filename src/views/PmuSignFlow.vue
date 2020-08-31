@@ -4,9 +4,7 @@
       href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap"
       rel="stylesheet"
     />
-    <div
-      class="min-h-screen bg-background w-full flex flex-col justify-between"
-    >
+    <div class="min-h-vh100 bg-background w-full flex flex-col justify-between">
       <div>
         <StepperTop :navigation="navigation" :page="step + 1" />
         <div class="my-4 max-w-4xl mx-auto px-4 pt-4">
@@ -18,6 +16,7 @@
                 :ref="componentName"
                 @nextStep="nextStep"
                 @answerUpdate="answerUpdate"
+                @errorAlreadySigned="errorAlreadySigned"
               ></component>
             </keep-alive>
           </transition>
@@ -52,6 +51,7 @@ import {
 } from '@/services/pmu.js';
 import { mapActions, mapGetters } from 'vuex';
 import { showOverlayAndRedirect } from '@/helpers.js';
+import { get } from 'lodash-es';
 
 export default {
   name: 'PmuSignFlow',
@@ -79,18 +79,20 @@ export default {
       errors: null
     };
   },
-  created() {
-    // NOTE: for development, you can set this to every step you need to debug
+  async created() {
+    // just for preventing error
     this.stepUpdate(0);
-    this.prepareTenantQuestions();
+    await this.prepareTenantQuestions();
+    // real initial set step
+    this.stepUpdate(0);
   },
   computed: {
     ...mapGetters('tenant', ['pmuDisclosuresGet']),
     componentName() {
-      return this.navigation[this.step].componentName;
+      return get(this.navigation, `[${this.step}].componentName`, 'div');
     },
     componentProps() {
-      return this.navigation[this.step].componentProps;
+      return get(this.navigation, `[${this.step}].componentProps`, {});
     },
     navigation() {
       return [
@@ -145,14 +147,22 @@ export default {
     ...mapActions('tenant', ['pmuDisclosuresFetch']),
     ...mapActions('client', ['pmuSignAnswers']),
     async prepareTenantQuestions() {
-      await this.pmuDisclosuresFetch({
-        params: { tenantSlug: this.tenantSlug }
-      });
-      this.navigationPart3 = this.pmuDisclosuresGet.map((item, index) =>
-        tenantQuestionsNavigationSteps(item, index)
-      );
+      try {
+        await this.pmuDisclosuresFetch({
+          params: { tenantSlug: this.tenantSlug }
+        });
+        this.navigationPart3 = this.pmuDisclosuresGet.map((item, index) =>
+          tenantQuestionsNavigationSteps(item, index)
+        );
+      } catch (error) {
+        console.log('already signed');
+      }
     },
     stepUpdate(step) {
+      if (!this.navigation[step]) {
+        return;
+      }
+
       this.step = step;
       const newRoute = this.navigation[step];
       if (this.$route.params.stepSlug === newRoute.slug) {
@@ -236,7 +246,7 @@ export default {
           showOverlayAndRedirect({
             title: 'Success!',
             message: 'Signed successfully!',
-            route: { name: 'PmuSign' },
+            route: { name: 'PmuSignGuestResult' },
             params: {
               clientId: this.clientId,
               tenantSlug: this.tenantSlug
@@ -247,6 +257,12 @@ export default {
           alert('Something went wrong in sign process.');
           console.log(error);
         });
+    },
+    // error in preview
+    errorAlreadySigned() {
+      setTimeout(() => {
+        this.$router.push({ name: 'PmuSignGuestResult' });
+      }, 1000);
     }
   }
 };

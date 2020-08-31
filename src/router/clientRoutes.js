@@ -112,6 +112,18 @@ export const clientRoutes = [
         }
       },
       {
+        path: 'pmu-sign/guest-result',
+        name: 'PmuSignGuestResult',
+        component: () => import('@/views/PmuSign.vue'),
+        props: true,
+        meta: {
+          noNavigation: true,
+          layout: WithTitleBarLayout,
+          title: 'PMU Form Sign',
+          backRoute: { name: 'ClientEdit' }
+        }
+      },
+      {
         path: 'pmu-sign-from-notify',
         name: 'PmuSignFromNotify',
         component: () => import('@/views/PmuSignFlow.vue'),

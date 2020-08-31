@@ -44,6 +44,8 @@
 </template>
 
 <script>
+import { get } from 'lodash-es';
+
 export default {
   name: 'CheckoutStepper',
   props: {
@@ -63,10 +65,12 @@ export default {
   },
   methods: {
     pageHeader(pageNum) {
-      return this.navigation[pageNum - 1].name;
+      return get(this.navigation, `[${pageNum - 1}].name`, '');
     },
     pageSubheader(pageNum) {
-      return this.navigation[pageNum] ? this.pageHeader(pageNum + 1) : '';
+      return get(this.navigation, `[${pageNum}]`, null)
+        ? this.pageHeader(pageNum + 1)
+        : '';
     }
   },
   computed: {

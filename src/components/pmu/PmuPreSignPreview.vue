@@ -27,12 +27,16 @@ export default {
   methods: {
     ...mapActions('client', ['pmuPreSignPreview']),
     async _pmuPreSignPreview() {
-      this.imagePreview = await this.pmuPreSignPreview({
-        params: {
-          clientId: this.clientId,
-          tenantSlug: this.tenantSlug
-        }
-      });
+      try {
+        this.imagePreview = await this.pmuPreSignPreview({
+          params: {
+            clientId: this.clientId,
+            tenantSlug: this.tenantSlug
+          }
+        });
+      } catch (error) {
+        this.$emit('errorAlreadySigned');
+      }
     },
     init() {
       this._pmuPreSignPreview();
