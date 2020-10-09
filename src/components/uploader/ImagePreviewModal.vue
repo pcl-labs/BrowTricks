@@ -84,25 +84,6 @@ export default {
       this.$emit('remove', this.file);
       this.closeModal();
     }
-  },
-  created() {
-    if (navigator.share) {
-      alert('supported');
-      navigator
-        .share({
-          title: 'My awesome post!',
-          text: 'This post may or may not contain the answer to the universe',
-          url: window.location.href
-        })
-        .then(() => {
-          alert('Thanks for sharing!');
-        })
-        .catch(err => {
-          alert(`Couldn't share because of`, err.message);
-        });
-    } else {
-      alert('web share not supported');
-    }
   }
 };
 </script>
