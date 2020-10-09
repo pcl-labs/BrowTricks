@@ -1,18 +1,6 @@
 <template>
   <div class="max-w-md mx-auto pt-6 px-4">
     <div class="text-on-background">
-      <a @click.prevent="selectField(uploaderField)" class="cursor-pointer">
-        <FormTemplateFieldTypeCard
-          @selectHelp="selectHelp"
-          class="mb-4"
-          :hasHelp="true"
-          :icon="uploaderField.icon"
-          :name="uploaderField.name"
-          :type="uploaderField.type"
-          :description="uploaderField.description"
-        />
-      </a>
-
       <h2 class="tg-h3-mobile text-on-background text-opacity-high mb-4">
         Select a question type:
       </h2>
@@ -74,7 +62,7 @@ export default {
       return {
         useUploader: true,
         icon: 'IconImages',
-        name: 'Use Your Own Form',
+        name: 'Upload',
         // NOTE: we'll set the actual type in FormTemplateDrawerUpload after upload file (image or pdf)
         type: 'upload',
         description:
@@ -84,6 +72,7 @@ export default {
     },
     fieldsAvailable() {
       return [
+        this.uploaderField,
         {
           icon: 'IconCheckSquared',
           name: 'Agreement Request',
