@@ -51,9 +51,6 @@ export default {
     },
     signupReturnUrl() {
       return `${window.location.origin}${this.getPanelRedirectorPath}?signup=1`;
-    },
-    loginReturnUrl() {
-      return `${window.location.href}`;
     }
   },
   methods: {
@@ -61,6 +58,7 @@ export default {
     async openAuthentication(provider) {
       await this.updateProvider(provider);
       await this.updateReturnUrl(this.signupReturnUrl);
+      console.log('oauthUrlGet', this.oauthUrlGet);
       window.location.assign(this.oauthUrlGet);
     }
   }
