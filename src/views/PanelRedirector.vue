@@ -161,6 +161,7 @@ export default {
       });
     },
     setTokenFromUrl() {
+      console.log('url in /wait:', location.href);
       if (this.$route.query.token) {
         this.updateToken(this.$route.query.token);
         return true;
