@@ -31,7 +31,7 @@
         <h3 class="tg-h2-mobile mb-4">Pro ($10/mo)</h3>
         <div class="tg-body-mobile">
           <p class="mb-5">
-            Upgrade to Pro for video cloud storage up to 500mg and unlimited PMU
+            Upgrade to Pro for video cloud storage up to 500mb and unlimited PMU
             custom form builder
           </p>
 
