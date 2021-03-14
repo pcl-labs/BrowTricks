@@ -107,10 +107,10 @@ body {
   }
 }
 html, iframe {
-  @apply safe-top safe-left safe-right;
+  @apply safe-top-padding safe-left-padding safe-right-padding;
 }
 html {
-  @apply safe-bottom;
+  @apply safe-bottom-padding;
 }
 
 #app {
