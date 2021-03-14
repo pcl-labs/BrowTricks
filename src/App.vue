@@ -1,7 +1,7 @@
 <template>
   <div
     id="app"
-    class="safe-top safe-left safe-right safe-bottom min-h-vh100 h-full text-center bg-background text-on-background antialiased tg-base"
+    class="min-h-vh100 h-full text-center bg-background text-on-background antialiased tg-base"
   >
     <SplashOverlay v-if="!isMobileApp" />
     <Alerter />
