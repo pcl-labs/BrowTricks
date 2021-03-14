@@ -21,7 +21,7 @@
 
           <div
             @click.stop
-            class="absolute inset-x-0 top-0 mt-12 max-w-md mx-auto"
+            class="absolute inset-x-0 top-safe mt-12 max-w-md mx-auto"
             v-if="showSwitcher"
           >
             <portal-target name="SwitcherBar"></portal-target>

@@ -20,7 +20,7 @@
             aria-label="Close"
           >
             <IconClose
-              class="iconClose absolute top-0 right-0 fill-current text-on-background text-opacity-medium w-6 h-6"
+              class="iconClose absolute top-safe right-0 fill-current text-on-background text-opacity-medium w-6 h-6"
             />
           </a>
         </header>
