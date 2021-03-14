@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full sticky top-0 z-40" :class="[background]">
+  <div class="w-full static top-0 z-40" :class="[background]">
     <div class="h-14 flex justify-between items-center text-white w-full px-2">
       <router-link
         v-if="backRoute"
