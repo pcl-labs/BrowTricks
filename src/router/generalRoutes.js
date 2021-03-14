@@ -5,7 +5,7 @@ export const generalRoutes = [
     path: '/',
     name: 'Home',
     component: () =>
-      process.env.VUE_APP_BUILD === 'web'
+      process.env.VUE_APP_BUILD === 'mobile'
         ? import('@/views/HomeMobile.vue')
         : import('@/views/Home.vue'),
     meta: {
