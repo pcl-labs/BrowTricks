@@ -31,10 +31,8 @@ export default {
 
 <style scoped>
 .content-board {
-  min-height: calc(
-    100 * var(--vh) - var(--safe-area-inset-top) - var(--safe-area-inset-bottom) -
-      var(--header-height)
-  );
+  min-height: calc(100 * var(--vh) - var(--header-height));
+  @apply safe-top-padding;
 }
 
 /* or hsa-navigation-bottom */
