@@ -1,5 +1,7 @@
 <template>
-  <header class="sticky top-safe z-20">
+  <header
+    class="sticky safe-top-padding safe-left-padding safe-right-padding z-20"
+  >
     <div class="flex justify-between items-center bg-brand6 px-4 py-3 h-16">
       <div class="flex items-center">
         <!-- hamburger menu -->
