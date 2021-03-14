@@ -1,5 +1,5 @@
 <template>
-  <div class="py-4 min-h-screen grid place-items-center">
+  <div class="py-4 min-h-vh100 grid place-items-center">
     <div class="px-4">
       <h2 class="text-center tg-h1-mobile md:tg-h1-desktop mb-8">
         You be a brow boss, let us do the organizing.
