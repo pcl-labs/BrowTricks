@@ -11,7 +11,7 @@
     <div
       class="flex flex-col items-center flex-grow w-full px-4 py-8 bg-surface rounded-t-xl"
     >
-      <AuthButtons></AuthButtons>
+      <AuthButtons prefix="Sign in with" />
 
       <div class="flex items-center justify-center w-full py-8">
         <hr class="flex-grow" />

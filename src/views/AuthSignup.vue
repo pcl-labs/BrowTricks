@@ -28,7 +28,7 @@
         </div>
       </div> -->
 
-      <AuthButtons></AuthButtons>
+      <AuthButtons prefix="Sign up with" />
 
       <div class="flex items-center justify-center w-full py-8">
         <hr class="flex-grow" />
