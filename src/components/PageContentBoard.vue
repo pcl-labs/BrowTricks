@@ -31,17 +31,12 @@ export default {
 
 <style scoped>
 .content-board {
-  min-height: calc(
-    100 * var(--vh) - var(--safe-area-inset-top) - var(--header-height) -
-      var(--safe-area-inset-bottom)
-  );
+  min-height: calc(100 * var(--vh) - var(--header-height));
+  @apply safe-top-padding;
 }
 
 /* or hsa-navigation-bottom */
 .has-spacer {
-  padding-bottom: calc(
-    var(--navigation-height) + var(--content-board-spacer) +
-      var(--safe-area-inset-bottom)
-  );
+  padding-bottom: calc(var(--navigation-height) + var(--content-board-spacer));
 }
 </style>
