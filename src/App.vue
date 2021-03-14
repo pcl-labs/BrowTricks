@@ -1,7 +1,7 @@
 <template>
   <div
     id="app"
-    class="safe-top safe-left safe-right safe-bottom min-h-screen h-full text-center bg-background text-on-background antialiased tg-base"
+    class="safe-top safe-left safe-right safe-bottom min-h-vh100 h-full text-center bg-background text-on-background antialiased tg-base"
   >
     <SplashOverlay v-if="!isMobileApp" />
     <Alerter />
@@ -54,6 +54,7 @@ import Alerter from '@/components/Alerter.vue';
 import SplashOverlay from '@/components/splash/SplashOverlay.vue';
 import SnackBar from '@/components/SnackBar.vue';
 import { mapGetters, mapActions } from 'vuex';
+import vhFix from '@/mixins/vhFix.js';
 import store from './store';
 import { getFormattedMetaTitle } from './helpers';
 import { get } from 'lodash-es';
@@ -66,6 +67,7 @@ export default {
       showPrivacySnackBar: true
     };
   },
+  mixins: [vhFix],
   components: {
     CssSafeArea,
     SplashOverlay,

@@ -97,8 +97,9 @@ html {
 }
 
 html,
-body {
+body, iframe {
   scroll-behavior: smooth;
+  @apply safe-top safe-left safe-right safe-bottom;
 }
 @media screen and (prefers-reduced-motion: reduce) {
   html,
