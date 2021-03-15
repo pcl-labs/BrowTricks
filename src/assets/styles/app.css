@@ -29,7 +29,7 @@ html {
 }
 
 .page-content--min-h {
-  min-height: calc(100 * var(--vh) - var(--header-height));
+  min-height: calc(100% - var(--header-height));
 }
 
 .no-pull-to-refresh {
@@ -49,25 +49,24 @@ html {
   min-width: 340px;
 }
 .min-h-vh100 {
-  min-height: 100vh;
-  min-height: calc(100 * var(--vh));
+  min-height: 100 * var(--vh);
+  min-height: calc(100 * var(--vh) - var(--safe-area-inset-top) - var(--safe-area-inset-bottom));
 }
 .h-vh100 {
-  height: 100vh;
-  height: calc(100 * var(--vh));
+  height: 100 * var(--vh);
+  height: calc(100 * var(--vh) - var(--safe-area-inset-top) - var(--safe-area-inset-bottom));
 }
 .h-vh100--without-headernav {
-  height: calc(100 * var(--vh) - var(--headernav-height));
+  height: calc(100 * var(--vh) - var(--safe-area-inset-top) - var(--safe-area-inset-bottom) - var(--headernav-height));
 }
 .min-h-vh100--without-header {
-  min-height: calc(100 * var(--vh) - var(--header-height));
+  min-height: calc(100 * var(--vh) - var(--safe-area-inset-top) - var(--safe-area-inset-bottom) - var(--header-height));
 }
 .h-vh100--without-header {
-  height: calc(100 * var(--vh) - var(--header-height));
+  height: calc(100 * var(--vh) - var(--safe-area-inset-top) - var(--safe-area-inset-bottom) - var(--header-height));
 }
 .min-h-vh100--without-footernav-n-header {
-  min-height: calc(
-    100 * var(--vh) - var(--header-height) - var(--footernav-height)
+  min-height: calc(100 * var(--vh) - var(--safe-area-inset-top) - var(--safe-area-inset-bottom) - var(--header-height) - var(--footernav-height)
   );
 }
 
