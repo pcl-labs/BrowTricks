@@ -36,6 +36,12 @@ Build and run xcode for iOS
 yarn capacitor:serve:production
 ```
 
+## CI
+
+Sometimes, you may want to push commits to your production branch without triggering a deploy on Netlify. To do this, add `[skip ci]` or `[skip netlify]` anywhere in the Git commit message.
+
+In the case of multiple commits pushed together, add [skip ci] or [skip netlify] to the most recent commit, and it will apply to all other commits in the push.
+
 ## License
 
 Licensed under the [GNU Affero General Public License v3.0](LICENSE).
