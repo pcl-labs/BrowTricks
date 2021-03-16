@@ -39,7 +39,7 @@
             </template>
           </ExpansionPanel>
 
-          <ExpansionPanel
+          <!-- <ExpansionPanel
             title="Tutorials"
             @click="isTutorialsModalOpen = true"
           >
@@ -66,7 +66,7 @@
                 class="h-6 w-6 fill-current text-opacity-medium text-on-surface"
               />
             </template>
-          </ExpansionPanel>
+          </ExpansionPanel> -->
 
           <ExpansionPanel
             title="FB Community"
