@@ -34,3 +34,6 @@
   from = "/*"
   to = "/"
   status = 200
+
+[build]
+  ignore = "git log -1 --pretty=%B | grep dependabot"
