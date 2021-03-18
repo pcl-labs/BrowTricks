@@ -4,7 +4,10 @@ export const generalRoutes = [
   {
     path: '/',
     name: 'Home',
-    component: () => import('@/views/Home.vue'),
+    component: () =>
+      process.env.VUE_APP_BUILD === 'mobile'
+        ? import('@/views/HomeMobile.vue')
+        : import('@/views/Home.vue'),
     meta: {
       isPublic: true,
       noNavigation: true,

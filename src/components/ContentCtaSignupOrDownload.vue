@@ -39,8 +39,10 @@
               title="Log in"
               :to="{ name: 'AuthLogin' }"
             />
-
-            <ButtonGooglePlay v-else className="mx-4" />
+           <div v-else class="space-y-4">
+              <ButtonGooglePlay className="mx-4" />
+              <ButtonAppleStore className="mx-4" />
+            </div>
           </div>
         </div>
       </div>
@@ -58,9 +60,10 @@
 
 <script>
 import ButtonGooglePlay from '@/components/inputs/ButtonGooglePlay';
+import ButtonAppleStore from '@/components/inputs/ButtonAppleStore';
 export default {
   name: 'ContentCtaSignupOrDownload',
-  components: { ButtonGooglePlay },
+  components: { ButtonGooglePlay, ButtonAppleStore },
   computed: {
     APPNAME() {
       return process.env.VUE_APP_NAME;

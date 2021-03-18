@@ -53,7 +53,10 @@
               title="Log in"
               :to="{ name: 'AuthLogin' }"
             />
-            <ButtonGooglePlay v-else className="mx-4 mb-4 sm:mb-0" />
+            <div v-else class="space-y-4">
+              <ButtonGooglePlay className="mx-4 mb-4 sm:mb-0" />
+              <ButtonAppleStore className="mx-4 mb-4 sm:mb-0" />
+            </div>
           </div>
         </div>
       </div>
@@ -70,13 +73,14 @@
 
 <script>
 import ButtonGooglePlay from '@/components/inputs/ButtonGooglePlay';
+import ButtonAppleStore from '@/components/inputs/ButtonAppleStore';
 import VideoSimple from '@/components/player/VideoSimple';
 import RatioBox from '@/components/RatioBox';
 import { isIE } from '@/helpers';
 
 export default {
   name: 'ContentHero',
-  components: { ButtonGooglePlay, VideoSimple, RatioBox },
+  components: { ButtonGooglePlay, VideoSimple, RatioBox, ButtonAppleStore },
   data: () => ({
     pageWidth: window.innerWidth
   }),

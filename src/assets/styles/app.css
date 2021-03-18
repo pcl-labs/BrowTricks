@@ -106,6 +106,12 @@ body {
     scroll-behavior: auto;
   }
 }
+html, iframe {
+  @apply safe-top-padding safe-left-padding safe-right-padding;
+}
+html {
+  @apply safe-bottom-padding;
+}
 
 #app {
   -webkit-font-smoothing: antialiased;

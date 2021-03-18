@@ -1,6 +1,6 @@
 <template>
   <div
-    class="h-vh100 bg-black bg-opacity-high z-50 fixed w-screen top-0 left-0 flex justify-center items-center"
+    class="h-screen bg-black bg-opacity-high z-50 fixed w-screen top-safe left-0 flex justify-center items-center"
   >
     <div
       class="flex flex-col items-center text-left w-full h-full relative"

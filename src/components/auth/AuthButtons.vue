@@ -1,14 +1,19 @@
 <template>
-  <div class="flex flex-wrap">
+  <div>
     <div
-      class="p-3 mx-auto"
+      class="py-3"
       v-for="({ name, logo }, index) in socialMediaProviders"
       :key="index"
     >
-      <Button :title="`${name}`" @clicked="openAuthentication(name)">
+      <Button
+        :title="`${prefix} ${name}`"
+        width="w-full"
+        padding="py-2 px-8"
+        @clicked="openAuthentication(name)"
+      >
         <template #start>
           <!-- icon -->
-          <component :is="logo" class="mr-2" />
+          <component :is="logo" class="mr-3" />
         </template>
       </Button>
     </div>
@@ -30,9 +35,9 @@ export default {
     IconGoogle
   },
   props: {
-    mode: {
+    prefix: {
       type: String,
-      default: 'signup'
+      default: ''
     }
   },
   data() {
@@ -43,12 +48,12 @@ export default {
           logo: 'IconApple'
         },
         {
-          name: 'Facebook',
-          logo: 'IconFacebook'
-        },
-        {
           name: 'Google',
           logo: 'IconGoogle'
+        },
+        {
+          name: 'Facebook',
+          logo: 'IconFacebook'
         }
       ]
     };
