@@ -64,7 +64,7 @@
               <div
                 title="Drag to reorder"
                 v-handle
-                class="w-12 h-12 absolute top-safe right-0 flex items-center justify-center"
+                class="w-12 h-12 absolute top-0 right-0 flex items-center justify-center"
               >
                 <IconReorder
                   class="fill-current text-on-surface text-opacity-medium"
