@@ -48,7 +48,6 @@
 </template>
 <script>
 import BaseOverlaySuccess from '@/components/BaseOverlaySuccess.vue';
-import CssSafeArea from '@/components/CssSafeArea.vue';
 import Alerter from '@/components/Alerter.vue';
 import SplashOverlay from '@/components/splash/SplashOverlay.vue';
 import SnackBar from '@/components/SnackBar.vue';
@@ -68,7 +67,6 @@ export default {
   },
   mixins: [vhFix],
   components: {
-    CssSafeArea,
     SplashOverlay,
     Alerter,
     BaseOverlaySuccess,
