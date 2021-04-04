@@ -7,10 +7,8 @@
   >
     <svg
       id="livetype"
-      class="w-full h-auto"
       xmlns="http://www.w3.org/2000/svg"
-      width="119.66407"
-      height="40"
+      height="46"
       viewBox="0 0 119.66407 40"
     >
       <title>Get it on Apple Store</title>
