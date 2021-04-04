@@ -202,6 +202,10 @@ export default {
 .box {
   @apply flex;
   @apply items-center;
+  @apply justify-center;
+  background-position: bottom right;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 .box-article {
   @apply py-16;

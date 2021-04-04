@@ -31,21 +31,24 @@
             radius="rounded-md"
             title="Sign Up"
             :to="{ name: 'AuthSignup' }"
-          />
-
-          <Button
-            v-if="isMobileApp"
-            class="cta-button mb-4 sm:mb-0"
-            margin="mr-4"
-            :width="null"
-            background="bg-brand6"
-            textColor="text-on-brand6"
-            radius="rounded-md"
-            title="Log in"
-            :to="{ name: 'AuthLogin' }"
           /> -->
-          <ButtonAppleStore className="mr-4" />
-          <ButtonGooglePlay className="mr-4" />
+
+            <Button
+              v-if="isMobileApp"
+              class="cta-button mb-4 sm:mb-0"
+              margin="mx-4"
+              :width="null"
+              background="bg-brand6"
+              textColor="text-on-brand6"
+              radius="rounded-md"
+              title="Log in"
+              :to="{ name: 'AuthLogin' }"
+            />
+            <div v-else class="space-y-4">
+              <ButtonGooglePlay className="mx-4" />
+              <ButtonAppleStore className="mx-4" />
+            </div>
+          </div>
         </div>
       </div>
     </div>
