@@ -39,7 +39,7 @@
               title="Log in"
               :to="{ name: 'AuthLogin' }"
             />
-           <div v-else class="space-y-4">
+            <div v-else class="space-y-4">
               <ButtonGooglePlay className="mx-4" />
               <ButtonAppleStore className="mx-4" />
             </div>

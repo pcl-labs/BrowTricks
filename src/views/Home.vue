@@ -174,7 +174,9 @@ export default {
 }
 
 .box {
-  @apply flex items-center justify-center;
+  @apply flex;
+  @apply items-center;
+  @apply justify-center;
   background-position: bottom right;
   background-size: contain;
   background-repeat: no-repeat;
