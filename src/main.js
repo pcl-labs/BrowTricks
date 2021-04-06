@@ -9,7 +9,7 @@ import './assets/styles/app.css';
 import Vuelidate from 'vuelidate';
 import configureModerator from './store/store-moderator';
 import PortalVue from 'portal-vue';
-import Rollbar from 'rollbar';
+import { rollbar } from '@/rollbar';
 import { Plugins as CapacitorPlugins } from '@capacitor/core';
 import VueMeta from 'vue-meta';
 import vClickOutside from 'v-click-outside';
@@ -55,15 +55,7 @@ Vue.use(VueGtm, {
 });
 
 if (process.env.VUE_APP_ROLLBAR) {
-  Vue.prototype.$rollbar = new Rollbar({
-    accessToken: '9912db541f8c42d88dc9a147d49062ef',
-    captureUncaught: true,
-    captureUnhandledRejections: true,
-    payload: {
-      environment: process.env.VUE_APP_ROLLBAR
-    }
-  });
-
+  Vue.prototype.$rollbar = rollbar;
   Vue.config.errorHandler = (err, vm) => {
     vm.$rollbar.error(err);
     throw err;

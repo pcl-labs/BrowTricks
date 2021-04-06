@@ -1,3 +1,5 @@
+import { rollbar } from '@/rollbar';
+
 const requestBase = ''.concat(
   process.env.VUE_APP_API_URL,
   '/api/v0/shortener/'
@@ -32,6 +34,7 @@ function getLongUrl(slug) {
       message =
         message ||
         'Something went wrong. Refreshing page may help, otherwise please contact chris@whynot.earth';
+      if (process.env.VUE_APP_ROLLBAR) rollbar.log(message, response);
       throw new Error(message);
     }
 
