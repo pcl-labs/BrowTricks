@@ -1,18 +1,10 @@
 <template functional>
-  <article class="px-2">
-    <header class="flex mb-6 items-center">
-      <div class="text-center px-4 flex-grow">
-        <h2
-          class="tg-h1-mobile text-on-background text-opacity-medium"
-          v-html="props.article.title"
-        ></h2>
-      </div>
-    </header>
-
-    <div
-      class="tg-body-mobile text-on-background text-opacity-medium"
-      v-html="props.article.content"
-    ></div>
+  <article class="mx-auto max-w-xl px-8 text-center md:text-left">
+    <h2
+      class="mb-6 md:mb-8 tg-home-h2-mobile md:tg-home-h2-desktop"
+      v-text="props.article.title"
+    />
+    <p class="tg-body-mobile" v-text="props.article.content" />
   </article>
 </template>
 
