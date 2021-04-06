@@ -16,20 +16,14 @@
           />
         </div>
         <div class="box box-2 box-article md:w-1/2">
-          <ArticleMini
-            class="flex flex-col justify-center"
-            :article="articles[0]"
-          />
+          <ArticleMini class="flex flex-col" :article="articles[0]" />
         </div>
       </div>
 
       <!-- row 2 -->
       <div class="flex flex-col md:flex-row w-full">
         <div class="box box-3 box-article md:w-1/2">
-          <ArticleMini
-            class="flex flex-col justify-center"
-            :article="articles[1]"
-          />
+          <ArticleMini class="flex flex-col" :article="articles[1]" />
         </div>
         <div class="box box-4 box-video md:w-1/2">
           <VideoSimple
@@ -39,13 +33,10 @@
         </div>
       </div>
       <div class="flex flex-col md:flex-row w-full">
-        <div class="box box-3 box-article md:w-1/2 md:order-2">
-          <ArticleMini
-            class="flex flex-col justify-center"
-            :article="articles[2]"
-          />
+        <div class="box box-6 box-article md:w-1/2 md:order-2">
+          <ArticleMini class="flex flex-col" :article="articles[2]" />
         </div>
-        <div class="box box-3 box-video md:w-1/2">
+        <div class="box box-5 box-video md:w-1/2">
           <VideoSimple
             class="video-content"
             url="https://res.cloudinary.com/whynotearth/video/upload/v1606201991/BrowTricks/static_v2/home-feature-blue_yvoqzy.mp4"
@@ -176,7 +167,6 @@ export default {
 .box {
   @apply flex;
   @apply items-center;
-  @apply justify-center;
   background-position: bottom right;
   background-size: contain;
   background-repeat: no-repeat;
