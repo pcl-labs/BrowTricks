@@ -60,6 +60,7 @@ const actions = {
         const status = get(error, 'response.status');
         if (status === 401) {
           dispatch('clear');
+          dispatch('updateToken', undefined);
         }
         throw error;
       });
