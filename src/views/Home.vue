@@ -7,84 +7,46 @@
     <template #content>
       <ContentHero />
 
-      <div class="bg-pink-white py-10 px-2 md:py-16 md:px-16">
-        <div class="hero-video mx-auto p-2 md:p-8 w-auto bg-home-pink-light">
-          <RatioBox :ratio="16 / 9">
-            <iframe
-              src="https://www.youtube-nocookie.com/embed/o8nOU01QZew"
-              title="YouTube video player"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-              class="w-full h-full"
-            />
-          </RatioBox>
+      <!-- row 1 -->
+      <div class="flex flex-col md:flex-row w-full">
+        <div class="box box-1 box-video md:w-1/2">
+          <VideoSimple
+            class="video-content"
+            url="https://res.cloudinary.com/whynotearth/video/upload/v1617688315/browtricks_beauty_pume_form_builder_example3_f4eng7.mp4"
+          />
         </div>
-        <div class="box box-2 box-article md:w-1/2">
-          <ArticleMini class="flex flex-col" :article="articles[0]" />
+        <div class="box box-1 box-article md:w-1/2">
+          <ArticleMini :article="articles[0]" />
         </div>
       </div>
 
       <!-- row 2 -->
-<<<<<<< HEAD
-      <div class="box-2 w-full">
-        <div
-          class="mx-auto max-w-screen-xxl flex flex-col lg:flex-row justify-between w-full"
-        >
-          <div class="box box-article lg:w-1/2 bg-spots bg-pattern-defaults">
-            <ArticleMini :article="articles[1]" />
-          </div>
-          <div class="box pb-10 px-2 md:px-16 md:py-24">
-            <iframe
-              width="560"
-              height="315"
-              src="https://www.youtube-nocookie.com/embed/deextA_8GAI"
-              title="YouTube video player"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-              class="mx-auto"
-            />
-          </div>
-        </div>
-      </div>
-      <div class="box-3 w-full">
-        <div
-          class="mx-auto max-w-screen-xxl flex flex-col lg:flex-row justify-between w-full"
-        >
-          <div
-            class="box box-article lg:w-1/2 lg:order-2 bg-spots bg-pattern-defaults"
-          >
-            <ArticleMini :article="articles[2]" />
-          </div>
-          <div class="box px-2 md:px-16">
-            <VideoSimple
-              class="video-content"
-              url="https://res.cloudinary.com/whynotearth/video/upload/v1619174259/BrowTricks/browtricks_features_tan_obu40a.mp4"
-            />
-          </div>
-=======
       <div class="flex flex-col md:flex-row w-full">
-        <div class="box box-3 box-article md:w-1/2">
-          <ArticleMini class="flex flex-col" :article="articles[1]" />
+        <div class="box box-2 box-article md:w-1/2">
+          <ArticleMini :article="articles[1]" />
         </div>
-        <div class="box box-4 box-video md:w-1/2">
-          <VideoSimple
-            class="video-content"
-            url="https://res.cloudinary.com/whynotearth/video/upload/v1606202007/BrowTricks/static_v2/home-feature-green_inuipz.mp4"
+        <div class="box box-2 box-video px-4 py-16 md:px-16 md:py-24 md:w-1/2">
+          <iframe
+            width="690"
+            height="400"
+            src="https://www.youtube.com/embed/IbKukl8CHYM"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            class="mx-auto"
           />
         </div>
       </div>
       <div class="flex flex-col md:flex-row w-full">
-        <div class="box box-6 box-article md:w-1/2 md:order-2">
-          <ArticleMini class="flex flex-col" :article="articles[2]" />
+        <div class="box box-3 box-article md:w-1/2 md:order-2">
+          <ArticleMini :article="articles[2]" />
         </div>
-        <div class="box box-5 box-video md:w-1/2">
+        <div class="box box-3 box-video md:w-1/2">
           <VideoSimple
             class="video-content"
-            url="https://res.cloudinary.com/whynotearth/video/upload/v1606201991/BrowTricks/static_v2/home-feature-blue_yvoqzy.mp4"
+            url="https://res.cloudinary.com/whynotearth/video/upload/v1617688312/browtricks_beauty_pume_form_builder_example_1_kygddc.mp4"
           />
->>>>>>> f9366d4 (chore: app name and new section)
         </div>
       </div>
 
