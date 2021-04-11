@@ -12,34 +12,40 @@
         <div class="box box-1 box-video md:w-1/2">
           <VideoSimple
             class="video-content"
-            url="https://res.cloudinary.com/whynotearth/video/upload/v1606202008/BrowTricks/static_v2/home-feature-pink_yvz5tb.mp4"
+            url="https://res.cloudinary.com/whynotearth/video/upload/v1617688315/browtricks_beauty_pume_form_builder_example3_f4eng7.mp4"
           />
         </div>
-        <div class="box box-2 box-article md:w-1/2">
-          <ArticleMini class="flex flex-col" :article="articles[0]" />
+        <div class="box box-1 box-article md:w-1/2">
+          <ArticleMini :article="articles[0]" />
         </div>
       </div>
 
       <!-- row 2 -->
       <div class="flex flex-col md:flex-row w-full">
-        <div class="box box-3 box-article md:w-1/2">
-          <ArticleMini class="flex flex-col" :article="articles[1]" />
+        <div class="box box-2 box-article md:w-1/2">
+          <ArticleMini :article="articles[1]" />
         </div>
-        <div class="box box-4 box-video md:w-1/2">
-          <VideoSimple
-            class="video-content"
-            url="https://res.cloudinary.com/whynotearth/video/upload/v1606202007/BrowTricks/static_v2/home-feature-green_inuipz.mp4"
+        <div class="box box-2 box-video px-4 py-16 md:px-16 md:py-24 md:w-1/2">
+          <iframe
+            width="690"
+            height="400"
+            src="https://www.youtube.com/embed/IbKukl8CHYM"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            class="mx-auto"
           />
         </div>
       </div>
       <div class="flex flex-col md:flex-row w-full">
-        <div class="box box-6 box-article md:w-1/2 md:order-2">
-          <ArticleMini class="flex flex-col" :article="articles[2]" />
+        <div class="box box-3 box-article md:w-1/2 md:order-2">
+          <ArticleMini :article="articles[2]" />
         </div>
-        <div class="box box-5 box-video md:w-1/2">
+        <div class="box box-3 box-video md:w-1/2">
           <VideoSimple
             class="video-content"
-            url="https://res.cloudinary.com/whynotearth/video/upload/v1606201991/BrowTricks/static_v2/home-feature-blue_yvoqzy.mp4"
+            url="https://res.cloudinary.com/whynotearth/video/upload/v1617688312/browtricks_beauty_pume_form_builder_example_1_kygddc.mp4"
           />
         </div>
       </div>
@@ -146,22 +152,13 @@ export default {
 }
 
 .box-1 {
-  background-color: #ebd3cd;
+  background-color: #ebbbb6;
 }
 .box-2 {
-  background-color: #ebd3cd;
-}
-.box-4 {
-  background-color: #d2e9e0;
+  background-color: #ceeadf;
 }
 .box-3 {
-  background-color: #d2e9e0;
-}
-.box-5 {
-  background-color: #eaf0fa;
-}
-.box-6 {
-  background-color: #eaf0fa;
+  background-color: #f1e2d7;
 }
 
 .box {
@@ -175,6 +172,7 @@ export default {
   @apply py-16;
 }
 .video-content {
+  @apply mx-auto;
   pointer-events: none;
 }
 </style>
