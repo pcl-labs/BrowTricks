@@ -4,7 +4,7 @@
       class="mb-6 md:mb-8 tg-home-h2-mobile md:tg-home-h2-desktop"
       v-text="props.article.title"
     />
-    <p class="tg-body-mobile" v-text="props.article.content" />
+    <p class="tg-home-body" v-text="props.article.content" />
   </article>
 </template>
 

@@ -14,6 +14,7 @@
         <dt><IconCheck class="list-tick" /><span>1000+ Users</span></dt>
         <dt><IconCheck class="list-tick" /><span>Client Notes</span></dt>
         <dt><IconCheck class="list-tick" /><span>Client Photos</span></dt>
+        <dt><IconCheck class="list-tick" /><span>Ongoing Support</span></dt>
         <dt><IconCheck class="list-tick" /><span>PMU Form Builder</span></dt>
       </dl>
     </BaseCard>
@@ -64,5 +65,8 @@ export default {
 .list-tick {
   background-color: rgb(3, 4, 19, 0.1);
   @apply w-6 h-6 p-1.5 mr-4 rounded-full;
+}
+.list-lock {
+  @apply text-error w-4 h-4 mr-4;
 }
 </style>
