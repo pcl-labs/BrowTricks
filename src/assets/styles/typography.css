@@ -126,11 +126,32 @@
     font-size: 46px;
     line-height: 60px;
   }
+  .tg-home-h3-desktop {
+    font-family: ChampagneLimousines, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 40px;
+  }
+  .tg-home-h3-mobile {
+    font-family: ChampagneLimousines, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 40px;
+  }
   .tg-home-h4 {
     font-family: Roboto, sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 20px;
     line-height: 35px;
+  }
+  .tg-home-body {
+    font-family: Roboto, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 32px;
   }
 }

@@ -1,112 +1,56 @@
 <template>
-  <component
-    :is="isLarge ? 'RatioBox' : 'div'"
-    :ratio="9 / 16"
-    class="relative"
-  >
-    <!-- background video -->
-    <VideoSimple
-      class="absolute inset-0 w-full hidden md:block z-0"
-      url="https://res.cloudinary.com/whynotearth/video/upload/v1606128043/BrowTricks/static_v2/home-hero_rwvppq.mp4"
-    />
-    <!-- text content -->
-    <div
-      class="flex flex-col justify-between max-w-4xl mx-auto h-full z-10 relative"
-    >
-      <div class="flex flex-col justify-center flex-grow">
-        <VideoSimple
-          class="w-full block md:hidden z-0"
-          url="https://res.cloudinary.com/whynotearth/video/upload/v1606128043/BrowTricks/static_v2/home-hero_rwvppq.mp4"
+  <div class="bg-home-green">
+    <div class="flex flex-col md:flex-row w-full">
+      <div class="my-auto app-image mx-auto flex-shrink-0 md:order-2">
+        <img
+          class="px-6"
+          src="https://res.cloudinary.com/whynotearth/image/upload/v1605631504/BrowTricks/static_v2/home-app_mea1yu.png"
+          alt="app"
         />
+      </div>
+      <div
+        class="px-4 py-6 md:py-14 md:px-16 my-16 mx-2 md:mx-auto max-w-2xl text-left bg-home-green-light"
+      >
+        <h2 class="tg-home-h1-mobile md:tg-home-h1-desktop mb-6 md:mb-8">
+          You be a brow boss, let us do the organizing.
+        </h2>
+        <h3 class="my-4 tg-home-h3-mobile md:tg-home-h3-desktop">
+          {{ APPNAME }}. {{ SLOGAN }}
+        </h3>
 
-        <div class="py-16 md:py-0">
-          <div class="px-4">
-            <h2 class="text-center tg-h1-mobile md:tg-h1-desktop mb-8">
-              You be a brow boss, let us do the organizing.
-            </h2>
-            <h1 class="tg-h3-mobile md:tg-h1-mobile mb-8">
-              {{ APPNAME }}. {{ SLOGAN }}
-            </h1>
-          </div>
+        <div class="grid grid-cols-2 gap-4">
+          <Button
+            class="cta-button mb-4 sm:mb-0"
+            :width="null"
+            background="bg-brand6"
+            textColor="text-on-brand6"
+            radius="rounded-md"
+            title="Sign Up"
+            :to="{ name: 'AuthSignup' }"
+          />
 
-          <div
-            class="flex flex-col sm:flex-row mt-6 items-center justify-center"
-          >
-            <Button
-              class="cta-button mb-4 sm:mb-0"
-              margin="mx-4"
-              :width="null"
-              background="bg-brand6"
-              textColor="text-on-brand6"
-              radius="rounded-md"
-              title="Sign Up"
-              :to="{ name: 'AuthSignup' }"
-            />
-            <Button
-              v-if="isMobileApp"
-              class="cta-button mb-4 sm:mb-0"
-              margin="mx-4"
-              :width="null"
-              background="bg-brand6"
-              textColor="text-on-brand6"
-              radius="rounded-md"
-              title="Log in"
-              :to="{ name: 'AuthLogin' }"
-            />
-            <div v-else class="space-y-4">
-              <ButtonGooglePlay className="mx-4 mb-4 sm:mb-0" />
-              <ButtonAppleStore className="mx-4 mb-4 sm:mb-0" />
-            </div>
-          </div>
+          <Button
+            class="cta-button mb-4 sm:mb-0 font-bold"
+            :width="null"
+            radius="rounded-md"
+            title="Log in"
+            :to="{ name: 'AuthLogin' }"
+          />
+          <ButtonAppleStore className="mr-4" />
+          <ButtonGooglePlay className="mr-4" />
         </div>
       </div>
-
-      <div class="px-4">
-        <p class="text-on-background mb-16">
-          It’s easy & user friendly. No credit card or commitments. We promise
-          you’ll love it!
-        </p>
-      </div>
     </div>
-  </component>
+  </div>
 </template>
 
 <script>
 import ButtonGooglePlay from '@/components/inputs/ButtonGooglePlay';
 import ButtonAppleStore from '@/components/inputs/ButtonAppleStore';
-import VideoSimple from '@/components/player/VideoSimple';
-import RatioBox from '@/components/RatioBox';
-import { isIE } from '@/helpers';
-
 export default {
-  name: 'ContentHero',
-  components: { ButtonGooglePlay, VideoSimple, RatioBox, ButtonAppleStore },
-  data: () => ({
-    pageWidth: window.innerWidth
-  }),
-
-  mounted() {
-    this.resizeListener();
-  },
-
-  methods: {
-    resizeListener() {
-      const eventConfig = isIE ? false : { passive: true };
-      window.addEventListener('resize', this.onResize, eventConfig);
-      this.$on('hook:beforeDestroy', () => {
-        window.removeEventListener('resize', this.onResize, eventConfig);
-      });
-    },
-    onResize() {
-      this.pageWidth = window.innerWidth;
-    }
-  },
-
+  name: 'ContentCtaSignupOrDownload',
+  components: { ButtonGooglePlay, ButtonAppleStore },
   computed: {
-    isLarge() {
-      // tailwindConfig: theme.screens.md => 768
-      return this.pageWidth >= 768;
-    },
     APPNAME() {
       return process.env.VUE_APP_NAME;
     },
@@ -118,6 +62,10 @@ export default {
 </script>
 
 <style scoped>
+.app-image {
+  width: 288px;
+}
+
 .cta-button {
   width: 148px;
 }
