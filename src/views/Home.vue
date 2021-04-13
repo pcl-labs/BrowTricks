@@ -7,16 +7,35 @@
     <template #content>
       <ContentHero />
 
+      <div class="hero-video p-2 md:p-8">
+        <div class="p-2 md:p-8 w-full h-full bg-home-pink-light">
+          <iframe
+            src="https://www.youtube.com/embed/IbKukl8CHYM"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            class="w-full h-full"
+          />
+        </div>
+      </div>
+
       <!-- row 1 -->
-      <div class="flex flex-col md:flex-row w-full">
-        <div class="box box-1 box-video md:w-1/2">
+      <div class="flex flex-col w-full">
+        <div class="box box-1 box-article">
+          <article class="mx-auto max-w-2xl px-4 md:px-16 text-center">
+            <h2
+              class="mb-6 md:mb-8 tg-home-h2-mobile md:tg-home-h2-desktop"
+              v-text="articles[0].title"
+            />
+            <p class="tg-body-mobile" v-text="articles[0].content" />
+          </article>
+        </div>
+        <div class="box box-1 box-video">
           <VideoSimple
             class="video-content"
             url="https://res.cloudinary.com/whynotearth/video/upload/v1617688315/browtricks_beauty_pume_form_builder_example3_f4eng7.mp4"
           />
-        </div>
-        <div class="box box-1 box-article md:w-1/2">
-          <ArticleMini :article="articles[0]" />
         </div>
       </div>
 
@@ -25,7 +44,7 @@
         <div class="box box-2 box-article md:w-1/2">
           <ArticleMini :article="articles[1]" />
         </div>
-        <div class="box box-2 box-video px-4 py-16 md:px-16 md:py-24 md:w-1/2">
+        <div class="box box-2 box-video px-4 pb-10 md:px-16 md:py-24 md:w-1/2">
           <iframe
             width="690"
             height="400"
@@ -182,16 +201,8 @@ export default {
   @apply mx-auto;
   pointer-events: none;
 }
-.bg-pink-white {
-  background: linear-gradient(white 50%, #ebbbb6 50%);
-}
 .hero-video {
-  max-width: 480px;
-  box-shadow: 5.725px 6.87px 0px rgba(183, 141, 137, 0.4);
-}
-@screen md {
-  .hero-video {
-    box-shadow: 20px 24px 0px rgba(183, 141, 137, 0.4);
-  }
+  height: 800px;
+  background: linear-gradient(white 50%, #ebbbb6 50%);
 }
 </style>
