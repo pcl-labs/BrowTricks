@@ -33,11 +33,10 @@
 <script>
 import BaseCard from '@/components/BaseCard';
 import IconCheck from '@/assets/icons/check.svg';
-import IconLock from '@/assets/icons/lock.svg';
 
 export default {
   name: 'ContentPricing',
-  components: { BaseCard, IconCheck, IconLock }
+  components: { BaseCard, IconCheck }
 };
 </script>
 
@@ -66,8 +65,5 @@ export default {
 .list-tick {
   background-color: rgb(3, 4, 19, 0.1);
   @apply w-6 h-6 p-1.5 mr-4 rounded-full;
-}
-.list-lock {
-  @apply text-error w-4 h-4 mr-4;
 }
 </style>
