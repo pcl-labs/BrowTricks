@@ -18,5 +18,3 @@ export default {
   components: { ContentPricing, NavigationFooter }
 };
 </script>
-
-<style scoped></style>

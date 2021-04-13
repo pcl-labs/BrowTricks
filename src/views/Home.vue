@@ -7,7 +7,7 @@
     <template #content>
       <ContentHero />
 
-      <div class="hero-video p-2 md:p-8">
+      <div class="hero-video py-16 px-2 md:px-8">
         <div class="p-2 md:p-8 w-full h-full bg-home-pink-light">
           <iframe
             src="https://www.youtube.com/embed/IbKukl8CHYM"
@@ -21,22 +21,17 @@
       </div>
 
       <!-- row 1 -->
-      <div class="flex flex-col w-full">
-        <div class="box box-1 box-article">
-          <article class="mx-auto max-w-2xl px-4 md:px-16 text-center">
-            <h2
-              class="mb-6 md:mb-8 tg-home-h2-mobile md:tg-home-h2-desktop"
-              v-text="articles[0].title"
-            />
-            <p class="tg-body-mobile" v-text="articles[0].content" />
-          </article>
-        </div>
-        <div class="box box-1 box-video">
-          <VideoSimple
-            class="video-content"
-            url="https://res.cloudinary.com/whynotearth/video/upload/v1617688315/browtricks_beauty_pume_form_builder_example3_f4eng7.mp4"
+      <div class="relative box box-1">
+        <article
+          class="absolute top-0 inset-x-0 mx-auto max-w-3xl px-4 md:px-16 text-center"
+        >
+          <h2
+            class="mb-6 md:mb-8 tg-home-h2-mobile md:tg-home-h2-desktop"
+            v-text="articles[0].title"
           />
-        </div>
+          <p class="tg-home-body" v-text="articles[0].content" />
+        </article>
+        <Lines class="mx-auto transform -translate-y-10" />
       </div>
 
       <!-- row 2 -->
@@ -73,10 +68,15 @@
         <FrameFullWidth>
           <div class="max-w-3xl mx-auto py-10">
             <h2
-              class="tg-h1-mobile text-on-background text-opacity-medium text-center mb-6"
+              class="mb-8 tg-home-h2-mobile md:tg-home-h2-desktop text-center"
             >
               Pricing
             </h2>
+            <p class="mb-12">
+              Ultrices vitae auctor eu augue ut lectus arcu. Donec et odio
+              pellentesque diam volutpat commodo. Eget nunc lobortis mattis
+              aliquam faucibus purus in.
+            </p>
             <ContentPricing />
           </div>
         </FrameFullWidth>
@@ -98,10 +98,12 @@ import ContentCtaSignupOrDownload from '@/components/ContentCtaSignupOrDownload.
 import NavigationFooter from '@/components/NavigationFooter.vue';
 import FrameFullWidth from '@/components/FrameFullWidth';
 import VideoSimple from '@/components/player/VideoSimple';
+import Lines from '@/assets/lines.svg';
 
 export default {
   name: 'Home',
   components: {
+    Lines,
     VideoSimple,
     FrameFullWidth,
     ArticleMini,
