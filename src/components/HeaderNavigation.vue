@@ -1,16 +1,16 @@
 <template>
   <header class="sticky bg-brand6 top-0 z-20">
     <div
-      class="mx-auto px-2 md:px-16 h-20 max-w-screen-xxl flex justify-between items-center"
+      class="mx-auto px-2 md:px-4 h-20 max-w-screen-xxl flex justify-between items-center"
     >
       <div class="w-full md:w-auto flex items-center justify-between">
-        <BrowTricksCrown />
+        <BrowTricksCrown class="py-2" />
         <!-- hamburger menu -->
         <a
           @click.stop="isMenuVisible = !isMenuVisible"
           class="cursor-pointer md:hidden menu-hamburger"
         >
-          <IconHamburger class="m-2 text-on-brand6" />
+          <IconHamburger class="text-on-brand6" />
 
           <transition name="menu-fade" mode="out-in">
             <nav
@@ -108,7 +108,7 @@
 
 <script>
 import IconHamburger from '@/assets/icons/hamburger.svg';
-import BrowTricksCrown from '@/assets/icons/browtricks-crown.svg';
+import BrowTricksCrown from '@/assets/icons/browtricks_crown.svg';
 
 export default {
   name: 'HeaderNavigation',
