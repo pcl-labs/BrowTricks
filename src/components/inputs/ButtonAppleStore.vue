@@ -146,7 +146,7 @@ export default {
 
 <style scoped>
 .cta-button {
-  max-width: 148px;
+  max-width: 138px;
 }
 .apple-store {
   background: url('https://user-images.githubusercontent.com/5694308/111573702-9b6bfd80-87dd-11eb-9f4e-b8f35624af74.png')

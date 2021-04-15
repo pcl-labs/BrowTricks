@@ -18,7 +18,7 @@ export default {
 
 <style scoped>
 .cta-button {
-  width: 148px;
+  width: 138px;
 }
 .google-play {
   background: url('https://res.cloudinary.com/whynotearth/image/upload/v1606120342/BrowTricks/static_v2/google-play_afdw6e.png')

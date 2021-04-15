@@ -1,13 +1,16 @@
 <template>
-  <header class="sticky top-0 z-20">
-    <div class="flex justify-between items-center bg-brand6 px-4 py-3 h-16">
-      <div class="flex items-center">
+  <header class="sticky bg-brand6 top-0 z-20">
+    <div
+      class="mx-auto px-2 md:px-4 h-20 max-w-screen-xxl flex justify-between items-center"
+    >
+      <div class="w-full md:w-auto flex items-center justify-between">
+        <BrowTricksCrown class="py-2" />
         <!-- hamburger menu -->
         <a
           @click.stop="isMenuVisible = !isMenuVisible"
-          class="cursor-pointer relative md:hidden menu-hamburger"
+          class="cursor-pointer md:hidden menu-hamburger"
         >
-          <IconHamburger class="text-on-brand6 mr-4" />
+          <IconHamburger class="text-on-brand6" />
 
           <transition name="menu-fade" mode="out-in">
             <nav
@@ -22,72 +25,72 @@
                     class="text-on-background block px-4 py-2 hover:bg-primary"
                     :to="{ name: 'Home' }"
                     exact
-                    >Home</router-link
                   >
+                    Home
+                  </router-link>
                 </li>
                 <li class="w-full">
                   <a
                     class="block px-4 py-2 hover:bg-primary text-on-background"
                     href="#section-pricing"
-                    >Pricing</a
                   >
+                    Pricing
+                  </a>
                 </li>
                 <li class="w-full">
                   <a
                     class="block px-4 py-2 hover:bg-primary text-on-background"
                     href="https://browtricksproductsorg.zendesk.com/"
-                    >Help</a
                   >
+                    Help
+                  </a>
                 </li>
                 <li class="w-full">
                   <router-link
                     class="block px-4 py-2 hover:bg-primary text-on-background"
                     :to="{ name: 'AuthLogin' }"
-                    >Log in</router-link
                   >
+                    Log in
+                  </router-link>
                 </li>
               </ul>
             </nav>
           </transition>
         </a>
-        <div
-          class="text-left tg-h3-mobile md:tg-h2-mobile text-on-brand6 select-none"
-        >
-          {{ APPNAME }}
-        </div>
       </div>
 
       <!-- horizontal menu -->
-      <nav class="flex menu-horizontal">
-        <ul class="hidden md:flex items-center tg-h3-mobile select-none">
+      <nav class="hidden md:flex menu-horizontal">
+        <ul class="flex items-center tg-h3-mobile text-white select-none">
           <li class="h-full flex items-center">
             <router-link
-              class="text-on-brand6 mx-1 p-2 rounded-md"
+              class="mx-1 p-2 rounded-md"
               :to="{ name: 'Home' }"
               exact
-              >Home</router-link
             >
+              Home
+            </router-link>
+          </li>
+          <li class="h-full flex items-center">
+            <a class="mx-1 p-2 rounded-md" href="#section-pricing">
+              Pricing
+            </a>
           </li>
           <li class="h-full flex items-center">
             <a
-              class="text-on-brand6 mx-1 p-2 rounded-md"
-              href="#section-pricing"
-              >Pricing</a
-            >
-          </li>
-          <li class="h-full flex items-center">
-            <a
-              class="text-on-brand6 mx-1 p-2 rounded-md"
+              class="mx-1 p-2 rounded-md"
               href="https://browtricksproductsorg.zendesk.com/"
-              >Help</a
             >
+              Help
+            </a>
           </li>
           <li class="h-full flex items-center">
             <router-link
-              class="text-on-brand6 mx-1 p-2 rounded-md"
+              class="mx-1 p-2 rounded-md"
               :to="{ name: 'AuthLogin' }"
-              >Log in</router-link
             >
+              Log in
+            </router-link>
           </li>
         </ul>
 
@@ -105,9 +108,11 @@
 
 <script>
 import IconHamburger from '@/assets/icons/hamburger.svg';
+import BrowTricksCrown from '@/assets/icons/browtricks_crown.svg';
+
 export default {
   name: 'HeaderNavigation',
-  components: { IconHamburger },
+  components: { IconHamburger, BrowTricksCrown },
   data: () => ({
     isMenuVisible: false
   }),

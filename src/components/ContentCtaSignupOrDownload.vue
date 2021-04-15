@@ -1,13 +1,7 @@
 <template>
   <div class="bg-primary">
     <div class="flex flex-col md:flex-row w-full">
-      <div class="my-auto app-image mx-auto flex-shrink-0 md:order-2">
-        <img
-          class="px-6"
-          src="https://res.cloudinary.com/whynotearth/image/upload/v1605631504/BrowTricks/static_v2/home-app_mea1yu.png"
-          alt="app"
-        />
-      </div>
+      <img src="@/assets/phones.png" alt="app" class="mx-auto md:order-2" />
       <div
         class="px-4 py-16 md:px-16 md:py-24 my-16 mx-2 md:mx-auto max-w-2xl text-left bg-primary-light"
       >
