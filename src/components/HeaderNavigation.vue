@@ -1,7 +1,7 @@
 <template>
   <header class="sticky bg-brand6 top-0 z-20">
     <div
-      class="mx-auto px-2 md:px-4 h-20 max-w-screen-xxl flex justify-between items-center"
+      class="mx-auto px-2 md:px-10 h-20 max-w-screen-xxl flex justify-between items-center"
     >
       <div class="w-full md:w-auto flex items-center justify-between">
         <BrowTricksCrown />
@@ -95,7 +95,7 @@
         </ul>
 
         <Button
-          padding="py-1 px-3 md:px-4 md:ml-3"
+          padding="py-1 px-3 md:px-10 md:ml-3"
           radius="rounded-md"
           :width="null"
           title="Try it now"
