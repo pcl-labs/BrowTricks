@@ -7,7 +7,7 @@
     <template #content>
       <ContentHero />
 
-      <div class="bg-pink-white py-16 px-2 md:px-8">
+      <div class="bg-pink-white py-16 px-2 md:px-10">
         <div class="hero-video mx-auto p-2 md:p-8 w-full bg-home-pink-light">
           <iframe
             src="https://www.youtube.com/embed/IbKukl8CHYM"
@@ -38,32 +38,40 @@
       </div>
 
       <!-- row 2 -->
-      <div class="box-2 flex flex-col md:flex-row w-full">
-        <div class="box box-article md:w-1/2">
-          <ArticleMini :article="articles[1]" />
-        </div>
-        <div class="box box-video px-4 pb-10 md:px-16 md:py-24 md:w-1/2">
-          <iframe
-            width="690"
-            height="400"
-            src="https://www.youtube.com/embed/IbKukl8CHYM"
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-            class="mx-auto"
-          />
+      <div class="box-2 w-full">
+        <div
+          class="mx-auto max-w-screen-xxl flex flex-col md:flex-row justify-between w-full"
+        >
+          <div class="box box-article">
+            <ArticleMini :article="articles[1]" />
+          </div>
+          <div class="box pb-10 px-2 md:px-10 md:py-24">
+            <iframe
+              width="690"
+              height="400"
+              src="https://www.youtube.com/embed/IbKukl8CHYM"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              class="mx-auto"
+            />
+          </div>
         </div>
       </div>
-      <div class="box-3 flex flex-col md:flex-row w-full">
-        <div class="box box-article md:w-1/2 md:order-2">
-          <ArticleMini :article="articles[2]" />
-        </div>
-        <div class="box box-video md:w-1/2">
-          <VideoSimple
-            class="video-content"
-            url="https://res.cloudinary.com/whynotearth/video/upload/v1617688312/browtricks_beauty_pume_form_builder_example_1_kygddc.mp4"
-          />
+      <div class="box-3 w-full">
+        <div
+          class="mx-auto max-w-screen-xxl flex flex-col md:flex-row justify-between w-full"
+        >
+          <div class="box box-article md:order-2">
+            <ArticleMini :article="articles[2]" />
+          </div>
+          <div class="box px-2 md:px-10">
+            <VideoSimple
+              class="video-content"
+              url="https://res.cloudinary.com/whynotearth/video/upload/v1617688312/browtricks_beauty_pume_form_builder_example_1_kygddc.mp4"
+            />
+          </div>
         </div>
       </div>
 
@@ -207,7 +215,7 @@ export default {
 @screen md {
   .hero-video {
     height: 800px;
-    max-width: 1200px;
+    max-width: 1840px;
   }
 }
 </style>

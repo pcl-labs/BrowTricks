@@ -1,14 +1,20 @@
 <template>
   <div class="bg-primary">
-    <div class="flex flex-col md:flex-row w-full">
-      <img src="@/assets/phones.png" alt="app" class="mx-auto md:order-2" />
+    <div
+      class="mx-auto max-w-screen-xxl flex flex-col md:flex-row justify-between w-full"
+    >
+      <img
+        src="@/assets/phones.png"
+        alt="app"
+        class="mx-2 md:mx-10 md:order-2"
+      />
       <div
-        class="px-4 py-16 md:px-16 md:py-24 my-16 mx-2 md:mx-auto max-w-2xl text-left bg-primary-light"
+        class="mx-2 md:mx-10 my-16 px-4 py-16 md:px-16 md:py-24 max-w-2xl text-left bg-primary-light"
       >
         <h2 class="tg-home-h1-mobile md:tg-home-h1-desktop mb-6 md:mb-8">
           {{ APPNAME }}
         </h2>
-        <p class="tg-body-mobile mb-10">
+        <p class="tg-home-body mb-10">
           Brow Tricks Beauty lets you snap, store, and see client photos and
           vidoes easily. This is great for remembering every single detail with
           a visual history of client's styles and progress. We recommend using
@@ -63,10 +69,6 @@ export default {
 </script>
 
 <style scoped>
-.app-image {
-  width: 288px;
-}
-
 .cta-button {
   width: 148px;
 }

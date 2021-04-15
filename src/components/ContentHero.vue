@@ -6,10 +6,10 @@
       <img
         src="@/assets/phones.png"
         alt="app"
-        class="mx-2 md:mx-4 md:order-2"
+        class="mx-2 md:mx-10 md:order-2"
       />
       <div
-        class="px-4 py-6 md:py-14 md:px-16 my-16 mx-2 md:mx-4 max-w-2xl text-left bg-home-green-light"
+        class="mx-2 md:mx-10 my-16 px-4 py-6 md:py-14 md:px-16 max-w-2xl text-left bg-home-green-light"
       >
         <h2 class="tg-home-h1-mobile md:tg-home-h1-desktop mb-6 md:mb-8">
           You be a brow boss, let us do the organizing.
