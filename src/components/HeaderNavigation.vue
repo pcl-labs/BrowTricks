@@ -4,13 +4,13 @@
       class="mx-auto px-2 md:px-4 h-20 max-w-screen-xxl flex justify-between items-center"
     >
       <div class="w-full md:w-auto flex items-center justify-between">
-        <BrowTricksCrown class="py-2" />
+        <BrowTricksCrown />
         <!-- hamburger menu -->
         <a
           @click.stop="isMenuVisible = !isMenuVisible"
           class="cursor-pointer md:hidden menu-hamburger"
         >
-          <IconHamburger class="text-on-brand6" />
+          <IconHamburger class="m-2 text-on-brand6" />
 
           <transition name="menu-fade" mode="out-in">
             <nav
