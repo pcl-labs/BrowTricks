@@ -23,7 +23,7 @@
       <!-- row 1 -->
       <div class="relative box box-1">
         <article
-          class="absolute top-0 inset-x-0 mx-auto max-w-3xl px-4 md:px-16 text-center"
+          class="absolute top-0 inset-x-0 mx-auto max-w-3xl px-2 text-center"
         >
           <h2
             class="mb-6 md:mb-8 tg-home-h2-mobile md:tg-home-h2-desktop"
@@ -33,16 +33,16 @@
         </article>
         <VideoSimple
           class="video-content"
-          url="https://res.cloudinary.com/whynotearth/video/upload/v1617688315/browtricks_beauty_pume_form_builder_example3_f4eng7.mp4"
+          url="https://res.cloudinary.com/whynotearth/video/upload/v1618759317/BrowTricks/ping_xwchok.mp4"
         />
       </div>
 
       <!-- row 2 -->
       <div class="box-2 w-full">
         <div
-          class="mx-auto max-w-screen-xxl flex flex-col md:flex-row justify-between w-full"
+          class="mx-auto max-w-screen-xxl flex flex-col lg:flex-row justify-between w-full"
         >
-          <div class="box box-article">
+          <div class="box box-article lg:w-1/2">
             <ArticleMini :article="articles[1]" />
           </div>
           <div class="box pb-10 px-2 md:px-16 md:py-24">
@@ -61,15 +61,15 @@
       </div>
       <div class="box-3 w-full">
         <div
-          class="mx-auto max-w-screen-xxl flex flex-col md:flex-row justify-between w-full"
+          class="mx-auto max-w-screen-xxl flex flex-col lg:flex-row justify-between w-full"
         >
-          <div class="box box-article md:order-2">
+          <div class="box box-article lg:w-1/2 lg:order-2">
             <ArticleMini :article="articles[2]" />
           </div>
           <div class="box px-2 md:px-16">
             <VideoSimple
               class="video-content"
-              url="https://res.cloudinary.com/whynotearth/video/upload/v1617688312/browtricks_beauty_pume_form_builder_example_1_kygddc.mp4"
+              url="https://res.cloudinary.com/whynotearth/video/upload/v1618759323/BrowTricks/tan_q3fvyf.mp4"
             />
           </div>
         </div>
@@ -210,12 +210,13 @@ export default {
 }
 .hero-video {
   height: 250px;
-  max-width: 400px;
+  max-width: 1790px;
+  box-shadow: 5.725px 6.87px 0px rgba(183, 141, 137, 0.4);
 }
 @screen md {
   .hero-video {
     height: 800px;
-    max-width: 1840px;
+    box-shadow: 20px 24px 0px rgba(183, 141, 137, 0.4);
   }
 }
 </style>
