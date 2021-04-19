@@ -25,7 +25,9 @@
         <div
           class="mx-auto max-w-screen-xxl flex flex-col lg:flex-row justify-between w-full"
         >
-          <div class="box box-article lg:w-1/2 lg:order-2">
+          <div
+            class="box box-article lg:w-1/2 lg:order-2 bg-spots bg-pattern-defaults"
+          >
             <ArticleMini :article="articles[0]" />
           </div>
           <div class="box px-2 md:px-16">
@@ -42,7 +44,7 @@
         <div
           class="mx-auto max-w-screen-xxl flex flex-col lg:flex-row justify-between w-full"
         >
-          <div class="box box-article lg:w-1/2">
+          <div class="box box-article lg:w-1/2 bg-spots bg-pattern-defaults">
             <ArticleMini :article="articles[1]" />
           </div>
           <div class="box pb-10 px-2 md:px-16 md:py-24">
@@ -63,7 +65,9 @@
         <div
           class="mx-auto max-w-screen-xxl flex flex-col lg:flex-row justify-between w-full"
         >
-          <div class="box box-article lg:w-1/2 lg:order-2">
+          <div
+            class="box box-article lg:w-1/2 lg:order-2 bg-spots bg-pattern-defaults"
+          >
             <ArticleMini :article="articles[2]" />
           </div>
           <div class="box px-2 md:px-16">
@@ -192,11 +196,7 @@ export default {
 }
 
 .box {
-  @apply flex;
-  @apply items-center;
-  background-position: bottom right;
-  background-size: contain;
-  background-repeat: no-repeat;
+  @apply flex items-center;
 }
 .box-article {
   @apply py-16;

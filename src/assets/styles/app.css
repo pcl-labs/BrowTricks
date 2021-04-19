@@ -117,3 +117,7 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.bg-pattern-defaults {
+  @apply  bg-center bg-contain bg-no-repeat;
+}
