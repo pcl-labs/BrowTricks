@@ -2,7 +2,7 @@
   <div class="bg-brand6">
     <div class="max-w-screen-xxl mx-auto py-16 px-2 md:px-16">
       <div
-        class="px-6 md:px-0 mb-12 md:mb-0 flex flex-col md:flex-row justify-between text-left"
+        class="flex flex-col md:flex-row justify-between text-left px-10 md:px-0 mb-12 md:mb-0"
       >
         <nav class="mb-10 md:mb-0">
           <h3 class="list-title">Quick Links</h3>
@@ -47,9 +47,11 @@
           </ul>
         </nav>
       </div>
-      <div class="mx-auto w-auto max-w-sm">
-        <img :src="BrowTricksLogoWithCrown" class="object-contain" />
-      </div>
+
+      <img
+        :src="BrowTricksLogoWithCrown"
+        class="mx-auto max-w-sm px-10 md:px-0"
+      />
     </div>
   </div>
 </template>

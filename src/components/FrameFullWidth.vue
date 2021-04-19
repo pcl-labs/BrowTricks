@@ -1,5 +1,5 @@
 <template functional>
-  <div class="bg-pattern px-2 md:px-10 py-6 md:py-10">
+  <div class="bg-pattern px-2 md:px-16 py-6 md:py-10">
     <div class="bg-home-green-light p-2 md:p-4">
       <slot />
     </div>
