@@ -8,7 +8,7 @@
         class="md:hidden"
       />
       <div
-        class="m-2 mt-0 md:m-16 px-4 py-6 md:p-16 max-w-2xl text-left bg-primary-light"
+        class="m-2 mt-0 md:m-16 px-4 py-6 md:p-16 md:max-w-2xl text-left bg-primary-light"
       >
         <h2 class="tg-home-h1-mobile md:tg-home-h1-desktop mb-6 md:mb-8">
           {{ APPNAME }}
