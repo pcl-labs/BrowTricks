@@ -7,7 +7,7 @@
     <template #content>
       <ContentHero />
 
-      <div class="bg-pink-white py-16 px-2 md:px-16">
+      <div class="bg-pink-white py-10 px-2 md:py-16 md:px-16">
         <div class="hero-video mx-auto p-2 md:p-8 w-full bg-home-pink-light">
           <iframe
             src="https://www.youtube.com/embed/IbKukl8CHYM"
@@ -21,20 +21,20 @@
       </div>
 
       <!-- row 1 -->
-      <div class="relative box box-1">
-        <article
-          class="absolute top-0 inset-x-0 mx-auto max-w-3xl px-2 text-center"
+      <div class="box-1 w-full">
+        <div
+          class="mx-auto max-w-screen-xxl flex flex-col lg:flex-row justify-between w-full"
         >
-          <h2
-            class="mb-6 md:mb-8 tg-home-h2-mobile md:tg-home-h2-desktop"
-            v-text="articles[0].title"
-          />
-          <p class="tg-home-body" v-text="articles[0].content" />
-        </article>
-        <VideoSimple
-          class="video-content"
-          url="https://res.cloudinary.com/whynotearth/video/upload/v1618759317/BrowTricks/ping_xwchok.mp4"
-        />
+          <div class="box box-article lg:w-1/2 lg:order-2">
+            <ArticleMini :article="articles[0]" />
+          </div>
+          <div class="box px-2 md:px-16">
+            <VideoSimple
+              class="video-content"
+              url="https://res.cloudinary.com/whynotearth/video/upload/v1618759317/BrowTricks/ping_xwchok.mp4"
+            />
+          </div>
+        </div>
       </div>
 
       <!-- row 2 -->
