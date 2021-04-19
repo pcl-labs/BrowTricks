@@ -1,6 +1,6 @@
 <template functional>
-  <div class="bg-pattern px-2 md:px-16 py-6 md:py-10">
-    <div class="bg-home-green-light p-2 md:p-4">
+  <div class="bg-pattern p-2 md:p-16">
+    <div class="bg-patch bg-pattern-defaults bg-home-green-light p-2 md:p-4">
       <slot />
     </div>
   </div>

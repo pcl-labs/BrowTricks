@@ -25,6 +25,7 @@
         <article
           class="absolute top-0 inset-x-0 mx-auto max-w-3xl px-4 md:px-16 text-center"
         >
+<<<<<<< HEAD
           <h2
             class="mb-6 md:mb-8 tg-home-h2-mobile md:tg-home-h2-desktop"
             v-text="articles[0].title"
@@ -35,6 +36,20 @@
           class="video-content"
           url="https://res.cloudinary.com/whynotearth/video/upload/v1617688315/browtricks_beauty_pume_form_builder_example3_f4eng7.mp4"
         />
+=======
+          <div
+            class="box box-article lg:w-1/2 lg:order-2 bg-spots bg-pattern-defaults"
+          >
+            <ArticleMini :article="articles[0]" />
+          </div>
+          <div class="box px-2 md:px-16">
+            <VideoSimple
+              class="video-content"
+              url="https://res.cloudinary.com/whynotearth/video/upload/v1618759317/BrowTricks/ping_xwchok.mp4"
+            />
+          </div>
+        </div>
+>>>>>>> 7bddceb (feat: pattern backgrounds)
       </div>
 
       <!-- row 2 -->
@@ -42,7 +57,11 @@
         <div
           class="mx-auto max-w-screen-xxl flex flex-col md:flex-row justify-between w-full"
         >
+<<<<<<< HEAD
           <div class="box box-article">
+=======
+          <div class="box box-article lg:w-1/2 bg-spots bg-pattern-defaults">
+>>>>>>> 7bddceb (feat: pattern backgrounds)
             <ArticleMini :article="articles[1]" />
           </div>
           <div class="box pb-10 px-2 md:px-16 md:py-24">
@@ -63,7 +82,9 @@
         <div
           class="mx-auto max-w-screen-xxl flex flex-col md:flex-row justify-between w-full"
         >
-          <div class="box box-article md:order-2">
+          <div
+            class="box box-article lg:w-1/2 lg:order-2 bg-spots bg-pattern-defaults"
+          >
             <ArticleMini :article="articles[2]" />
           </div>
           <div class="box px-2 md:px-16">
@@ -192,11 +213,7 @@ export default {
 }
 
 .box {
-  @apply flex;
-  @apply items-center;
-  background-position: bottom right;
-  background-size: contain;
-  background-repeat: no-repeat;
+  @apply flex items-center;
 }
 .box-article {
   @apply py-16;
