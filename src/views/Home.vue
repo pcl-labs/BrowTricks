@@ -7,7 +7,7 @@
     <template #content>
       <ContentHero />
 
-      <div class="bg-pink-white py-16 px-2 md:px-10">
+      <div class="bg-pink-white py-16 px-2 md:px-16">
         <div class="hero-video mx-auto p-2 md:p-8 w-full bg-home-pink-light">
           <iframe
             src="https://www.youtube.com/embed/IbKukl8CHYM"
@@ -45,7 +45,7 @@
           <div class="box box-article">
             <ArticleMini :article="articles[1]" />
           </div>
-          <div class="box pb-10 px-2 md:px-10 md:py-24">
+          <div class="box pb-10 px-2 md:px-16 md:py-24">
             <iframe
               width="690"
               height="400"
@@ -66,7 +66,7 @@
           <div class="box box-article md:order-2">
             <ArticleMini :article="articles[2]" />
           </div>
-          <div class="box px-2 md:px-10">
+          <div class="box px-2 md:px-16">
             <VideoSimple
               class="video-content"
               url="https://res.cloudinary.com/whynotearth/video/upload/v1617688312/browtricks_beauty_pume_form_builder_example_1_kygddc.mp4"
