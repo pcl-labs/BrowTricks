@@ -1,11 +1,14 @@
 <template>
-  <div class="bg-home-green">
+  <div class="md:bg-phones-image bg-cover bg-right bg-no-repeat bg-home-green">
     <div
-      class="relative mx-auto max-w-screen-xxl flex flex-col md:flex-row justify-between w-full"
+      class="mx-auto max-w-screen-xxl md:h-auto flex flex-col md:flex-row justify-between w-full"
     >
-      <img src="@/assets/phones.png" alt="app" class="md:order-2" />
+      <img
+        src="https://res.cloudinary.com/whynotearth/image/upload/v1618759425/BrowTricks/Phones_Full_p86ypn.png"
+        class="md:hidden"
+      />
       <div
-        class="mx-2 md:mx-16 my-16 px-4 py-6 md:py-14 md:px-16 max-w-2xl text-left bg-home-green-light"
+        class="m-2 mt-0 md:m-16 px-4 py-6 md:p-16 max-w-2xl text-left bg-home-green-light"
       >
         <h2 class="tg-home-h1-mobile md:tg-home-h1-desktop mb-6 md:mb-8">
           You be a brow boss, let us do the organizing.

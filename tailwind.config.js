@@ -54,6 +54,10 @@ module.exports = {
       },
       wordBreak: {
         'break-word': 'break-word'
+      },
+      backgroundImage: {
+        'phones-image':
+          'url(https://res.cloudinary.com/whynotearth/image/upload/v1618759425/BrowTricks/Phones_Full_Width_qedj14.png)'
       }
     }
   },
