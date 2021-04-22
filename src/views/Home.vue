@@ -33,7 +33,7 @@
           <div class="box px-2 md:px-16">
             <VideoSimple
               class="video-content"
-              url="https://res.cloudinary.com/whynotearth/video/upload/v1618759317/BrowTricks/ping_xwchok.mp4"
+              url="https://res.cloudinary.com/whynotearth/video/upload/v1618879055/BrowTricks/browtricks_features_pink1_gjdkno.mp4"
             />
           </div>
         </div>
@@ -73,7 +73,7 @@
           <div class="box px-2 md:px-16">
             <VideoSimple
               class="video-content"
-              url="https://res.cloudinary.com/whynotearth/video/upload/v1618759323/BrowTricks/tan_q3fvyf.mp4"
+              url="https://res.cloudinary.com/whynotearth/video/upload/v1618879037/BrowTricks/browtricks_features_tan2_rrgskp.mp4"
             />
           </div>
         </div>
