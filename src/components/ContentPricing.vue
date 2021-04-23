@@ -14,7 +14,6 @@
         <dt><IconCheck class="list-tick" /><span>1000+ Users</span></dt>
         <dt><IconCheck class="list-tick" /><span>Client Notes</span></dt>
         <dt><IconCheck class="list-tick" /><span>Client Photos</span></dt>
-        <dt><IconCheck class="list-tick" /><span>Ongoing Support</span></dt>
         <dt><IconCheck class="list-tick" /><span>PMU Form Builder</span></dt>
       </dl>
     </BaseCard>
