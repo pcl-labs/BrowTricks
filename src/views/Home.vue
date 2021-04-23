@@ -89,11 +89,6 @@
             >
               Pricing
             </h2>
-            <p class="mb-12">
-              Ultrices vitae auctor eu augue ut lectus arcu. Donec et odio
-              pellentesque diam volutpat commodo. Eget nunc lobortis mattis
-              aliquam faucibus purus in.
-            </p>
             <ContentPricing />
           </div>
         </FrameFullWidth>
