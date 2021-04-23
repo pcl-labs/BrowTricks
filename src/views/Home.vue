@@ -10,7 +10,7 @@
       <div class="bg-pink-white py-10 px-2 md:py-16 md:px-16">
         <div class="hero-video mx-auto p-2 md:p-8 w-full bg-home-pink-light">
           <iframe
-            src="https://www.youtube.com/embed/IbKukl8CHYM"
+            src="https://www.youtube.com/embed/IbKukl8CHYM?autoplay=1"
             title="YouTube video player"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -33,7 +33,7 @@
           <div class="box px-2 md:px-16">
             <VideoSimple
               class="video-content"
-              url="https://res.cloudinary.com/whynotearth/video/upload/v1618879055/BrowTricks/browtricks_features_pink1_gjdkno.mp4"
+              url="https://res.cloudinary.com/whynotearth/video/upload/v1619174430/BrowTricks/browtricks_features_pink_lvsyzp.mp4"
             />
           </div>
         </div>
@@ -73,7 +73,7 @@
           <div class="box px-2 md:px-16">
             <VideoSimple
               class="video-content"
-              url="https://res.cloudinary.com/whynotearth/video/upload/v1618879037/BrowTricks/browtricks_features_tan2_rrgskp.mp4"
+              url="https://res.cloudinary.com/whynotearth/video/upload/v1619174259/BrowTricks/browtricks_features_tan_obu40a.mp4"
             />
           </div>
         </div>
