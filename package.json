@@ -17,7 +17,7 @@
     "@capacitor/cli": "^2.4.2",
     "@capacitor/core": "^2.4.2",
     "@capacitor/ios": "2.4.2",
-    "@whynotearth/meredith-axios": "^1.0.61",
+    "@whynotearth/meredith-axios": "^1.0.65",
     "@whynotearth/vue-flow-form": "^0.0.4",
     "axios": "^0.19.2",
     "cordova-plugin-inappbrowser": "^4.1.0",

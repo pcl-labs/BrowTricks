@@ -1553,10 +1553,10 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@whynotearth/meredith-axios@^1.0.61":
-  version "1.0.61"
-  resolved "https://registry.yarnpkg.com/@whynotearth/meredith-axios/-/meredith-axios-1.0.61.tgz#c48d8f7c1b2650e7fa11e558cadb0e573f2bcf55"
-  integrity sha512-f/G3NcOpHZdAiRjYY6yLGdgADCfH6CvCpKbOeia1JqiPj5txDjKvLrGIOL6/8vFlG3pmw4cTPfo4YSWTJ5VuGQ==
+"@whynotearth/meredith-axios@^1.0.65":
+  version "1.0.65"
+  resolved "https://registry.yarnpkg.com/@whynotearth/meredith-axios/-/meredith-axios-1.0.65.tgz#636fb152d6adfc804bd42a7d755fa25f4b5ddc53"
+  integrity sha512-G0C2GlFf1ewEvR+Vi9F/DkM0z1iCwoS63g8y5jar4V7KB7hSjr8Bv1VoIbMfA+neZvzgfBakkHkVxd0xC8lJZA==
   dependencies:
     swagger-axios-codegen "^0.10.3"
 
@@ -6670,6 +6670,7 @@ plist@^3.0.1:
     base64-js "^1.2.3"
     xmlbuilder "^9.0.7"
     xmldom "0.1.x"
+
 plyr@^3.6.2:
   version "3.6.2"
   resolved "https://registry.yarnpkg.com/plyr/-/plyr-3.6.2.tgz#5a55b608acd161262de1cc75ca843aa64355a051"
