@@ -17,7 +17,11 @@
             </template>
           </ExpansionPanel> -->
 
+<<<<<<< HEAD
           <router-link v-if="isAdmin" :to="{ name: 'SuperAdmin' }">
+=======
+          <router-link :to="{ name: 'SuperAdmin' }">
+>>>>>>> 6f5ee89 (feat: super admin page)
             <ExpansionPanel title="Admin Panel">
               <template #preIcon>
                 <IconPerson class="w-4 h-4 fill-current" />
