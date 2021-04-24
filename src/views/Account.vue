@@ -17,6 +17,13 @@
             </template>
           </ExpansionPanel> -->
 
+          <router-link :to="{ name: 'SuperAdmin' }">
+            <ExpansionPanel title="Admin Panel">
+              <template #preIcon>
+                <IconPerson class="w-4 h-4 fill-current" />
+              </template>
+            </ExpansionPanel>
+          </router-link>
           <router-link :to="{ name: 'AuthLogout' }">
             <ExpansionPanel title="Log Out">
               <template #preIcon>
