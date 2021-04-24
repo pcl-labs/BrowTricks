@@ -1,7 +1,7 @@
 <template>
   <a
     tabindex="1"
-    class="cursor-pointer px-6 mb-4 flex items-center justify-between"
+    class="cursor-pointer px-4 mb-4 flex items-center justify-between"
     @click="$emit('select', client)"
   >
     <div class="flex items-center">
