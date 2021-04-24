@@ -10,6 +10,7 @@ import uploader from './modules/uploader';
 import formTemplate from './modules/formTemplate';
 import profile from './modules/profile';
 import alerter from './modules/alerter';
+import admin from './modules/admin';
 import VuexPersistence from 'vuex-persist';
 
 const vuexSession = new VuexPersistence({
@@ -39,6 +40,7 @@ export default new Vuex.Store({
     client,
     overlay,
     loading,
-    uploader
+    uploader,
+    admin
   }
 });
