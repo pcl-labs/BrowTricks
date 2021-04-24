@@ -65,7 +65,7 @@
         </div>
 
         <div>
-          <Button class="mb-6" type="submit" title="Login" />
+          <Button class="mb-6" type="submit" title="Login" :loading="loading" />
           <p class="mt-4 text-center tg-body-mobile">
             Don't have an account?
             <router-link :to="{ name: 'AuthSignup' }" class="underline">
@@ -104,6 +104,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       // email: '',
       userName: '',
       password: ''
@@ -139,6 +140,7 @@ export default {
         return;
       }
 
+      this.loading = true;
       this.loginStandard({
         params: {
           body: {
@@ -148,7 +150,10 @@ export default {
         }
       })
         .then(this.onSuccess)
-        .catch(this.onSubmitCatch);
+        .catch(this.onSubmitCatch)
+        .finally(() => {
+          this.loading = false;
+        });
     },
     onSuccess() {
       showOverlayAndRedirect({
