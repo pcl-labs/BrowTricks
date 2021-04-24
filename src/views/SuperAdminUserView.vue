@@ -48,63 +48,42 @@ export default {
     PageContentBoard,
     HeaderHeroSection
   },
-
+  props: {
+    user: {
+      type: Object,
+      required: true
+    }
+  },
   data() {
     return {
       logo: process.env.VUE_APP_LOGO2_URL,
       userId: this.$route.params.userId,
-      loading: false,
-      user: {}
+      loading: false
     };
   },
   created() {
-    this.fetchUser();
+    if (!this.user) this.$router.push({ name: 'SuperAdminUsers' });
   },
   methods: {
-    ...mapActions('alerter', ['show', 'updateVisibility']),
-    ...mapActions('loading', ['loadingUpdate']),
-    async fetchUser() {
-      this.loadingUpdate(true);
-      try {
-        this.user = await UserService.users2({ userId: this.userId });
-      } catch {
-        this.show({
-          text: 'Error fetching user, refreshing page may fix it.',
-          button: this.contactUs()
-        });
-      } finally {
-        this.loadingUpdate(false);
-      }
-    },
+    ...mapActions('alerter', ['show']),
     async submit(userId) {
       try {
         this.loading = true;
         await UserService.resetPassword({ userId });
-        this.show({
-          text: 'Sent reset email! Ask the user to check their email.',
-          button: {
-            title: 'Okay!',
-            action: () => this.updateVisibility(false)
-          }
-        });
       } catch (error) {
         this.show({
-          // eslint-disable-next-line
           text: "Couldn't send reset email, try again or contact us.",
-          button: this.contactUs()
+          class: '',
+          button: {
+            title: 'Contact Us',
+            action() {
+              window.open('https://browtricksproductsorg.zendesk.com/');
+            }
+          }
         });
       } finally {
         this.loading = false;
       }
-    },
-    contactUs() {
-      return {
-        title: 'Contact Us',
-        action: () => {
-          window.open('https://browtricksproductsorg.zendesk.com/');
-          this.updateVisibility(false);
-        }
-      };
     }
   }
 };
