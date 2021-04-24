@@ -135,9 +135,11 @@ export default {
   /* color is brand1 */
   box-shadow: 0 0 0 2px #b5bbc9;
 }
-.button:disabled {
+.button:disabled,
+.button:disabled:hover {
   @apply bg-opacity-disabled;
   @apply cursor-not-allowed;
+  @apply shadow-none;
 }
 .min-w-200 {
   min-width: 200px;
