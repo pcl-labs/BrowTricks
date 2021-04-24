@@ -14,26 +14,27 @@ export const adminRoutes = [
     }
   },
   {
-    path: '/tenant/:tenantSlug/admin/tenants',
-    name: 'SuperAdminTenantsList',
-    component: () => import('@/views/SuperAdminTenantsList.vue'),
+    path: '/tenant/:tenantSlug/admin/users',
+    name: 'SuperAdminUsers',
+    component: () => import('@/views/SuperAdminUsers.vue'),
     meta: {
       layout: AppBarLayout,
       appBar: {
         backRoute: { name: 'SuperAdmin' },
-        title: 'Tenants'
+        title: 'Users'
       }
     }
   },
   {
-    path: '/tenant/:tenantSlug/admin/tenants/:id',
-    name: 'SuperAdminTenantView',
-    component: () => import('@/views/SuperAdminTenantView.vue'),
+    path: '/tenant/:tenantSlug/admin/users/:userId',
+    name: 'SuperAdminUserView',
+    component: () => import('@/views/SuperAdminUserView.vue'),
+    props: true,
     meta: {
       layout: AppBarLayout,
       appBar: {
-        backRoute: { name: 'SuperAdminTenantsList' },
-        title: 'Tenant Profile'
+        backRoute: { name: 'SuperAdminUsers' },
+        title: 'User Profile'
       }
     }
   }
