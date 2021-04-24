@@ -4,10 +4,14 @@
       <HeaderHeroSection>
         <!-- header -->
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> f2b95d1 (feat: super admin page)
         <div class="flex flex-col mb-8 items-center">
           <img class="h-20 mx-auto" :src="logo" alt="logo" />
           <h1 class="tg-h2-mobile text-opacity-high text-on-background">
             Welcome Back Boss!
+<<<<<<< HEAD
 =======
         <div>
           <h1
@@ -15,10 +19,13 @@
           >
             <img class="mb-4" :src="logo" alt="user-logo" />
 >>>>>>> 6f5ee89 (feat: super admin page)
+=======
+>>>>>>> f2b95d1 (feat: super admin page)
           </h1>
         </div>
 
         <!-- content -->
+<<<<<<< HEAD
 <<<<<<< HEAD
         <div class="mb-8 max-w-md mx-auto w-full h-full">
           <router-link :to="{ name: 'SuperAdminUsers' }">
@@ -37,6 +44,13 @@
           </ExpansionPanel>
         </router-link>
 >>>>>>> 6f5ee89 (feat: super admin page)
+=======
+        <div class="mb-8 max-w-md mx-auto w-full h-full">
+          <router-link :to="{ name: 'SuperAdminTenantsList' }">
+            <ExpansionPanel title="Tenants" />
+          </router-link>
+        </div>
+>>>>>>> f2b95d1 (feat: super admin page)
       </HeaderHeroSection>
     </div>
   </PageContentBoard>
@@ -46,6 +60,7 @@
 import HeaderHeroSection from '@/components/HeaderHeroSection.vue';
 import PageContentBoard from '@/components/PageContentBoard.vue';
 import ExpansionPanel from '@/components/ExpansionPanel.vue';
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 export default {
@@ -61,19 +76,26 @@ export default {
     ExpansionPanel
 =======
 import IconUser from '@/assets/icons/user-nocircle.svg';
+=======
+>>>>>>> f2b95d1 (feat: super admin page)
 
 export default {
   name: 'SuperAdmin',
-  data: () => ({
-    isTutorialsModalOpen: false,
-    logo: process.env.VUE_APP_LOGO3_URL
-  }),
+  data() {
+    return {
+      logo: process.env.VUE_APP_LOGO2_URL
+    };
+  },
   components: {
     PageContentBoard,
     HeaderHeroSection,
+<<<<<<< HEAD
     ExpansionPanel,
     IconUser
 >>>>>>> 6f5ee89 (feat: super admin page)
+=======
+    ExpansionPanel
+>>>>>>> f2b95d1 (feat: super admin page)
   }
 };
 </script>
