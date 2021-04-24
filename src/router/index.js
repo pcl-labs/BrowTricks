@@ -8,7 +8,6 @@ import { authRoutes } from './authRoutes';
 import { generalRoutes } from './generalRoutes';
 import { formTemplateRoutes } from './formTemplateRoutes';
 import { adminRoutes } from './adminRoutes';
-import { get } from 'lodash-es';
 
 Vue.use(VueRouter);
 
@@ -41,43 +40,20 @@ function isRouteChangingUpdate(value) {
 router.beforeEach((to, from, next) => {
   isRouteChangingUpdate(true);
 
-  // is public
-  if (to.meta.isPublic) {
-    if (to.meta.needsUserInfo) {
-      store.dispatch('auth/ping').catch(() => {
-        console.log('Not authenticated');
-      });
-    }
-    next();
-  }
-
-  // is not public
-  else {
-    const hasBeenAuthenticated = store.getters['auth/isAuthenticated'];
-    if (hasBeenAuthenticated) {
-      // don't wait for ping
-      next();
-    }
-
-    store
-      .dispatch('auth/ping')
-      .then(response => {
-        const isAuthenticated = response && response.isAuthenticated;
-        if (isAuthenticated) {
-          // only runs if isAuthenticated is changed right now
-          next();
-        } else {
-          next({ name: 'Home' });
+  store
+    .dispatch('auth/ping')
+    .then(() => {
+      return next();
+    })
+    .catch(() => {
+      if (to.meta.isPublic) {
+        if (to.meta.needsUserInfo) {
+          console.log('Not authenticated');
         }
-      })
-      .catch(error => {
-        console.log('Not authenticated');
-        const isError401 = get(error, 'response.status', null) === 401;
-        if (isError401) {
-          next({ name: 'Home' });
-        }
-      });
-  }
+        return next();
+      }
+      return next({ name: 'Home' });
+    });
 
   isRouteChangingUpdate(false);
 });
