@@ -4,9 +4,9 @@
     @close="updateVisibility(false)"
     background="bg-surface"
     textColor="text-on-background"
-    :padding="null"
+    padding="p-4"
   >
-    <div class="flex flex-col justify-center items-center w-full py-4">
+    <div class="flex flex-col justify-center items-center w-full">
       <div class="mb-4">{{ alerterGet.text }}</div>
 
       <Button
