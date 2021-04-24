@@ -46,8 +46,8 @@
 >>>>>>> 6f5ee89 (feat: super admin page)
 =======
         <div class="mb-8 max-w-md mx-auto w-full h-full">
-          <router-link :to="{ name: 'SuperAdminTenantsList' }">
-            <ExpansionPanel title="Tenants" />
+          <router-link :to="{ name: 'SuperAdminUsers' }">
+            <ExpansionPanel title="Users" />
           </router-link>
         </div>
 >>>>>>> f2b95d1 (feat: super admin page)
