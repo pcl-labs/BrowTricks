@@ -37,6 +37,7 @@
     "vue": "^2.6.11",
     "vue-100vh": "^0.1.1",
     "vue-gtm": "3.0.0-vue2",
+    "vue-infinite-loading": "^2.4.5",
     "vue-meta": "^2.4.0",
     "vue-router": "^3.1.5",
     "vue-simplemde": "^1.1.2",
