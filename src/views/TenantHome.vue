@@ -129,8 +129,8 @@ import BaseDialog from '@/components/BaseDialog.vue';
 import IconUser from '@/assets/icons/user-nocircle.svg';
 import IconDocument from '@/assets/icons/document.svg';
 import IconFacebook from '@/assets/icons/facebook.svg';
-import IconShop from '@/assets/icons/shop.svg';
-import IconTutorial from '@/assets/icons/tutorial.svg';
+// import IconShop from '@/assets/icons/shop.svg';
+// import IconTutorial from '@/assets/icons/tutorial.svg';
 import IconExit from '@/assets/icons/exit.svg';
 import { mapGetters, mapActions } from 'vuex';
 
@@ -149,8 +149,8 @@ export default {
     BaseDialog,
     IconUser,
     IconFacebook,
-    IconShop,
-    IconTutorial,
+    // IconShop,
+    // IconTutorial,
     IconDocument,
     IconExit
   },

@@ -27,7 +27,24 @@
         spinner="spiral"
         :identifier="infiniteId"
         @infinite="fetchUsers"
-      />
+      >
+        <div slot="no-more"></div>
+        <div slot="no-results">
+          No users found.
+        </div>
+        <div slot="error" slot-scope="{ trigger }">
+          Something went wrong, you can
+          <button @click="trigger" class="actions">retry</button>
+          or
+          <a
+            target="_blank"
+            href="https://browtricksproductsorg.zendesk.com/"
+            class="actions"
+          >
+            contact us.
+          </a>
+        </div>
+      </InfiniteLoading>
     </div>
   </PageContentBoard>
 </template>
@@ -98,3 +115,11 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.actions {
+  @apply text-black;
+  @apply underline;
+  @apply font-semibold;
+}
+</style>
