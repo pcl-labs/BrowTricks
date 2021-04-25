@@ -101,7 +101,7 @@ html {
   @apply z-20;
   @apply pt-4;
   @apply bg-background;
-  top: 56px;
+  top: calc(56px + env(safe-area-inset-top));
 }
 
 html,
@@ -114,7 +114,8 @@ body {
     scroll-behavior: auto;
   }
 }
-html, iframe {
+html,
+iframe {
   @apply safe-top-padding safe-left-padding safe-right-padding;
 }
 html {
@@ -127,5 +128,5 @@ html {
 }
 
 .bg-pattern-defaults {
-  @apply  bg-center bg-contain bg-no-repeat;
+  @apply bg-center bg-contain bg-no-repeat;
 }
