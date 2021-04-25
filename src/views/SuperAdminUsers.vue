@@ -1,7 +1,7 @@
 <template>
   <PageContentBoard>
-    <div class="my-4 p-4">
-      <div class="sticky top-0">
+    <div class="my-4 px-4">
+      <div class="search-box">
         <MaterialInput
           v-model="query"
           :immediate-input="true"
@@ -121,5 +121,13 @@ export default {
   @apply text-black;
   @apply underline;
   @apply font-semibold;
+}
+.search-box {
+  @apply sticky;
+  @apply z-20;
+  @apply pt-4;
+  @apply pb-1;
+  @apply bg-background;
+  top: 56px;
 }
 </style>
