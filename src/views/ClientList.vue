@@ -1,14 +1,6 @@
 <template>
   <PageContentBoard>
-    <div class="my-4 px-4">
-      <div class="search-box">
-        <MaterialInput
-          v-model="query"
-          :immediate-input="true"
-          label="Search"
-          placeholder="Search by name, number or email"
-        />
-      </div>
+    <div class="my-4 p-4" v-if="clients.length > 0">
       <div v-for="(client, key) in clients" :key="key">
         <h6
           v-if="showLetter(clients[key - 1], client)"
