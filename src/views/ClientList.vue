@@ -1,7 +1,7 @@
 <template>
   <PageContentBoard>
-    <div class="mb-1" v-if="clients.length > 0">
-      <div class="" v-for="(client, key) in clients" :key="key">
+    <div class="my-4 p-4" v-if="clients.length > 0">
+      <div v-for="(client, key) in clients" :key="key">
         <h6
           v-if="showLetter(clients[key - 1], client)"
           class="p-3 tg-caption-mobile"

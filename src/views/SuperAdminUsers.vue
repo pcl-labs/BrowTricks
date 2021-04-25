@@ -1,11 +1,11 @@
 <template>
   <PageContentBoard>
-    <div class="mb-1">
+    <div class="my-4 p-4">
+      <div class="sticky top-0">
+        <MaterialInput label="Search by names and numbers" />
+      </div>
       <div v-for="(user, key) in users" :key="key">
-        <h6
-          v-if="showLetter(users[key - 1], user)"
-          class="p-3 tg-caption-mobile"
-        >
+        <h6 v-if="showLetter(users[key - 1], user)" class="tg-caption-mobile">
           {{ user.firstName && user.firstName[0].toUpperCase() }}
         </h6>
 
