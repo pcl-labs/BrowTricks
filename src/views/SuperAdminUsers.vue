@@ -6,7 +6,7 @@
           v-model="query"
           :immediate-input="true"
           label="Search"
-          placeholder="Search by names and numbers"
+          placeholder="Search by name, number or email"
         />
       </div>
       <div v-for="(user, key) in users" :key="key">
@@ -23,34 +23,12 @@
           <ClientListItem :client="user" type="tenant" />
         </router-link>
       </div>
-      <InfiniteLoading
-        spinner="spiral"
-        :identifier="infiniteId"
-        @infinite="fetchUsers"
-      >
-        <div slot="no-more"></div>
-        <div slot="no-results">
-          No users found.
-        </div>
-        <div slot="error" slot-scope="{ trigger }">
-          Something went wrong, you can
-          <button @click="trigger" class="actions">retry</button>
-          or
-          <a
-            target="_blank"
-            href="https://browtricksproductsorg.zendesk.com/"
-            class="actions"
-          >
-            contact us.
-          </a>
-        </div>
-      </InfiniteLoading>
+      <infinite-loading :identifier="infiniteId" @infinite="fetchUsers" />
     </div>
   </PageContentBoard>
 </template>
 
 <script>
-import InfiniteLoading from 'vue-infinite-loading';
 import ClientListItem from '@/components/client/ClientListItem';
 import PageContentBoard from '@/components/PageContentBoard';
 import { UserService } from '@whynotearth/meredith-axios';
@@ -60,8 +38,7 @@ export default {
   name: 'SuperAdminUsers',
   components: {
     PageContentBoard,
-    ClientListItem,
-    InfiniteLoading
+    ClientListItem
   },
   data() {
     return {
@@ -73,7 +50,7 @@ export default {
   },
   watch: {
     query() {
-      this.search();
+      this.reset();
     }
   },
   methods: {
@@ -103,7 +80,7 @@ export default {
           $state.error();
         });
     },
-    search: debounce(
+    reset: debounce(
       function() {
         this.page = 0;
         this.users = [];
@@ -115,18 +92,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.actions {
-  @apply text-black;
-  @apply underline;
-  @apply font-semibold;
-}
-.search-box {
-  @apply sticky;
-  @apply z-20;
-  @apply pt-4;
-  @apply bg-background;
-  top: calc(56px + env(safe-area-inset-top));
-}
-</style>
