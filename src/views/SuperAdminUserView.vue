@@ -65,19 +65,27 @@ export default {
     if (!this.user) this.$router.push({ name: 'SuperAdminUsers' });
   },
   methods: {
-    ...mapActions('alerter', ['show']),
+    ...mapActions('alerter', ['show', 'updateVisibility']),
     async submit(userId) {
       try {
         this.loading = true;
         await UserService.resetPassword({ userId });
+        this.show({
+          text: 'Sent reset email! Ask the user to check their email.',
+          button: {
+            title: 'Okay!',
+            action: () => this.updateVisibility(false)
+          }
+        });
       } catch (error) {
         this.show({
+          // eslint-disable-next-line
           text: "Couldn't send reset email, try again or contact us.",
-          class: '',
           button: {
             title: 'Contact Us',
-            action() {
+            action: () => {
               window.open('https://browtricksproductsorg.zendesk.com/');
+              this.updateVisibility(false);
             }
           }
         });
