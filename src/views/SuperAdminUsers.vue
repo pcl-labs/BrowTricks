@@ -126,8 +126,7 @@ export default {
   @apply sticky;
   @apply z-20;
   @apply pt-4;
-  @apply pb-1;
   @apply bg-background;
-  top: 56px;
+  top: calc(56px + env(safe-area-inset-top));
 }
 </style>
