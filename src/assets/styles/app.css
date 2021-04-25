@@ -96,6 +96,14 @@ html {
   height: 100%;
 }
 
+.search-box {
+  @apply sticky;
+  @apply z-20;
+  @apply pt-4;
+  @apply bg-background;
+  top: calc(56px + env(safe-area-inset-top));
+}
+
 html,
 body {
   scroll-behavior: smooth;
