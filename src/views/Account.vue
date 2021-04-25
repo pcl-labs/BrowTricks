@@ -189,7 +189,8 @@ export default {
           alert('Something went wrong, could not fetch tenants');
         });
     },
-    deleteItem({ id, resourceType }) {
+    async deleteItem({ id, resourceType }) {
+      this.loadingUpdate(true);
       /* eslint-disable */
       const method =
         resourceType === 'image'
@@ -201,12 +202,14 @@ export default {
       if (!method) {
         console.log('Unknown resource type.');
       }
-      method({
+      await method({
         params: {
           tenantSlug: this.tenantSlug,
           [`${resourceType}Id`]: id
         }
-      }).then(this._fetchTenant);
+      });
+      await this._fetchTenant();
+      this.loadingUpdate(false);
     }
   },
   watch: {
