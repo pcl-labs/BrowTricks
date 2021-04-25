@@ -10,7 +10,7 @@
       <div class="bg-pink-white py-10 px-2 md:py-16 md:px-16">
         <div class="hero-video mx-auto p-2 md:p-8 w-full bg-home-pink-light">
           <iframe
-            src="https://www.youtube.com/embed/IbKukl8CHYM?autoplay=1"
+            src="https://www.youtube.com/embed/IbKukl8CHYM"
             title="YouTube video player"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -191,7 +191,8 @@ export default {
 }
 
 .box {
-  @apply flex items-center;
+  @apply flex;
+  @apply items-center;
 }
 .box-article {
   @apply py-16;
