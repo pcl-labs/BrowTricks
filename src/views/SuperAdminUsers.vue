@@ -2,7 +2,12 @@
   <PageContentBoard>
     <div class="my-4 p-4">
       <div class="sticky top-0">
-        <MaterialInput label="Search by names and numbers" />
+        <MaterialInput
+          v-model="query"
+          :immediate-input="true"
+          label="Search"
+          placeholder="Search by names and numbers"
+        />
       </div>
       <div v-for="(user, key) in users" :key="key">
         <h6 v-if="showLetter(users[key - 1], user)" class="tg-caption-mobile">
@@ -18,32 +23,43 @@
           <ClientListItem :client="user" type="tenant" />
         </router-link>
       </div>
+      <InfiniteLoading
+        spinner="spiral"
+        :identifier="infiniteId"
+        @infinite="fetchUsers"
+      />
     </div>
   </PageContentBoard>
 </template>
 
 <script>
+import InfiniteLoading from 'vue-infinite-loading';
 import ClientListItem from '@/components/client/ClientListItem';
 import PageContentBoard from '@/components/PageContentBoard';
-import { mapActions, mapState } from 'vuex';
+import { UserService } from '@whynotearth/meredith-axios';
+import { debounce } from 'lodash-es';
 
 export default {
   name: 'SuperAdminUsers',
   components: {
     PageContentBoard,
-    ClientListItem
+    ClientListItem,
+    InfiniteLoading
   },
   data() {
-    return {};
+    return {
+      users: [],
+      page: 0,
+      query: '',
+      infiniteId: +new Date()
+    };
   },
-  async created() {
-    this.loadingUpdate(true);
-    await this.fetchUsers();
-    this.loadingUpdate(false);
+  watch: {
+    query() {
+      this.search();
+    }
   },
   methods: {
-    ...mapActions('loading', ['loadingUpdate']),
-    ...mapActions('admin', ['fetchUsers']),
     showLetter(prev, current) {
       if (!prev) return true;
 
@@ -53,10 +69,32 @@ export default {
         current && current.firstName && current.firstName[0].toUpperCase();
 
       return getPrevFirstCharacter !== getCurrentFirstCharacter;
-    }
-  },
-  computed: {
-    ...mapState('admin', ['users'])
+    },
+    fetchUsers($state) {
+      return UserService.users1({ page: this.page, query: this.query })
+        .then(response => {
+          const users = response.records;
+          if (users.length) {
+            this.page += 1;
+            this.users.push(...users);
+            $state.loaded();
+          } else {
+            $state.complete();
+          }
+        })
+        .catch(() => {
+          $state.error();
+        });
+    },
+    search: debounce(
+      function() {
+        this.page = 0;
+        this.users = [];
+        this.infiniteId += 1;
+      },
+      300,
+      { maxWait: 3000 }
+    )
   }
 };
 </script>
