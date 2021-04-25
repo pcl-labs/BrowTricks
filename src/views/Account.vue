@@ -17,7 +17,7 @@
             </template>
           </ExpansionPanel> -->
 
-          <router-link :to="{ name: 'SuperAdmin' }">
+          <router-link v-if="isAdmin" :to="{ name: 'SuperAdmin' }">
             <ExpansionPanel title="Admin Panel">
               <template #preIcon>
                 <IconPerson class="w-4 h-4 fill-current" />
@@ -86,7 +86,7 @@ import ExpansionPanel from '@/components/ExpansionPanel.vue';
 import PageContentBoard from '@/components/PageContentBoard.vue';
 import HeaderHeroSection from '@/components/HeaderHeroSection.vue';
 import MediaManager from '@/components/uploader/MediaManager.vue';
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import { get } from 'lodash-es';
 // import IconCreate from '@/assets/icons/create.svg';
 import IconPerson from '@/assets/icons/person.svg';
@@ -117,6 +117,7 @@ export default {
     };
   },
   computed: {
+    ...mapState('auth', ['isAdmin']),
     avatar() {
       return process.env.VUE_APP_LOGO2_URL;
     },
