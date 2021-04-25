@@ -48,24 +48,34 @@ export default {
     PageContentBoard,
     HeaderHeroSection
   },
-  props: {
-    user: {
-      type: Object,
-      required: true
-    }
-  },
+
   data() {
     return {
       logo: process.env.VUE_APP_LOGO2_URL,
       userId: this.$route.params.userId,
-      loading: false
+      loading: false,
+      user: {}
     };
   },
   created() {
-    if (!this.user) this.$router.push({ name: 'SuperAdminUsers' });
+    this.fetchUser();
   },
   methods: {
-    ...mapActions('alerter', ['show']),
+    ...mapActions('alerter', ['show', 'updateVisibility']),
+    ...mapActions('loading', ['loadingUpdate']),
+    async fetchUser() {
+      this.loadingUpdate(true);
+      try {
+        this.user = await UserService.users2({ userId: this.userId });
+      } catch {
+        this.show({
+          text: 'Error fetching user, refreshing page may fix it.',
+          button: this.contactUs()
+        });
+      } finally {
+        this.loadingUpdate(false);
+      }
+    },
     async submit(userId) {
       try {
         this.loading = true;
@@ -73,17 +83,20 @@ export default {
       } catch (error) {
         this.show({
           text: "Couldn't send reset email, try again or contact us.",
-          class: '',
-          button: {
-            title: 'Contact Us',
-            action() {
-              window.open('https://browtricksproductsorg.zendesk.com/');
-            }
-          }
+          button: this.contactUs()
         });
       } finally {
         this.loading = false;
       }
+    },
+    contactUs() {
+      return {
+        title: 'Contact Us',
+        action: () => {
+          window.open('https://browtricksproductsorg.zendesk.com/');
+          this.updateVisibility(false);
+        }
+      };
     }
   }
 };
