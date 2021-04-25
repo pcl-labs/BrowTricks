@@ -42,7 +42,11 @@ router.beforeEach((to, from, next) => {
 
   store
     .dispatch('auth/ping')
-    .then(() => {
+    .then(response => {
+      if (to.meta.admin) {
+        if (response.isAdmin) return next();
+        else return next({ name: 'PanelRedirector' });
+      }
       return next();
     })
     .catch(() => {

@@ -6,6 +6,7 @@ export const adminRoutes = [
     name: 'SuperAdmin',
     component: () => import('@/views/SuperAdmin.vue'),
     meta: {
+      admin: true,
       layout: AppBarLayout,
       appBar: {
         backRoute: { name: 'TenantHome' },
@@ -18,6 +19,7 @@ export const adminRoutes = [
     name: 'SuperAdminUsers',
     component: () => import('@/views/SuperAdminUsers.vue'),
     meta: {
+      admin: true,
       layout: AppBarLayout,
       appBar: {
         backRoute: { name: 'SuperAdmin' },
@@ -31,6 +33,7 @@ export const adminRoutes = [
     component: () => import('@/views/SuperAdminUserView.vue'),
     props: true,
     meta: {
+      admin: true,
       layout: AppBarLayout,
       appBar: {
         backRoute: { name: 'SuperAdminUsers' },
