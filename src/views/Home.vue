@@ -8,15 +8,17 @@
       <ContentHero />
 
       <div class="bg-pink-white py-10 px-2 md:py-16 md:px-16">
-        <div class="hero-video mx-auto p-2 md:p-8 w-full bg-home-pink-light">
-          <iframe
-            src="https://www.youtube.com/embed/IbKukl8CHYM"
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-            class="w-full h-full"
-          />
+        <div class="hero-video mx-auto p-2 md:p-8 w-auto bg-home-pink-light">
+          <RatioBox :ratio="16 / 9">
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/o8nOU01QZew"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              class="w-full h-full"
+            />
+          </RatioBox>
         </div>
       </div>
 
@@ -49,9 +51,9 @@
           </div>
           <div class="box pb-10 px-2 md:px-16 md:py-24">
             <iframe
-              width="690"
-              height="400"
-              src="https://www.youtube.com/embed/IbKukl8CHYM"
+              width="560"
+              height="315"
+              src="https://www.youtube-nocookie.com/embed/deextA_8GAI"
               title="YouTube video player"
               frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -108,6 +110,7 @@ import ContentCtaSignupOrDownload from '@/components/ContentCtaSignupOrDownload.
 import NavigationFooter from '@/components/NavigationFooter.vue';
 import FrameFullWidth from '@/components/FrameFullWidth';
 import VideoSimple from '@/components/player/VideoSimple';
+import RatioBox from '@/components/RatioBox';
 
 export default {
   name: 'Home',
@@ -119,7 +122,8 @@ export default {
     ContentHero,
     ContentPricing,
     ContentCtaSignupOrDownload,
-    NavigationFooter
+    NavigationFooter,
+    RatioBox
   },
   // metaInfo() {
   //   return {
@@ -205,13 +209,11 @@ export default {
   background: linear-gradient(white 50%, #ebbbb6 50%);
 }
 .hero-video {
-  height: 250px;
-  max-width: 1790px;
+  max-width: 480px;
   box-shadow: 5.725px 6.87px 0px rgba(183, 141, 137, 0.4);
 }
 @screen md {
   .hero-video {
-    height: 800px;
     box-shadow: 20px 24px 0px rgba(183, 141, 137, 0.4);
   }
 }
