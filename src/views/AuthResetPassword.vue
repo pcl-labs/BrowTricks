@@ -133,6 +133,7 @@ export default {
         params: {
           body: {
             email: this.email,
+            username: this.userName,
             token: this.token,
             password: this.password,
             confirmPassword: this.confirmPassword
