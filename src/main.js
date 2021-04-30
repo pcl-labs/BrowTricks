@@ -13,6 +13,7 @@ import { rollbar } from '@/rollbar';
 import { Plugins as CapacitorPlugins } from '@capacitor/core';
 import VueMeta from 'vue-meta';
 import vClickOutside from 'v-click-outside';
+import InfiniteLoading from 'vue-infinite-loading';
 
 // global components
 // -----------------
@@ -21,6 +22,7 @@ import TextAreaInput from '@/components/inputs/TextAreaInput.vue';
 import MaterialInput from '@/components/inputs/MaterialInput.vue';
 import PageContentBoard from '@/components/PageContentBoard.vue';
 import BaseDialog from '@/components/BaseDialog.vue';
+import ErrorInfiniteLoader from '@/components/ErrorInfiniteLoader.vue';
 import ClassicLayout from '@/layouts/ClassicLayout.vue';
 // -----------------
 Vue.component('Button', Button);
@@ -40,6 +42,17 @@ Vue.mixin({
     isMobileApp() {
       return process.env.VUE_APP_MOBILE === 'true';
     }
+  }
+});
+
+Vue.use(InfiniteLoading, {
+  props: {
+    spinner: 'spiral'
+  },
+  slots: {
+    noMore: '',
+    noResults: 'No results found.',
+    error: ErrorInfiniteLoader
   }
 });
 

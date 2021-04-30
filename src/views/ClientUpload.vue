@@ -39,7 +39,7 @@
                       class="fill-current text-on-surface w-3 h-3"
                     />
                   </template>
-                  Client
+                  {{ clientName }}
                 </BaseChip>
               </a>
 
@@ -128,7 +128,8 @@ export default {
     isOpenClientSelect: false,
     description: '',
     file: null,
-    selectedClientId: undefined
+    selectedClientId: undefined,
+    clientName: 'Select client'
   }),
   validations: {
     selectedClientId: {},
@@ -206,10 +207,12 @@ export default {
     },
     onDeselectClient() {
       this.selectedClientId = undefined;
+      this.clientName = 'Select client';
       this.description = this.replaceClientTag(this.description, undefined);
     },
     onSelectClient(client) {
       this.selectedClientId = client.id;
+      this.clientName = `${client.firstName} ${client.lastName}`;
       this.description = this.replaceClientTag(this.description, client);
     },
     async submit() {

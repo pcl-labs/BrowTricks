@@ -7,6 +7,7 @@ import { TenantPanelRoutes } from './TenantRoutes';
 import { authRoutes } from './authRoutes';
 import { generalRoutes } from './generalRoutes';
 import { formTemplateRoutes } from './formTemplateRoutes';
+import { adminRoutes } from './adminRoutes';
 
 Vue.use(VueRouter);
 
@@ -14,6 +15,7 @@ const routes = [
   ...formTemplateRoutes,
   ...TenantPanelRoutes,
   ...clientRoutes,
+  ...adminRoutes,
   ...authRoutes,
   ...generalRoutes
 ];
@@ -40,7 +42,11 @@ router.beforeEach((to, from, next) => {
 
   store
     .dispatch('auth/ping')
-    .then(() => {
+    .then(response => {
+      if (to.meta.admin) {
+        if (response.isAdmin) return next();
+        else return next({ name: 'PanelRedirector' });
+      }
       return next();
     })
     .catch(() => {

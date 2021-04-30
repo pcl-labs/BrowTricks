@@ -1,67 +1,29 @@
 <template>
-  <div>
-    <div
-      class="grid grid-flow-row md:grid-flow-col gap-6 md:gap-16 px-0 md:px-6"
+  <div class="flex flex-col">
+    <BaseCard
+      className="mx-auto max-w-xs flex flex-col text-left"
+      padding="p-8"
+      rounded="rounded-none"
+      shadow="shadow-none"
     >
-      <BaseCard className="flex flex-col">
-        <h3 class="tg-h2-mobile mb-4">Standard (Free)</h3>
-        <div class="tg-body-mobile">
-          <p class="mb-5">
-            Standard plan created to fit the needs of salons of all sizes.
-          </p>
-
-          <hr class="mb-5" />
-
-          <dl class="text-left feature-list">
-            <dt><IconCheck class="list-tick" /><span>1000+ Users</span></dt>
-            <dt><IconCheck class="list-tick" /><span>Client Notes</span></dt>
-            <dt><IconCheck class="list-tick" /><span>Client Photos</span></dt>
-            <dt><IconCheck class="list-tick" /><span>Ongoing Support</span></dt>
-            <dt><IconLock class="list-lock" /><span>PMU Form Builder</span></dt>
-            <dt>
-              <IconLock class="list-lock" /><span
-                >Video Cloud Storage (500 MB)</span
-              >
-            </dt>
-          </dl>
-        </div>
-      </BaseCard>
-
-      <BaseCard className="flex flex-col">
-        <h3 class="tg-h2-mobile mb-4">Pro ($10/mo)</h3>
-        <div class="tg-body-mobile">
-          <p class="mb-5">
-            Upgrade to Pro for video cloud storage up to 500mb and unlimited PMU
-            custom form builder
-          </p>
-
-          <hr class="mb-5" />
-
-          <dl class="text-left feature-list">
-            <dt><IconCheck class="list-tick" /><span>1000+ Users</span></dt>
-            <dt><IconCheck class="list-tick" /><span>Client Notes</span></dt>
-            <dt><IconCheck class="list-tick" /><span>Client Photos</span></dt>
-            <dt><IconCheck class="list-tick" /><span>Ongoing Support</span></dt>
-            <dt>
-              <IconCheck class="list-tick" /><span>PMU Form Builder</span>
-            </dt>
-            <dt>
-              <IconCheck class="list-tick" /><span
-                >Video Cloud Storage (500 MB)</span
-              >
-            </dt>
-          </dl>
-        </div>
-      </BaseCard>
-    </div>
+      <h3 class="heading mb-5">Standard (Free)</h3>
+      <p class="mb-5 caption">
+        Standard plan created to fit the needs of salons of all sizes.
+      </p>
+      <dl class="text-left feature-list">
+        <dt><IconCheck class="list-tick" /><span>1000+ Users</span></dt>
+        <dt><IconCheck class="list-tick" /><span>Client Notes</span></dt>
+        <dt><IconCheck class="list-tick" /><span>Client Photos</span></dt>
+        <dt><IconCheck class="list-tick" /><span>PMU Form Builder</span></dt>
+      </dl>
+    </BaseCard>
 
     <Button
       background="bg-brand6"
       textColor="text-on-brand6"
-      maxWidth="max-w-240"
       radius="rounded-md"
       title="Try it now"
-      class="mt-6"
+      class="my-14"
       :to="{ name: 'AuthSignup' }"
     />
   </div>
@@ -70,22 +32,37 @@
 <script>
 import BaseCard from '@/components/BaseCard';
 import IconCheck from '@/assets/icons/check.svg';
-import IconLock from '@/assets/icons/lock.svg';
 
 export default {
   name: 'ContentPricing',
-  components: { BaseCard, IconCheck, IconLock }
+  components: { BaseCard, IconCheck }
 };
 </script>
 
 <style scoped>
+.heading {
+  font-family: Roboto, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 34px;
+  line-height: 46px;
+}
+.caption {
+  font-family: Roboto, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 20px;
+  opacity: 0.6;
+}
 .feature-list > dt {
+  font-family: Roboto, sans-serif;
+  font-size: 15px;
+  line-height: 18px;
   @apply flex py-2;
 }
 .list-tick {
-  @apply text-success w-4 h-4 mr-4;
-}
-.list-lock {
-  @apply text-error w-4 h-4 mr-4;
+  background-color: rgb(3, 4, 19, 0.1);
+  @apply w-6 h-6 p-1.5 mr-4 rounded-full;
 }
 </style>
