@@ -15,14 +15,15 @@
         >
           <slot name="preIcon"></slot>
         </div>
-        <slot
-          ><h4
+        <slot>
+          <h4
             :title="title"
-            class="title mr-4 text-on-surface text-opacity-high min-w-expansion-panel text-left tg-body-bold-mobile"
+            class="title mr-4 text-opacity-high min-w-expansion-panel text-left tg-body-bold-mobile"
+            :class="headingColor"
           >
             {{ title }}
-          </h4></slot
-        >
+          </h4>
+        </slot>
       </div>
       <div class="flex flex-grow justify-end">
         <div
@@ -76,6 +77,10 @@ export default {
     leftSideClasses: {
       type: String,
       default: ''
+    },
+    headingColor: {
+      type: String,
+      default: 'text-on-surface'
     }
   },
   computed: {
