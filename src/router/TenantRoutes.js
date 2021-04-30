@@ -63,5 +63,21 @@ export const TenantPanelRoutes = [
         title: 'Create Business Profile'
       }
     }
+  },
+  {
+    path: '/manage-account',
+    name: 'AccountManage',
+    props: true,
+    component: () => import('@/views/AccountManage.vue'),
+    meta: {
+      noNavigation: true,
+      layout: AppBarCardLayout,
+      pageBackground: 'bg-background',
+      needsUserInfo: true,
+      appBar: {
+        title: 'Manage Account',
+        backRoute: { name: 'AccountSettings' }
+      }
+    }
   }
 ];
