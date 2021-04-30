@@ -18,10 +18,8 @@
         <slot>
           <h4
             :title="title"
-            :class="[
-              headingColor,
-              'title mr-4 text-opacity-high min-w-expansion-panel text-left tg-body-bold-mobile'
-            ]"
+            class="title mr-4 text-opacity-high min-w-expansion-panel text-left tg-body-bold-mobile"
+            :class="headingColor"
           >
             {{ title }}
           </h4>
