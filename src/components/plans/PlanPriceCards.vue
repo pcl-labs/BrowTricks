@@ -4,7 +4,7 @@
       <BaseCard className="flex-col space-y-4">
         <RadioInput
           label="Pro ($ 20 / year)"
-          className="tg-h2-mobile"
+          className="tg-h3-mobile"
           value="pro"
           v-model="selected"
         />
@@ -59,8 +59,8 @@
     <li>
       <BaseCard className="flex-col space-y-4">
         <RadioInput
-          label="Standrad (Free)"
-          className="tg-h2-mobile"
+          label="Standard (Free)"
+          className="tg-h3-mobile"
           value="free"
           v-model="selected"
         />
