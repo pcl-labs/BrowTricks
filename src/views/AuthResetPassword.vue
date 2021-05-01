@@ -52,7 +52,12 @@
         </div>
 
         <div>
-          <Button class="mb-6" type="submit" title="Submit" />
+          <Button
+            class="mb-6"
+            type="submit"
+            title="Submit"
+            :loading="loading"
+          />
           <p class="mt-4 text-center tg-body-mobile">
             <router-link :to="{ name: 'AuthLogin' }" class="underline">
               Back to login
@@ -92,6 +97,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       invalidPage: false,
       password: '',
       confirmPassword: ''
@@ -131,6 +137,7 @@ export default {
         return;
       }
 
+      this.loading = true;
       const payload = {
         params: {
           body: {
@@ -147,7 +154,10 @@ export default {
 
       this.resetPassword(payload)
         .then(this.onSuccess)
-        .catch(this.onSubmitCatch);
+        .catch(this.onSubmitCatch)
+        .finally(() => {
+          this.loading = false;
+        });
     },
     onSuccess() {
       this.logout();
