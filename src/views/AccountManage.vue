@@ -78,6 +78,7 @@
           title="Upgrade to Pro"
           background="bg-black"
           textColor="text-white"
+          @clicked="isOpen = true"
         >
         </Button>
         <Button
@@ -89,19 +90,67 @@
         </Button>
       </div>
     </div>
+    <div class="w-full">
+      <BaseDrawerActions
+        :isOpen="isOpen"
+        @close="isOpen = false"
+        drawerClasses="flex-col overflow-y-auto"
+      >
+        <div class="p-4 space-y-2">
+          <h4 class="title text-opacity-high text-left tg-body-mobile">
+            Upgrade Your Plan now!
+          </h4>
+          <div class="flex justify-center tg-body-mobile">
+            <p>Paying with Visa 1234</p>
+            <span class="text-error ml-1">Edit</span>
+          </div>
+        </div>
+        <div class="space-y-4 p-4 pb-16">
+          <PlanPriceCards @selected="selectPlan" :selectedPlan="selectedPlan" />
+        </div>
+        <div class="w-full fixed bottom-0">
+          <Button
+            :title="getTitle"
+            width="w-full"
+            radius="rounded-none"
+            background="bg-accent"
+          >
+          </Button>
+        </div>
+      </BaseDrawerActions>
+    </div>
   </PageContentBoard>
 </template>
 
 <script>
 import ExpansionPanel from '@/components/ExpansionPanel.vue';
+import BaseDrawerActions from '@/components/BaseDrawerActions.vue';
+
+import PlanPriceCards from '@/components/plans/PlanPriceCards.vue';
 export default {
   name: 'AccountSettings',
   components: {
-    ExpansionPanel
+    ExpansionPanel,
+    BaseDrawerActions,
+    PlanPriceCards
+  },
+  data() {
+    return {
+      isOpen: false,
+      selectedPlan: 'free'
+    };
   },
   computed: {
     currentPath() {
       return this.$route.fullPath;
+    },
+    getTitle() {
+      return `Upgrade to ${this.selectedPlan} Now`;
+    }
+  },
+  methods: {
+    selectPlan(value) {
+      this.selectedPlan = value;
     }
   }
 };
