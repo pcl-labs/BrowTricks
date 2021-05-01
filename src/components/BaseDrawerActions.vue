@@ -24,7 +24,7 @@
             />
           </a>
         </header>
-        <DrawerContent class="flex-grow flex h-full">
+        <DrawerContent class="flex-grow flex h-full" :class="drawerClasses">
           <slot />
         </DrawerContent>
       </section>
@@ -53,6 +53,10 @@ export default {
       default: false
     },
     title: {
+      type: String,
+      default: ''
+    },
+    drawerClasses: {
       type: String,
       default: ''
     }

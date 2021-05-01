@@ -1,19 +1,19 @@
 <template>
   <div
-    class="w-full cursor-pointer tg-body-mobile flex items-center focus:shadow-outline outline-none"
+    class="w-full cursor-pointer tg-body-mobile flex items-center focus:shadow-none outline-none"
     tabindex="0"
-    :class="{ 'opacity-50 cursor-not-allowed': disabled }"
+    :class="[className, { 'opacity-50 cursor-not-allowed': disabled }]"
     @click="selectOption"
     @keyup.enter="selectOption"
     @keyup.space="selectOption"
   >
     <div
-      class="rounded-full h-5 w-5 p-1 border-2 border-gray-500 mr-4"
-      :class="{ 'border-secondary': selectedOption === value }"
+      class="rounded-full h-5 w-5 p-1 border-2 border-accent mr-4"
+      :class="{ 'border-accent': selectedOption === value }"
     >
       <div
         class="h-full w-full rounded-full"
-        :class="{ 'bg-secondary': selectedOption === value }"
+        :class="{ 'bg-accent': selectedOption === value }"
       ></div>
     </div>
     <div>
@@ -45,6 +45,10 @@ export default {
     },
     disabled: {
       type: Boolean
+    },
+    className: {
+      type: String,
+      default: ''
     }
   },
   methods: {
