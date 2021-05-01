@@ -3,75 +3,22 @@
     <div class="max-w-md w-full mx-auto pt-6 px-4">
       <div class="pb-4">
         <h3 class="tg-caption-mobile text-on-surface mb-6">Account</h3>
-        <ExpansionPanel
-          title="Verify Phone Number"
-          @click="
-            $router.push({
-              name: ''
-            })
-          "
-        >
-        </ExpansionPanel>
+        <ExpansionPanel title="Verify Phone Number"> </ExpansionPanel>
 
-        <ExpansionPanel
-          title="Verify Email"
-          @click="
-            $router.push({
-              name: ''
-            })
-          "
-        >
-        </ExpansionPanel>
+        <ExpansionPanel title="Verify Email"> </ExpansionPanel>
       </div>
       <!-- your business section -->
       <div class="pb-4">
         <h3 class="tg-caption-mobile text-on-surface mb-6">Your Business</h3>
-        <ExpansionPanel
-          title="Business Hours"
-          @click="
-            $router.push({
-              name: ''
-            })
-          "
-        >
-        </ExpansionPanel>
+        <ExpansionPanel title="Business Hours"> </ExpansionPanel>
 
-        <ExpansionPanel
-          title="Booking Options"
-          @click="
-            $router.push({
-              name: ''
-            })
-          "
-        >
-        </ExpansionPanel>
-        <ExpansionPanel
-          title="Services"
-          @click="
-            $router.push({
-              name: ''
-            })
-          "
-        >
-        </ExpansionPanel>
+        <ExpansionPanel title="Booking Options"> </ExpansionPanel>
+        <ExpansionPanel title="Services"> </ExpansionPanel>
 
-        <ExpansionPanel
-          title="Promotions"
-          @click="
-            $router.push({
-              name: ''
-            })
-          "
-        >
-        </ExpansionPanel>
+        <ExpansionPanel title="Promotions"> </ExpansionPanel>
         <ExpansionPanel
           title="Switch to User Account"
           headingColor="text-error"
-          @click="
-            $router.push({
-              name: ''
-            })
-          "
         >
         </ExpansionPanel>
         <Button
@@ -97,7 +44,7 @@
         drawerClasses="flex-col overflow-y-auto"
       >
         <div class="p-4 space-y-2">
-          <h4 class="title text-opacity-high text-left tg-body-mobile">
+          <h4 class="title text-opacity-high text-left tg-h2-mobile">
             Upgrade Your Plan now!
           </h4>
           <div class="flex justify-center tg-body-mobile">
