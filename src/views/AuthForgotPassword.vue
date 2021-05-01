@@ -42,7 +42,12 @@
         </div>
 
         <div>
-          <Button class="mb-6" type="submit" title="Reset Password" />
+          <Button
+            class="mb-6"
+            type="submit"
+            title="Reset Password"
+            :loading="loading"
+          />
           <p class="mt-4 text-center tg-body-mobile">
             <router-link :to="{ name: 'AuthLogin' }" class="underline">
               Back to login
@@ -70,6 +75,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       email: ''
     };
   },
@@ -96,6 +102,7 @@ export default {
         return;
       }
 
+      this.loading = true;
       this.forgotPassword({
         params: {
           body: {
@@ -106,7 +113,10 @@ export default {
         }
       })
         .then(this.onSuccess)
-        .catch(this.onSubmitCatch);
+        .catch(this.onSubmitCatch)
+        .finally(() => {
+          this.loading = false;
+        });
     },
     onSuccess() {
       this.$router.push({
