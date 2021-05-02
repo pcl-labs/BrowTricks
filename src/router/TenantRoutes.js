@@ -123,5 +123,20 @@ export const TenantPanelRoutes = [
         backRoute: { name: 'AccountActivity' }
       }
     }
+  },
+  {
+    path: '/tenant/:tenantSlug/payment-methods',
+    name: 'PaymentMethods',
+    props: true,
+    component: () => import('@/views/PaymentMethods.vue'),
+    meta: {
+      layout: AppBarCardLayout,
+      pageBackground: 'bg-brand7',
+      needsUserInfo: true,
+      appBar: {
+        title: 'Payment Methods',
+        backRoute: { name: 'AccountActivity' }
+      }
+    }
   }
 ];

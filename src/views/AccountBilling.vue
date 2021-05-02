@@ -10,7 +10,15 @@
         "
       >
       </ExpansionPanel>
-      <ExpansionPanel title="Payment Methods"> </ExpansionPanel>
+      <ExpansionPanel
+        title="Payment Methods"
+        @click="
+          $router.push({
+            name: 'PaymentMethods'
+          })
+        "
+      >
+      </ExpansionPanel>
       <ExpansionPanel
         title="Subscription"
         middleText="Standard"
