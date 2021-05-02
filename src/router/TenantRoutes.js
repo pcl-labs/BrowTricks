@@ -79,5 +79,49 @@ export const TenantPanelRoutes = [
         backRoute: { name: 'AccountSettings' }
       }
     }
+  },
+  {
+    path: '/tenant/:tenantSlug/billing',
+    name: 'AccountBilling',
+    props: true,
+    component: () => import('@/views/AccountBilling.vue'),
+    meta: {
+      layout: AppBarCardLayout,
+      pageBackground: 'bg-brand7',
+      needsUserInfo: true,
+      appBar: {
+        title: 'Billing',
+        backRoute: { name: 'AccountManage' }
+      }
+    }
+  },
+  {
+    path: '/tenant/:tenantSlug/activity',
+    name: 'AccountActivity',
+    props: true,
+    component: () => import('@/views/AccountActivity.vue'),
+    meta: {
+      layout: AppBarCardLayout,
+      pageBackground: 'bg-brand7',
+      needsUserInfo: true,
+      appBar: {
+        title: 'Activity'
+      }
+    }
+  },
+  {
+    path: '/tenant/:tenantSlug/transaction-details',
+    name: 'TransactionDetails',
+    props: true,
+    component: () => import('@/views/TransactionDetails.vue'),
+    meta: {
+      layout: AppBarCardLayout,
+      pageBackground: 'bg-brand7',
+      needsUserInfo: true,
+      appBar: {
+        title: 'Transaction Details',
+        backRoute: { name: 'AccountActivity' }
+      }
+    }
   }
 ];
