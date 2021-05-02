@@ -65,7 +65,7 @@ export const TenantPanelRoutes = [
     }
   },
   {
-    path: '/manage-account',
+    path: '/tenant/:tenantSlug/manage-account',
     name: 'AccountManage',
     props: true,
     component: () => import('@/views/AccountManage.vue'),
@@ -91,7 +91,7 @@ export const TenantPanelRoutes = [
       needsUserInfo: true,
       appBar: {
         title: 'Billing',
-        backRoute: { name: 'AccountManage' }
+        backRoute: { name: 'AccountSettings' }
       }
     }
   },
