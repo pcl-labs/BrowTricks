@@ -135,7 +135,7 @@ export const TenantPanelRoutes = [
       needsUserInfo: true,
       appBar: {
         title: 'Payment Methods',
-        backRoute: { name: 'AccountActivity' }
+        backRoute: { name: 'AccountBilling' }
       }
     }
   }
