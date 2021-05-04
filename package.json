@@ -17,6 +17,7 @@
     "@capacitor/cli": "^2.4.2",
     "@capacitor/core": "^2.4.2",
     "@capacitor/ios": "2.4.2",
+    "@stripe/stripe-js": "^1.14.0",
     "@whynotearth/meredith-axios": "^1.0.66",
     "@whynotearth/vue-flow-form": "^0.0.4",
     "axios": "^0.19.2",
