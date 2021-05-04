@@ -7,6 +7,7 @@
       width="w-full"
       textColor="text-brand6 text-opacity-50"
       @clicked="showAddPaymentMethodForms"
+      v-show="!isFormVisible"
     >
     </Button>
     <div class="pb-16 space-y-4" v-show="isFormVisible">
