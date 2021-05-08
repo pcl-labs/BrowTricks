@@ -101,7 +101,13 @@ export default {
     this._fetchNote();
   },
   methods: {
-    ...mapActions('client', ['noteSave', 'noteDelete', 'notesFetch']),
+    ...mapActions('client', [
+      'noteCreate',
+      'noteUpdate',
+      'noteDelete',
+      'notesFetch'
+    ]),
+
     async _fetchNote() {
       if (this.noteId) {
         this.loadingUpdate(true);
@@ -113,21 +119,28 @@ export default {
         this.loadingUpdate(false);
       }
     },
-    submit() {
+    async submit() {
       if (!this.beforeSubmit()) {
         return;
       }
-
-      this.noteSave({
-        clientId: this.$route.params.clientId,
-        tenantSlug: this.$route.params.tenantSlug,
-        body: {
-          id: this.noteId,
-          note: this.content
+      try {
+        const payload = {
+          clientId: this.$route.params.clientId,
+          tenantSlug: this.$route.params.tenantSlug,
+          body: {
+            note: this.content
+          }
+        };
+        if (this.noteId) {
+          payload.noteId = this.noteId;
+          await this.noteUpdate(payload);
+        } else {
+          await this.noteCreate(payload);
         }
-      })
-        .then(this.onSuccess)
-        .catch(this.onSubmitCatch);
+        this.onSuccess();
+      } catch (error) {
+        this.onSubmitCatch(error);
+      }
     },
     onSuccess() {
       showOverlayAndRedirect({

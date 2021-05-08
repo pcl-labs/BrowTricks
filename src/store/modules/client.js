@@ -59,11 +59,14 @@ const actions = {
   notesFetch(context, payload) {
     return ClientNoteService.notes1(payload);
   },
-  noteSave(context, payload) {
+  noteCreate(context, payload) {
+    return ClientNoteService.notes(payload);
+  },
+  noteUpdate(context, payload) {
     return ClientNoteService.notes2(payload);
   },
   noteDelete(context, payload) {
-    return ClientNoteService.notes(payload);
+    return ClientNoteService.notes3(payload);
   },
 
   pmuSendFormLink(context, { params }) {
