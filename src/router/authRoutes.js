@@ -62,7 +62,7 @@ export const authRoutes = [
     }
   },
   {
-    path: '/reset',
+    path: '/reset/:userid?',
     name: 'AuthResetPassword',
     component: () => import('@/views/AuthResetPassword.vue'),
     props: true,

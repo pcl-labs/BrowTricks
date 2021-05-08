@@ -1,7 +1,7 @@
 <template>
   <BaseOverlayPage :isOpen="isOpen" @close="close" title="Select Client">
     <div class="px-4">
-      <div class="sticky bg-background top-0 z-20">
+      <div class="sticky py-1 bg-background top-0 z-20">
         <MaterialInput
           v-model="query"
           :immediate-input="true"
