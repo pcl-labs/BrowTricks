@@ -1,43 +1,24 @@
 <template>
   <div class="bg-brand6">
-    <div class="max-w-6xl mx-auto py-16 px-6">
+    <div class="max-w-screen-xxl mx-auto py-16 px-2 md:px-16">
       <div
-        class="grid grid-cols-1 md:grid-cols-4 text-left px-10 md:px-0 mb-12 md:mb-0"
+        class="px-6 md:px-0 mb-12 md:mb-0 flex flex-col md:flex-row justify-between text-left"
       >
-        <nav class="md:col-span-2 mb-10 md:mb-0">
-          <h3 class="tg-h2-mobile list-title">Quick Links</h3>
-
-          <div class="flex flex-col md:flex-row">
-            <ul class="list-items tg-body-bold-mobile flex-grow flex-shrink-0">
-              <li class="mb-2">
-                <router-link :to="{ name: 'Home' }">Home</router-link>
-              </li>
-              <li class="mb-2">
-                <router-link :to="{ name: 'Pricing' }">Pricing</router-link>
-              </li>
-              <li class="mb-2 md:mb-0">
-                <router-link :to="{ name: 'AuthLogin' }">Log In</router-link>
-              </li>
-            </ul>
-
-            <ul class="list-items tg-body-bold-mobile flex-grow flex-shrink-0">
-              <li class="mb-2">
-                <router-link :to="{ name: 'Home' }"
-                  >Terms and Conditions</router-link
-                >
-              </li>
-              <li class="mb-2 md:mb-0">
-                <router-link :to="{ name: 'PrivacyPolicy' }"
-                  >Privacy Policy</router-link
-                >
-              </li>
-            </ul>
-          </div>
+        <nav class="mb-10 md:mb-0">
+          <h3 class="list-title">Quick Links</h3>
+          <ul class="list-items">
+            <li class="mb-2">
+              <router-link :to="{ name: 'Home' }">Home</router-link>
+            </li>
+            <li class="mb-2 md:mb-0">
+              <router-link :to="{ name: 'AuthLogin' }">Log In</router-link>
+            </li>
+          </ul>
         </nav>
 
         <nav class="mb-10 md:mb-0">
-          <h3 class="tg-h2-mobile list-title">Follow</h3>
-          <ul class="list-items tg-body-bold-mobile">
+          <h3 class="list-title">Follow</h3>
+          <ul class="list-items">
             <li class="mb-2">
               <router-link :to="{ name: 'Home' }">Facebook</router-link>
             </li>
@@ -48,27 +29,41 @@
         </nav>
 
         <nav class="mb-10 md:mb-0">
-          <h3 class="tg-h2-mobile list-title">Stay In Touch</h3>
-          <ul class="list-items tg-body-bold-mobile">
+          <h3 class="list-title">Stay In Touch</h3>
+          <ul class="list-items">
             <li class="mb-2 md:mb-0">
               <a href="https://browtricksproductsorg.zendesk.com/">Help</a>
+            </li>
+            <li class="mb-2">
+              <router-link :to="{ name: 'Home' }">
+                Terms and Conditions
+              </router-link>
+            </li>
+            <li class="mb-2 md:mb-0">
+              <router-link :to="{ name: 'PrivacyPolicy' }">
+                Privacy Policy
+              </router-link>
             </li>
           </ul>
         </nav>
       </div>
-
-      <div
-        class="flex justify-center md:justify-end text-on-brand6 text-opacity-high tg-h1-mobile px-10 md:px-0"
-      >
-        {{ APPNAME }}
+      <div class="mx-auto w-auto max-w-sm">
+        <img :src="BrowTricksLogoWithCrown" class="object-contain" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import BrowTricksLogoWithCrown from '@/assets/icons/browtricks-logo-with-crown.png';
+
 export default {
   name: 'NavigationFooter',
+  data() {
+    return {
+      BrowTricksLogoWithCrown
+    };
+  },
   computed: {
     APPNAME() {
       return process.env.VUE_APP_NAME;
@@ -79,10 +74,20 @@ export default {
 
 <style scoped>
 .list-title {
-  @apply mb-8 text-on-brand6 text-opacity-high;
+  @apply mb-8 text-on-brand6 text-opacity-high uppercase;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 28px;
 }
 
 .list-items > li > a {
-  @apply py-2 inline-block text-on-brand6 text-opacity-high;
+  @apply py-2 inline-block text-on-brand6 text-opacity-75;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 20px;
 }
 </style>

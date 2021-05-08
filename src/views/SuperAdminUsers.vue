@@ -9,65 +9,40 @@
           placeholder="Search by name, number or email"
         />
       </div>
-      <div v-for="(client, key) in clients" :key="key">
-        <h6
-          v-if="showLetter(clients[key - 1], client)"
-          class="tg-caption-mobile"
-        >
-          {{ client.firstName && client.firstName[0].toUpperCase() }}
+      <div v-for="(user, key) in users" :key="key">
+        <h6 v-if="showLetter(users[key - 1], user)" class="tg-caption-mobile">
+          {{ user.firstName && user.firstName[0].toUpperCase() }}
         </h6>
 
         <router-link
           :to="{
-            name: 'ClientInfo',
-            params: { slug: tenantSlug, clientId: client.id }
+            name: 'SuperAdminUserView',
+            params: { userId: user.id, user }
           }"
         >
-          <ClientListItem :client="client" />
+          <ClientListItem :client="user" type="tenant" />
         </router-link>
       </div>
-      <infinite-loading :identifier="infiniteId" @infinite="fetchClients" />
+      <infinite-loading :identifier="infiniteId" @infinite="fetchUsers" />
     </div>
-
-    <portal to="HeaderAction">
-      <router-link
-        class="tg-color-label-mobile flex flex-row items-center py-1 px-2"
-        :to="{
-          name: 'ClientItemAdd'
-        }"
-      >
-        <IconAdd class="mr-2 text-background text-opacity-high fill-current" />
-        Add client
-      </router-link>
-    </portal>
   </PageContentBoard>
 </template>
 
 <script>
 import ClientListItem from '@/components/client/ClientListItem';
 import PageContentBoard from '@/components/PageContentBoard';
-import IconAdd from '@/assets/icons/add.svg';
-import { ClientService } from '@whynotearth/meredith-axios';
+import { UserService } from '@whynotearth/meredith-axios';
 import { debounce } from 'lodash-es';
 
 export default {
-  name: 'ClientList',
+  name: 'SuperAdminUsers',
   components: {
-    IconAdd,
     PageContentBoard,
     ClientListItem
   },
-  props: {
-    tenantSlug: {
-      type: String,
-      required: true
-    }
-  },
   data() {
     return {
-      logoUrl:
-        'https://res.cloudinary.com/whynotearth/image/upload/v1585738963/BrowTricks/_0003_MANAGE-CLIENTS_hl5cux.png',
-      clients: [],
+      users: [],
       page: 0,
       query: '',
       infiniteId: +new Date()
@@ -89,19 +64,13 @@ export default {
 
       return getPrevFirstCharacter !== getCurrentFirstCharacter;
     },
-    fetchClients($state) {
-      this.loading = true;
-      return ClientService.clients1({
-        companySlug: process.env.VUE_APP_COMPANY_SLUG,
-        tenantSlug: this.tenantSlug,
-        page: this.page,
-        query: this.query
-      })
+    fetchUsers($state) {
+      return UserService.users1({ page: this.page, query: this.query })
         .then(response => {
-          const clients = response.records;
-          if (clients.length) {
+          const users = response.records;
+          if (users.length) {
             this.page += 1;
-            this.clients.push(...clients);
+            this.users.push(...users);
             $state.loaded();
           } else {
             $state.complete();
@@ -114,7 +83,7 @@ export default {
     reset: debounce(
       function() {
         this.page = 0;
-        this.clients = [];
+        this.users = [];
         this.infiniteId += 1;
       },
       300,

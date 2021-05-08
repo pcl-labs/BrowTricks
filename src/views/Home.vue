@@ -7,49 +7,77 @@
     <template #content>
       <ContentHero />
 
-      <!-- row 1 -->
-      <div class="flex flex-col md:flex-row w-full">
-        <div class="box box-1 box-video md:w-1/2">
-          <VideoSimple
-            class="video-content"
-            url="https://res.cloudinary.com/whynotearth/video/upload/v1606202008/BrowTricks/static_v2/home-feature-pink_yvz5tb.mp4"
-          />
+      <div class="bg-pink-white py-10 px-2 md:py-16 md:px-16">
+        <div class="hero-video mx-auto p-2 md:p-8 w-auto bg-home-pink-light">
+          <RatioBox :ratio="16 / 9">
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/o8nOU01QZew"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              class="w-full h-full"
+            />
+          </RatioBox>
         </div>
-        <div class="box box-2 box-article md:w-1/2">
-          <ArticleMini
-            class="flex flex-col justify-center"
-            :article="articles[0]"
-          ></ArticleMini>
+      </div>
+
+      <!-- row 1 -->
+      <div class="box-1 w-full">
+        <div
+          class="mx-auto max-w-screen-xxl flex flex-col lg:flex-row justify-between w-full"
+        >
+          <div
+            class="box box-article lg:w-1/2 lg:order-2 bg-spots bg-pattern-defaults"
+          >
+            <ArticleMini :article="articles[0]" />
+          </div>
+          <div class="box px-2 md:px-16">
+            <VideoSimple
+              class="video-content"
+              url="https://res.cloudinary.com/whynotearth/video/upload/v1619174430/BrowTricks/browtricks_features_pink_lvsyzp.mp4"
+            />
+          </div>
         </div>
       </div>
 
       <!-- row 2 -->
-      <div class="flex flex-col md:flex-row w-full">
-        <div class="box box-4 box-video md:w-1/2 md:order-2">
-          <VideoSimple
-            class="video-content"
-            url="https://res.cloudinary.com/whynotearth/video/upload/v1606202007/BrowTricks/static_v2/home-feature-green_inuipz.mp4"
-          />
-        </div>
-        <div class="box box-3 box-article md:w-1/2 md:order-1">
-          <ArticleMini
-            class="flex flex-col justify-center"
-            :article="articles[1]"
-          ></ArticleMini>
+      <div class="box-2 w-full">
+        <div
+          class="mx-auto max-w-screen-xxl flex flex-col lg:flex-row justify-between w-full"
+        >
+          <div class="box box-article lg:w-1/2 bg-spots bg-pattern-defaults">
+            <ArticleMini :article="articles[1]" />
+          </div>
+          <div class="box pb-10 px-2 md:px-16 md:py-24">
+            <iframe
+              width="560"
+              height="315"
+              src="https://www.youtube-nocookie.com/embed/deextA_8GAI"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              class="mx-auto"
+            />
+          </div>
         </div>
       </div>
-      <div class="flex flex-col md:flex-row w-full">
-        <div class="box box-5 box-video md:w-1/2">
-          <VideoSimple
-            class="video-content"
-            url="https://res.cloudinary.com/whynotearth/video/upload/v1606201991/BrowTricks/static_v2/home-feature-blue_yvoqzy.mp4"
-          />
-        </div>
-        <div class="box box-6 box-article md:w-1/2">
-          <ArticleMini
-            class="flex flex-col justify-center"
-            :article="articles[2]"
-          ></ArticleMini>
+      <div class="box-3 w-full">
+        <div
+          class="mx-auto max-w-screen-xxl flex flex-col lg:flex-row justify-between w-full"
+        >
+          <div
+            class="box box-article lg:w-1/2 lg:order-2 bg-spots bg-pattern-defaults"
+          >
+            <ArticleMini :article="articles[2]" />
+          </div>
+          <div class="box px-2 md:px-16">
+            <VideoSimple
+              class="video-content"
+              url="https://res.cloudinary.com/whynotearth/video/upload/v1619174259/BrowTricks/browtricks_features_tan_obu40a.mp4"
+            />
+          </div>
         </div>
       </div>
 
@@ -57,7 +85,7 @@
         <FrameFullWidth>
           <div class="max-w-3xl mx-auto py-10">
             <h2
-              class="tg-h1-mobile text-on-background text-opacity-medium text-center mb-6"
+              class="mb-8 tg-home-h2-mobile md:tg-home-h2-desktop text-center"
             >
               Pricing
             </h2>
@@ -82,6 +110,7 @@ import ContentCtaSignupOrDownload from '@/components/ContentCtaSignupOrDownload.
 import NavigationFooter from '@/components/NavigationFooter.vue';
 import FrameFullWidth from '@/components/FrameFullWidth';
 import VideoSimple from '@/components/player/VideoSimple';
+import RatioBox from '@/components/RatioBox';
 
 export default {
   name: 'Home',
@@ -93,7 +122,8 @@ export default {
     ContentHero,
     ContentPricing,
     ContentCtaSignupOrDownload,
-    NavigationFooter
+    NavigationFooter,
+    RatioBox
   },
   // metaInfo() {
   //   return {
@@ -155,34 +185,36 @@ export default {
 }
 
 .box-1 {
-  background-color: #ebd3cd;
+  background-color: #ebbbb6;
 }
 .box-2 {
-  background-color: #ebd3cd;
-}
-.box-4 {
-  background-color: #d2e9e0;
+  background-color: #ceeadf;
 }
 .box-3 {
-  background-color: #d2e9e0;
-}
-.box-5 {
-  background-color: #eaf0fa;
-}
-.box-6 {
-  background-color: #eaf0fa;
+  background-color: #f1e2d7;
 }
 
 .box {
-  @apply flex items-center justify-center;
-  background-position: bottom right;
-  background-size: contain;
-  background-repeat: no-repeat;
+  @apply flex;
+  @apply items-center;
 }
 .box-article {
   @apply py-16;
 }
 .video-content {
+  @apply mx-auto;
   pointer-events: none;
+}
+.bg-pink-white {
+  background: linear-gradient(white 50%, #ebbbb6 50%);
+}
+.hero-video {
+  max-width: 480px;
+  box-shadow: 5.725px 6.87px 0px rgba(183, 141, 137, 0.4);
+}
+@screen md {
+  .hero-video {
+    box-shadow: 20px 24px 0px rgba(183, 141, 137, 0.4);
+  }
 }
 </style>

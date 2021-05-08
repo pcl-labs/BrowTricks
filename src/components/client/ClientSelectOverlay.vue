@@ -1,43 +1,47 @@
 <template>
-  <div>
-    <BaseOverlayPage :isOpen="isOpen" @close="close" title="Select Client">
-      <div class="mb-1" v-if="clients.length > 0">
-        <div class="" v-for="(client, key) in clients" :key="key">
-          <h6
-            v-if="showLetter(clients[key - 1], client)"
-            class="p-3 tg-caption-mobile text-on-background text-opacity-high border-t"
-          >
-            {{ client.firstName && client.firstName[0].toUpperCase() }}
-          </h6>
+  <BaseOverlayPage :isOpen="isOpen" @close="close" title="Select Client">
+    <div class="px-4">
+      <div class="sticky py-1 bg-background top-0 z-20">
+        <MaterialInput
+          v-model="query"
+          :immediate-input="true"
+          label="Search"
+          placeholder="Search by name, number or email"
+        />
+      </div>
+      <div v-for="(client, key) in clients" :key="key">
+        <h6
+          v-if="showLetter(clients[key - 1], client)"
+          class="tg-caption-mobile"
+        >
+          {{ client.firstName && client.firstName[0].toUpperCase() }}
+        </h6>
 
-          <ClientListItem
-            :key="client.id"
-            :client="client"
-            @select="onSelectClient(client)"
-          >
-            <template #end>
-              <IconCheck
-                v-if="client.id === selectedId"
-                class="fill-current w-6 h-6 text-on-background text-opacity-medium"
-              />
-            </template>
-          </ClientListItem>
-        </div>
+        <ClientListItem
+          :key="client.id"
+          :client="client"
+          @select="onSelectClient(client)"
+        >
+          <template #end>
+            <IconCheck
+              v-if="client.id === selectedId"
+              class="fill-current w-6 h-6 text-on-background text-opacity-medium"
+            />
+          </template>
+        </ClientListItem>
       </div>
-      <div class="px-4 py-8 text-center border-t" v-else>
-        <p class="tg-body-mobile text-opacity-high text-on-background">
-          You have no clients yet.
-        </p>
-      </div>
-    </BaseOverlayPage>
-  </div>
+      <infinite-loading :identifier="infiniteId" @infinite="fetchClients" />
+    </div>
+  </BaseOverlayPage>
 </template>
 
 <script>
 import ClientListItem from '@/components/client/ClientListItem';
 import BaseOverlayPage from '@/components/BaseOverlayPage';
 import IconCheck from '@/assets/icons/check.svg';
-import { mapActions, mapGetters } from 'vuex';
+import { ClientService } from '@whynotearth/meredith-axios';
+import { debounce } from 'lodash-es';
+
 export default {
   name: 'ClientSelectOverlay',
   components: { ClientListItem, BaseOverlayPage, IconCheck },
@@ -54,13 +58,23 @@ export default {
       required: true
     }
   },
-  created() {
-    this.fetchClients(this.tenantSlug);
+  data() {
+    return {
+      clients: [],
+      page: 0,
+      query: '',
+      infiniteId: +new Date()
+    };
+  },
+  watch: {
+    query() {
+      this.reset();
+    }
   },
   methods: {
-    ...mapActions('client', ['fetchClients']),
     onSelectClient(client) {
       this.$emit('select', client);
+      this.reset();
       this.close();
     },
     close() {
@@ -75,12 +89,38 @@ export default {
         current && current.firstName && current.firstName[0].toUpperCase();
 
       return getPrevFirstCharacter !== getCurrentFirstCharacter;
-    }
-  },
-  computed: {
-    ...mapGetters('client', ['clients'])
+    },
+    fetchClients($state) {
+      this.loading = true;
+      return ClientService.clients1({
+        companySlug: process.env.VUE_APP_COMPANY_SLUG,
+        tenantSlug: this.tenantSlug,
+        page: this.page,
+        query: this.query
+      })
+        .then(response => {
+          const clients = response.records;
+          if (clients.length) {
+            this.page += 1;
+            this.clients.push(...clients);
+            $state.loaded();
+          } else {
+            $state.complete();
+          }
+        })
+        .catch(() => {
+          $state.error();
+        });
+    },
+    reset: debounce(
+      function() {
+        this.page = 0;
+        this.clients = [];
+        this.infiniteId += 1;
+      },
+      300,
+      { maxWait: 3000 }
+    )
   }
 };
 </script>
-
-<style scoped></style>

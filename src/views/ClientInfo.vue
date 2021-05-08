@@ -176,6 +176,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions('loading', ['loadingUpdate']),
     ...mapActions('client', [
       'updateClient',
       'archiveClient',
@@ -203,7 +204,8 @@ export default {
         name: 'ClientList'
       });
     },
-    deleteItem({ id, resourceType }) {
+    async deleteItem({ id, resourceType }) {
+      this.loadingUpdate(true);
       /* eslint-disable */
       const method =
         resourceType === 'image'
@@ -215,12 +217,14 @@ export default {
       if (!method) {
         console.log('Unknown resource type.');
       }
-      method({
+      await method({
         params: {
           tenantSlug: this.tenantSlug,
           [`${resourceType}Id`]: id
         }
-      }).then(this._fetchClient);
+      });
+      await this._fetchClient();
+      this.loadingUpdate(false);
     }
   }
 };

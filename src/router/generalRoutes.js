@@ -30,22 +30,6 @@ export const generalRoutes = [
       }
     }
   },
-
-  {
-    path: '/pricing',
-    name: 'Pricing',
-    component: () => import('@/views/Pricing.vue'),
-    meta: {
-      layout: AppBarCardLayout,
-      isPublic: true,
-      pageBackground: 'bg-background',
-      noNavigation: true,
-      appBar: {
-        backRoute: { name: 'Home' },
-        title: 'Pricing'
-      }
-    }
-  },
   {
     path: '/help',
     name: 'Help',

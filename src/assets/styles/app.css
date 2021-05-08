@@ -96,6 +96,14 @@ html {
   height: 100%;
 }
 
+.search-box {
+  @apply sticky;
+  @apply z-20;
+  @apply pt-4;
+  @apply bg-background;
+  top: 56px;
+}
+
 html,
 body {
   scroll-behavior: smooth;
@@ -116,4 +124,8 @@ html {
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.bg-pattern-defaults {
+  @apply  bg-center bg-contain bg-no-repeat;
 }

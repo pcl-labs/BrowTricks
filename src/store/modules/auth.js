@@ -6,7 +6,8 @@ import { get } from 'lodash-es';
 const state = {
   provider: '',
   returnURL: '',
-  token: ''
+  token: '',
+  isAdmin: false
 };
 
 const getters = {
@@ -54,6 +55,7 @@ const actions = {
     return AuthenticationService.ping()
       .then(async response => {
         commit('updateProvider', response.loginProviders[0]);
+        commit('updateAdminStatus', response.isAdmin);
         return response;
       })
       .catch(error => {
@@ -135,6 +137,9 @@ const mutations = {
   },
   updateReturnUrl(state, payload) {
     state.returnURL = encodeURIComponent(payload);
+  },
+  updateAdminStatus(state, payload) {
+    state.isAdmin = payload;
   }
 };
 

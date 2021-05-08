@@ -21,8 +21,11 @@
     v-on="eventListeners"
     :href="href"
     :to="to"
+    :disabled="loading"
+    :aria-disabled="loading"
   >
-    <div class="flex content-between items-center" :class="[textJustify]">
+    <span v-if="loading">Please wait...</span>
+    <div v-else :class="[textJustify, 'flex content-between items-center']">
       <slot name="start" />
       <span class="title flex items-center flex-grow-0">{{ title }}</span>
       <slot name="end" />
@@ -91,6 +94,10 @@ export default {
     isBordered: {
       type: Boolean,
       default: false
+    },
+    loading: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -122,6 +129,12 @@ export default {
   outline: none;
   /* color is brand1 */
   box-shadow: 0 0 0 2px #b5bbc9;
+}
+.button:disabled,
+.button:disabled:hover {
+  @apply bg-opacity-disabled;
+  @apply cursor-not-allowed;
+  @apply shadow-none;
 }
 .min-w-200 {
   min-width: 200px;

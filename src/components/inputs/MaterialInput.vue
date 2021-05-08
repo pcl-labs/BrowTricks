@@ -13,7 +13,7 @@
           v-bind="attrs"
           :id="idName"
           :type="type"
-          :value="value | trim"
+          :value="value"
           v-on="inputListeners"
           :placeholder="placeholder || label"
         />
@@ -78,11 +78,6 @@ export default {
     immediateInput: {
       type: Boolean,
       default: false
-    }
-  },
-  filters: {
-    trim: function(value) {
-      return (value || '').trim();
     }
   },
   computed: {

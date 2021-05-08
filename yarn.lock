@@ -1553,10 +1553,10 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@whynotearth/meredith-axios@^1.0.61":
-  version "1.0.61"
-  resolved "https://registry.yarnpkg.com/@whynotearth/meredith-axios/-/meredith-axios-1.0.61.tgz#c48d8f7c1b2650e7fa11e558cadb0e573f2bcf55"
-  integrity sha512-f/G3NcOpHZdAiRjYY6yLGdgADCfH6CvCpKbOeia1JqiPj5txDjKvLrGIOL6/8vFlG3pmw4cTPfo4YSWTJ5VuGQ==
+"@whynotearth/meredith-axios@^1.0.66":
+  version "1.0.66"
+  resolved "https://registry.yarnpkg.com/@whynotearth/meredith-axios/-/meredith-axios-1.0.66.tgz#b5cd4d90dcddcd78c1687ce09b9d9cca7a405ffb"
+  integrity sha512-7AA0PAeYltvODeh65ERDfItfEaxyYfc9B62FmmdbpjLbgRqVhfLt6AH0hPSD7TFncE6Mp5pCnJZpLVIr5HNRLg==
   dependencies:
     swagger-axios-codegen "^0.10.3"
 
@@ -6670,6 +6670,7 @@ plist@^3.0.1:
     base64-js "^1.2.3"
     xmlbuilder "^9.0.7"
     xmldom "0.1.x"
+
 plyr@^3.6.2:
   version "3.6.2"
   resolved "https://registry.yarnpkg.com/plyr/-/plyr-3.6.2.tgz#5a55b608acd161262de1cc75ca843aa64355a051"
@@ -8912,6 +8913,11 @@ vue-hot-reload-api@^2.3.0:
   version "2.3.4"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.4.tgz#532955cc1eb208a3d990b3a9f9a70574657e08f2"
   integrity sha512-BXq3jwIagosjgNVae6tkHzzIk6a8MHFtzAdwhnV5VlvPTFxDCvIttgSiHWjdGoTJvXtmRu5HacExfdarRcFhog==
+
+vue-infinite-loading@^2.4.5:
+  version "2.4.5"
+  resolved "https://registry.yarnpkg.com/vue-infinite-loading/-/vue-infinite-loading-2.4.5.tgz#cc20fd40af7f20188006443c99b60470cf1de1b3"
+  integrity sha512-xhq95Mxun060bRnsOoLE2Be6BR7jYwuC89kDe18+GmCLVrRA/dU0jrGb12Xu6NjmKs+iTW0AA6saSEmEW4cR7g==
 
 "vue-loader-v16@npm:vue-loader@^16.0.0-beta.3":
   version "16.0.0-beta.5"

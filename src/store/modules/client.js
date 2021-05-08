@@ -6,7 +6,6 @@ import {
 } from '@whynotearth/meredith-axios';
 
 const state = {
-  clients: [],
   clientInfo: {
     firstName: '',
     lastName: '',
@@ -22,9 +21,6 @@ const state = {
 };
 
 const getters = {
-  clients(state) {
-    return state.clients;
-  },
   clientInfo(state) {
     return state.clientInfo;
   },
@@ -34,29 +30,6 @@ const getters = {
 };
 
 const actions = {
-  fetchClients({ commit }, tenantSlug) {
-    return ClientService.clients1({
-      companySlug: process.env.VUE_APP_COMPANY_SLUG,
-      tenantSlug
-    })
-      .then(response => {
-        response.sort((a, b) => {
-          const nameA = `${a.firstName} ${a.lastName}`.toUpperCase();
-          const nameB = `${b.firstName} ${b.lastName}`.toUpperCase();
-          if (nameA < nameB) {
-            return -1;
-          }
-          if (nameA > nameB) {
-            return 1;
-          }
-          return 0;
-        });
-        commit('updateClients', response);
-      })
-      .catch(() => {
-        commit('updateClients', []);
-      });
-  },
   fetchClient(context, { params }) {
     // params = { tenantSlug, clientId }
     return ClientService.clients3(params);
@@ -86,11 +59,14 @@ const actions = {
   notesFetch(context, payload) {
     return ClientNoteService.notes1(payload);
   },
-  noteSave(context, payload) {
+  noteCreate(context, payload) {
+    return ClientNoteService.notes(payload);
+  },
+  noteUpdate(context, payload) {
     return ClientNoteService.notes2(payload);
   },
   noteDelete(context, payload) {
-    return ClientNoteService.notes(payload);
+    return ClientNoteService.notes3(payload);
   },
 
   pmuSendFormLink(context, { params }) {
@@ -121,9 +97,6 @@ const actions = {
 };
 
 const mutations = {
-  updateClients(state, payload) {
-    state.clients = payload;
-  },
   pageChange(state, payload) {
     state.page = payload;
   },

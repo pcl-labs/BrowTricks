@@ -1,0 +1,111 @@
+<template>
+  <PageContentBoard background="bg-pattern">
+    <div class="pb-20">
+      <HeaderHeroSection>
+        <!-- header -->
+        <div class="flex flex-col mb-8 items-center">
+          <img class="h-20 mx-auto" :src="logo" alt="logo" />
+          <h1 class="tg-h2-mobile text-opacity-high text-on-background">
+            {{ user.firstName }} {{ user.lastName }}
+          </h1>
+          <div
+            class="mt-4 space-y-1 flex flex-col items-center tg-caption-mobile underline"
+          >
+            <a :href="`tel:${user.phoneNumber}`">
+              {{ user.phoneNumber }}
+            </a>
+            <a :href="`mailto:${user.email}`">
+              {{ user.email }}
+            </a>
+          </div>
+        </div>
+
+        <!-- content -->
+        <div class="mb-8 max-w-md mx-auto w-full h-full">
+          <Button
+            title="Send password reset email"
+            background="bg-brand6"
+            textColor="text-on-brand6"
+            radius="rounded-full"
+            :loading="loading"
+            @clicked="submit(userId)"
+          />
+        </div>
+      </HeaderHeroSection>
+    </div>
+  </PageContentBoard>
+</template>
+
+<script>
+import HeaderHeroSection from '@/components/HeaderHeroSection.vue';
+import PageContentBoard from '@/components/PageContentBoard.vue';
+import { UserService } from '@whynotearth/meredith-axios';
+import { mapActions } from 'vuex';
+
+export default {
+  name: 'SuperAdminUserView',
+  components: {
+    PageContentBoard,
+    HeaderHeroSection
+  },
+
+  data() {
+    return {
+      logo: process.env.VUE_APP_LOGO2_URL,
+      userId: this.$route.params.userId,
+      loading: false,
+      user: {}
+    };
+  },
+  created() {
+    this.fetchUser();
+  },
+  methods: {
+    ...mapActions('alerter', ['show', 'updateVisibility']),
+    ...mapActions('loading', ['loadingUpdate']),
+    async fetchUser() {
+      this.loadingUpdate(true);
+      try {
+        this.user = await UserService.users2({ userId: this.userId });
+      } catch {
+        this.show({
+          text: 'Error fetching user, refreshing page may fix it.',
+          button: this.contactUs()
+        });
+      } finally {
+        this.loadingUpdate(false);
+      }
+    },
+    async submit(userId) {
+      try {
+        this.loading = true;
+        await UserService.resetPassword({ userId });
+        this.show({
+          text: 'Sent reset email! Ask the user to check their email.',
+          button: {
+            title: 'Okay!',
+            action: () => this.updateVisibility(false)
+          }
+        });
+      } catch (error) {
+        this.show({
+          // eslint-disable-next-line
+          text: "Couldn't send reset email, try again or contact us.",
+          button: this.contactUs()
+        });
+      } finally {
+        this.loading = false;
+      }
+    },
+    contactUs() {
+      return {
+        title: 'Contact Us',
+        action: () => {
+          window.open('https://browtricksproductsorg.zendesk.com/');
+          this.updateVisibility(false);
+        }
+      };
+    }
+  }
+};
+</script>
