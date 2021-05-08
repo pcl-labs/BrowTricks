@@ -80,13 +80,8 @@ export default {
     }
   },
   computed: {
-    getResetPasswordPath() {
-      return this.$router.resolve({
-        name: 'AuthResetPassword'
-      }).href;
-    },
     resetPasswordReturnUrl() {
-      return `${window.location.origin}${this.getResetPasswordPath}`;
+      return `${window.location.origin}/reset/{userid}`;
     }
   },
   methods: {

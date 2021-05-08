@@ -85,6 +85,11 @@ export default {
   components: {
     PasswordInput
   },
+  props: {
+    userid: {
+      type: [String, Number]
+    }
+  },
   data() {
     return {
       invalidPage: false,
@@ -102,14 +107,11 @@ export default {
     }
   },
   created() {
-    if (!(this.userName || this.email) || !this.token) {
+    if (!(this.userid || this.email) || !this.token) {
       this.invalidPage = true;
     }
   },
   computed: {
-    userName() {
-      return this.$route.query.username;
-    },
     token() {
       return this.$route.query.forgot_password_token;
     },
@@ -118,7 +120,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('auth', ['resetPassword']),
+    ...mapActions('auth', ['resetPassword', 'logout']),
     submit() {
       if (!this.beforeSubmit()) {
         return;
@@ -129,21 +131,26 @@ export default {
         return;
       }
 
-      this.resetPassword({
+      const payload = {
         params: {
           body: {
-            email: this.email,
-            username: this.userName,
             token: this.token,
             password: this.password,
             confirmPassword: this.confirmPassword
           }
         }
-      })
+      };
+
+      if (this.userid) payload.params.body.userid = this.userid;
+      else if (this.email) payload.params.body.email = this.email;
+      else return;
+
+      this.resetPassword(payload)
         .then(this.onSuccess)
         .catch(this.onSubmitCatch);
     },
     onSuccess() {
+      this.logout();
       showOverlayAndRedirect({
         title: 'Success!',
         route: { name: 'AuthLogin' }
