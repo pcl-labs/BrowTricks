@@ -36,7 +36,7 @@ export default {
       default: parseInt(process.env.VUE_APP_UPLOADER_MAX_IMAGE_WIDTH)
     },
     maxFiles: {
-      type: Number,
+      type: [Number, String],
       default: parseInt(process.env.VUE_APP_UPLOADER_MAX_FILES)
     },
     id: {
