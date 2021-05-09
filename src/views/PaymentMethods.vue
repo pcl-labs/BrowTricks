@@ -11,7 +11,7 @@
     >
     </Button>
     <div class="pb-16 space-y-4" v-show="isFormVisible">
-      <AddCardInfoForm> </AddCardInfoForm>
+      <AddCardInfoForm :tenantSlug="$attrs.tenantSlug"> </AddCardInfoForm>
     </div>
   </div>
 </template>

@@ -1,4 +1,4 @@
-import { loadStripe } from '@stripe/stripe-js';
+import { PaymentMethodService } from '@whynotearth/meredith-axios';
 
 export default {
   namespaced: true,
@@ -17,7 +17,8 @@ export default {
       city: '',
       state: '',
       zipcode: ''
-    }
+    },
+    token: ''
   },
   mutations: {
     cardInfoUpdate(state, payload) {
@@ -25,24 +26,34 @@ export default {
     },
     billingInfoUpdate(state, payload) {
       state.billingInfo = payload;
+    },
+    updateToken(state, payload) {
+      state.token = payload;
     }
   },
   actions: {
-    async generateToken({ commit }, payload) {
-      let stripe = loadStripe(process.env.VUE_APP_STRIPE_PUBLIC_KEY);
-      let token = await stripe.createToken(
-        ...payload.cardData,
-        payload.additionalData
-      );
-      console.log(token);
+    generateToken({ commit }, payload) {
+      let { cardNumber, cardExpiry, cardCvc } = payload.cardData;
+      return payload.stripe
+        .createToken(cardNumber, cardExpiry, cardCvc, payload.additionalData)
+        .then(res => {
+          commit('updateToken', res.token);
+          return res;
+        })
+        .catch(err => {
+          throw err;
+        });
+    },
+    addPaymentMethod({ commit }, { params }) {
+      return PaymentMethodService.paymentmethods(params);
     },
     updateCardElements({ commit }, payload) {
       commit('cardInfoUpdate', payload);
     }
   },
   getters: {
-    loadingGet(state) {
-      return state.loading;
+    getToken(state) {
+      return state.token;
     }
   }
 };

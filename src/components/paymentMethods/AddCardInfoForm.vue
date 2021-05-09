@@ -126,7 +126,7 @@ import {
   minLength,
   maxLength
 } from 'vuelidate/lib/validators';
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'AddCardInfoForm',
@@ -134,6 +134,12 @@ export default {
   components: {
     BaseCard,
     BaseTextInput
+  },
+  props: {
+    tenantSlug: {
+      type: String,
+      required: true
+    }
   },
   data() {
     return {
@@ -196,12 +202,17 @@ export default {
     this.createCardInfoElements();
   },
   computed: {
+    ...mapGetters('paymentMethod', ['getToken']),
     getStripeKey() {
       return process.env.VUE_APP_STRIPE_PUBLIC_KEY;
     }
   },
   methods: {
-    ...mapActions('paymentMethod', ['generateToken', 'updateCardElements']),
+    ...mapActions('paymentMethod', [
+      'generateToken',
+      'updateCardElements',
+      'addPaymentMethod'
+    ]),
     createCardInfoElements() {
       let baseStyle = {
         style: {
@@ -235,15 +246,15 @@ export default {
         this.validCardDetails = false;
       });
     },
-    submit() {
+    async submit() {
       if (!this.beforeSubmit() || !this.validCardDetails) {
         return;
       }
 
       let cardData = {
-        cardNumber: this.stripe.getElement('cardNumber'),
-        cardExpiry: this.stripe.getElement('cardExpiry'),
-        cardCvc: this.stripe.getElement('cardCvc')
+        cardNumber: this.elements.getElement('cardNumber'),
+        cardExpiry: this.elements.getElement('cardExpiry'),
+        cardCvc: this.elements.getElement('cardCvc')
       };
       let additionalData = {
         name: this.userInfo.firstName + this.userInfo.lastName,
@@ -253,7 +264,27 @@ export default {
         address_state: this.billingInfo.state,
         address_zip: this.billingInfo.zipcode
       };
-      this.generateToken({ cardData, additionalData });
+      await this.generateToken({
+        stripe: this.stripe,
+        cardData,
+        additionalData
+      });
+      if (this.getToken) {
+        this.addPaymentMethod({
+          params: {
+            tenantSlug: this.tenantSlug,
+            body: {
+              token: this.getToken.id
+            }
+          }
+        })
+          .then(res => {
+            console.log(res);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
     }
   }
 };
