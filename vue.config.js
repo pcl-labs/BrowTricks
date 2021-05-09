@@ -3,6 +3,8 @@ process.env.VUE_APP_MOBILE =
 
 console.log('VUE_APP_BUILD:', process.env.VUE_APP_BUILD);
 
+const fs = require('fs');
+
 module.exports = {
   pages: {
     index: {
@@ -105,7 +107,11 @@ module.exports = {
     // for local browserstack
     disableHostCheck: true
     // enable localhost https
-    // https: true
+    // https: true,
+    // https: {
+    //   key: fs.readFileSync('./localhost-key.pem'),
+    //   cert: fs.readFileSync('./localhost.pem')
+    // }
   },
 
   chainWebpack: config => {

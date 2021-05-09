@@ -1,27 +1,40 @@
 <template>
-  <div class="w-full">
-    <label
-      class="block text-left tg-caption-mobile text-on-background text-opacity-50"
-    >
-      {{ label }}
-    </label>
-    <div>
-      <input
-        type="text"
-        :class="[
-          'w-full placeholder-on-background placeholder-opacity-50 outline-none focus:outline-none',
-          border
-        ]"
-        :placeholder="placeholder"
-        :value="value"
-        v-on="inputListeners"
-      />
-    </div>
-  </div>
+  <FormGroup v-bind="$attrs" :validatorModel="validatorModel">
+    <template #control>
+      <div class="w-full">
+        <label
+          class="block text-left tg-caption-mobile text-on-background text-opacity-50"
+        >
+          {{ label }}
+        </label>
+        <div>
+          <input
+            type="text"
+            :class="[
+              'w-full placeholder-on-background placeholder-opacity-50 outline-none focus:outline-none',
+              border
+            ]"
+            :placeholder="placeholder"
+            :value="value"
+            v-on="inputListeners"
+          />
+        </div>
+      </div>
+    </template>
+    <template #error>
+      <div class="text-error tg-body-mobile mt-2" v-if="validatorModel.$error">
+        <slot />
+      </div>
+    </template>
+  </FormGroup>
 </template>
 
 <script>
+import FormGroup from '@/components/inputs/FormGroup.vue';
 export default {
+  components: {
+    FormGroup
+  },
   props: {
     label: {
       type: String,
@@ -38,6 +51,10 @@ export default {
     border: {
       type: String,
       default: 'border-b border-opacity-50'
+    },
+    validatorModel: {
+      type: Object,
+      default: () => ({})
     }
   },
   computed: {
