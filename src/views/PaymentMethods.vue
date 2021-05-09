@@ -12,8 +12,6 @@
     </Button>
     <div class="pb-16 space-y-4" v-show="isFormVisible">
       <AddCardInfoForm> </AddCardInfoForm>
-      <AddBillingInfoForm></AddBillingInfoForm>
-      <Button title="Save" background="bg-white"> </Button>
     </div>
   </div>
 </template>
@@ -21,14 +19,14 @@
 <script>
 import PaymentMethodCard from '@/components/paymentMethods/PaymentMethodCard.vue';
 import AddCardInfoForm from '@/components/paymentMethods/AddCardInfoForm.vue';
-import AddBillingInfoForm from '@/components/paymentMethods/AddBillingInfoForm.vue';
+// import AddBillingInfoForm from '@/components/paymentMethods/AddBillingInfoForm.vue';
 
 export default {
   name: 'PaymentMethods',
   components: {
     PaymentMethodCard,
-    AddCardInfoForm,
-    AddBillingInfoForm
+    AddCardInfoForm
+    // AddBillingInfoForm
   },
   data() {
     return {
