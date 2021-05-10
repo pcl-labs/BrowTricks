@@ -143,6 +143,7 @@ export default {
   },
   data() {
     return {
+      stripeKey: '',
       elements: {},
       stripe: {},
       userInfo: {
@@ -197,21 +198,19 @@ export default {
     }
   },
   async mounted() {
+    await this.getStripePublishableKeys();
     this.stripe = await loadStripe(this.getStripeKey);
     this.elements = this.stripe.elements();
     this.createCardInfoElements();
   },
   computed: {
-    ...mapGetters('paymentMethod', ['getToken']),
-    getStripeKey() {
-      return process.env.VUE_APP_STRIPE_PUBLIC_KEY;
-    }
+    ...mapGetters('paymentMethod', ['getToken', 'getStripeKey'])
   },
   methods: {
     ...mapActions('paymentMethod', [
       'generateToken',
-      'updateCardElements',
-      'addPaymentMethod'
+      'addPaymentMethod',
+      'getStripePublishableKeys'
     ]),
     createCardInfoElements() {
       let baseStyle = {

@@ -1,4 +1,7 @@
-import { PaymentMethodService } from '@whynotearth/meredith-axios';
+import {
+  PaymentMethodService,
+  CompanyService
+} from '@whynotearth/meredith-axios';
 
 export default {
   namespaced: true,
@@ -18,7 +21,8 @@ export default {
       state: '',
       zipcode: ''
     },
-    token: ''
+    token: '',
+    stripeKey: ''
   },
   mutations: {
     cardInfoUpdate(state, payload) {
@@ -29,9 +33,27 @@ export default {
     },
     updateToken(state, payload) {
       state.token = payload;
+    },
+    updateStripeKey(state, payload) {
+      state.stripeKey = payload;
     }
   },
   actions: {
+    getStripePublishableKeys({ commit }, payload) {
+      return new Promise((resolve, reject) => {
+        const params = {
+          companyId: process.env.VUE_APP_COMPANY_ID
+        };
+        CompanyService.publishable(params)
+          .then(res => {
+            commit('updateStripeKey', res.key);
+            resolve(res);
+          })
+          .catch(e => {
+            reject(e);
+          });
+      });
+    },
     generateToken({ commit }, payload) {
       let { cardNumber, cardExpiry, cardCvc } = payload.cardData;
       return payload.stripe
@@ -52,8 +74,11 @@ export default {
     }
   },
   getters: {
-    getToken(state) {
+    getToken: state => {
       return state.token;
+    },
+    getStripeKey: state => {
+      return state.stripeKey;
     }
   }
 };

@@ -19,14 +19,12 @@
 <script>
 import PaymentMethodCard from '@/components/paymentMethods/PaymentMethodCard.vue';
 import AddCardInfoForm from '@/components/paymentMethods/AddCardInfoForm.vue';
-// import AddBillingInfoForm from '@/components/paymentMethods/AddBillingInfoForm.vue';
 
 export default {
   name: 'PaymentMethods',
   components: {
     PaymentMethodCard,
     AddCardInfoForm
-    // AddBillingInfoForm
   },
   data() {
     return {
