@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-4">
     <BaseCard className="flex-col gap-2">
-      <BaseTextInput
+      <MaterialInput
         label="First Name"
         placeholder="First Name"
         v-model="$v.userInfo.firstName.$model"
@@ -13,8 +13,8 @@
         <p v-if="!$v.userInfo.firstName.alpha">
           First Name should contain only Alphabets
         </p>
-      </BaseTextInput>
-      <BaseTextInput
+      </MaterialInput>
+      <MaterialInput
         label="Last Name"
         placeholder="Last Name"
         v-model="$v.userInfo.lastName.$model"
@@ -25,7 +25,7 @@
         <p v-if="!$v.userInfo.lastName.alpha">
           Last Name should contain only Alphabets
         </p>
-      </BaseTextInput>
+      </MaterialInput>
       <div class="text-left">
         <label class="tg-caption-mobile text-on-background text-opacity-50">
           Card Number
@@ -46,7 +46,7 @@
       </div>
     </BaseCard>
     <BaseCard className="flex-col gap-2">
-      <BaseTextInput
+      <MaterialInput
         placeholder="Street Address 1"
         label="Street Address 1"
         v-model="$v.billingInfo.address1.$model"
@@ -57,8 +57,8 @@
         <p v-if="!$v.billingInfo.address1.alpha">
           Street Address 1 should contain only AlphaNumeric
         </p>
-      </BaseTextInput>
-      <BaseTextInput
+      </MaterialInput>
+      <MaterialInput
         placeholder="Street Address 2"
         label="Street Address 2"
         v-model="$v.billingInfo.address2.$model"
@@ -69,8 +69,8 @@
         <p v-if="!$v.billingInfo.address2.alpha">
           Street Address 2 should contain only AlphaNumeric
         </p>
-      </BaseTextInput>
-      <BaseTextInput
+      </MaterialInput>
+      <MaterialInput
         placeholder="City"
         label="City"
         v-model="$v.billingInfo.city.$model"
@@ -81,8 +81,8 @@
         <p v-if="!$v.billingInfo.state.alpha">
           City should contain only Alphabets
         </p>
-      </BaseTextInput>
-      <BaseTextInput
+      </MaterialInput>
+      <MaterialInput
         placeholder="State"
         label="State"
         v-model="$v.billingInfo.state.$model"
@@ -93,8 +93,8 @@
         <p v-if="!$v.billingInfo.state.alpha">
           State should contain only Alphabets
         </p>
-      </BaseTextInput>
-      <BaseTextInput
+      </MaterialInput>
+      <MaterialInput
         placeholder="Zip Code"
         label="Zip Code"
         v-model="$v.billingInfo.zipcode.$model"
@@ -105,7 +105,7 @@
         <p v-if="!$v.billingInfo.zipcode.numeric">
           Zipcode should contain only Numeric
         </p>
-      </BaseTextInput>
+      </MaterialInput>
     </BaseCard>
     <Button title="Save" background="bg-white" @clicked="submit"> </Button>
   </div>
@@ -115,7 +115,7 @@
 import { loadStripe } from '@stripe/stripe-js';
 
 import BaseCard from '@/components/BaseCard.vue';
-import BaseTextInput from '@/components/inputs/BaseTextInput.vue';
+import MaterialInput from '@/components/inputs/MaterialInput.vue';
 import formGeneralUtils from '@/mixins/formGeneralUtils.js';
 
 import {
@@ -133,7 +133,7 @@ export default {
   mixins: [formGeneralUtils],
   components: {
     BaseCard,
-    BaseTextInput
+    MaterialInput
   },
   props: {
     tenantSlug: {
