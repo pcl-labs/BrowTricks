@@ -3,7 +3,7 @@
   "appName": "Brow Tricks",
   "bundledWebRuntime": false,
   "npmClient": "yarn",
-  "webDir": "/Users/jaya/Projects/upwork/paul-luke/BrowTricks/dist",
+  "webDir": "./dist",
   "plugins": {
     "SplashScreen": {
       "launchShowDuration": 1500
