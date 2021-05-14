@@ -8,6 +8,13 @@ const ajax = axios.create({
 
 ajax.defaults.headers['Content-Type'] = 'application/json';
 
+// We use interceptor so as to always fetch the latest token
+ajax.interceptors.request.use(request => {
+  const token = localStorage.getItem('auth_token');
+  if (token) request.headers['Authorization'] = `Bearer ${token}`;
+  return request;
+});
+
 ajax.interceptors.response.use(
   response => {
     return response;
