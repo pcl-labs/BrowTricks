@@ -2,7 +2,7 @@
   <BaseCard className="flex-col gap-2" padding="px-4 py-4">
     <div class="flex gap-2 p-4">
       <div class="self-center">
-        <!-- <img :src="require('@/assets/icons/amex.png')" /> -->
+        <img :src="getCardBrandIcon" />
       </div>
       <div class="flex flex-col items-start">
         <span>{{ paymentMethod.brand }} ****{{ paymentMethod.last4 }}</span>
@@ -55,6 +55,12 @@ export default {
     tenantSlug: {
       type: String,
       required: true
+    }
+  },
+  computed: {
+    getCardBrandIcon() {
+      let brand = this.paymentMethod.brand;
+      return require(`@/assets/pm-icons/${brand.toLowerCase()}.png`);
     }
   },
   methods: {
