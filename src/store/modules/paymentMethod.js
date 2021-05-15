@@ -22,7 +22,8 @@ export default {
       zipcode: ''
     },
     token: '',
-    stripeKey: ''
+    stripeKey: '',
+    paymentMethods: []
   },
   mutations: {
     cardInfoUpdate(state, payload) {
@@ -36,6 +37,12 @@ export default {
     },
     updateStripeKey(state, payload) {
       state.stripeKey = payload;
+    },
+    updatePaymentMethods(state, payload) {
+      state.paymentMethods = payload;
+    },
+    addPaymentMethod(state, payload) {
+      state.paymentMethods.push(payload);
     }
   },
   actions: {
@@ -66,8 +73,40 @@ export default {
           throw err;
         });
     },
+    fetchPaymentMethods({ commit }, { params }) {
+      return new Promise((resolve, reject) => {
+        PaymentMethodService.paymentmethods1(params)
+          .then(res => {
+            commit('updatePaymentMethods', res);
+            resolve(res);
+          })
+          .catch(err => {
+            reject(err);
+          });
+      });
+    },
     addPaymentMethod({ commit }, { params }) {
-      return PaymentMethodService.paymentmethods(params);
+      return new Promise((resolve, reject) => {
+        PaymentMethodService.paymentmethods(params)
+          .then(res => {
+            commit('addPaymentMethod', res);
+            resolve(res);
+          })
+          .catch(e => {
+            reject(e);
+          });
+      });
+    },
+    removePaymentMethod({ commit }, { params }) {
+      return new Promise((resolve, reject) => {
+        PaymentMethodService.paymentmethods2(params)
+          .then(res => {
+            resolve(res);
+          })
+          .catch(e => {
+            reject(e);
+          });
+      });
     },
     updateCardElements({ commit }, payload) {
       commit('cardInfoUpdate', payload);
@@ -79,6 +118,9 @@ export default {
     },
     getStripeKey: state => {
       return state.stripeKey;
+    },
+    getPaymentMethods: state => {
+      return state.paymentMethods;
     }
   }
 };

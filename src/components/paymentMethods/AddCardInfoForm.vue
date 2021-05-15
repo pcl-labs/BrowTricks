@@ -98,12 +98,21 @@
         placeholder="Zip Code"
         label="Zip Code"
         v-model="$v.billingInfo.zipcode.$model"
+        type="number"
       >
         <p v-if="!$v.billingInfo.zipcode.required">
           Zipcode is required
         </p>
         <p v-if="!$v.billingInfo.zipcode.numeric">
           Zipcode should contain only Numeric
+        </p>
+        <p
+          v-if="
+            !$v.billingInfo.zipcode.minLength ||
+              !$v.billingInfo.zipcode.maxLength
+          "
+        >
+          Zipcode should contain exact 5 digits.
         </p>
       </MaterialInput>
     </BaseCard>
@@ -117,6 +126,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import BaseCard from '@/components/BaseCard.vue';
 import MaterialInput from '@/components/inputs/MaterialInput.vue';
 import formGeneralUtils from '@/mixins/formGeneralUtils.js';
+import { showOverlayAndRedirect } from '@/helpers';
 
 import {
   required,
@@ -158,7 +168,10 @@ export default {
         state: '',
         zipcode: ''
       },
-      validCardDetails: false
+      validCardDetails: false,
+      cardNumber: {},
+      cardExpiry: {},
+      cardCvc: {}
     };
   },
   validations: {
@@ -207,6 +220,7 @@ export default {
     ...mapGetters('paymentMethod', ['getToken', 'getStripeKey'])
   },
   methods: {
+    ...mapActions('loading', ['loadingUpdate']),
     ...mapActions('paymentMethod', [
       'generateToken',
       'addPaymentMethod',
@@ -225,16 +239,16 @@ export default {
           }
         }
       };
-      let cardNumber = this.elements.create('cardNumber', baseStyle);
-      let cardExpiry = this.elements.create('cardExpiry', baseStyle);
-      let cardCvc = this.elements.create('cardCvc', baseStyle);
+      this.cardNumber = this.elements.create('cardNumber', baseStyle);
+      this.cardExpiry = this.elements.create('cardExpiry', baseStyle);
+      this.cardCvc = this.elements.create('cardCvc', baseStyle);
 
-      cardNumber.mount(this.$refs.cardNumber);
-      cardExpiry.mount(this.$refs.cardExpiry);
-      cardCvc.mount(this.$refs.cardCvc);
-      this.validateCardElement(cardNumber);
-      this.validateCardElement(cardExpiry);
-      this.validateCardElement(cardCvc);
+      this.cardNumber.mount(this.$refs.cardNumber);
+      this.cardExpiry.mount(this.$refs.cardExpiry);
+      this.cardCvc.mount(this.$refs.cardCvc);
+      this.validateCardElement(this.cardNumber);
+      this.validateCardElement(this.cardExpiry);
+      this.validateCardElement(this.cardCvc);
     },
     validateCardElement(cardElement) {
       cardElement.on('change', e => {
@@ -249,7 +263,7 @@ export default {
       if (!this.beforeSubmit() || !this.validCardDetails) {
         return;
       }
-
+      this.loadingUpdate(true);
       let cardData = {
         cardNumber: this.elements.getElement('cardNumber'),
         cardExpiry: this.elements.getElement('cardExpiry'),
@@ -277,13 +291,22 @@ export default {
             }
           }
         })
-          .then(res => {
-            console.log(res);
+          .then(() => {
+            this.$v.$reset();
+            this.cardNumber.clear();
+            this.cardExpiry.clear();
+            this.cardCvc.clear();
+            showOverlayAndRedirect({
+              title: 'Payment Methods',
+              message: 'Payment method added sucessfully'
+            });
+            this.loadingUpdate(false);
           })
-          .catch(err => {
-            console.log(err);
+          .catch(() => {
+            this.loadingUpdate(false);
           });
       }
+      this.$emit('show-form', false);
     }
   }
 };
