@@ -126,7 +126,6 @@ import { loadStripe } from '@stripe/stripe-js';
 import BaseCard from '@/components/BaseCard.vue';
 import MaterialInput from '@/components/inputs/MaterialInput.vue';
 import formGeneralUtils from '@/mixins/formGeneralUtils.js';
-import { showOverlayAndRedirect } from '@/helpers';
 
 import {
   required,
@@ -137,6 +136,8 @@ import {
   maxLength
 } from 'vuelidate/lib/validators';
 import { mapActions, mapGetters } from 'vuex';
+import Rollbar from 'rollbar';
+import { da } from 'date-fns/locale';
 
 export default {
   name: 'AddCardInfoForm',
@@ -226,6 +227,7 @@ export default {
       'addPaymentMethod',
       'getStripePublishableKeys'
     ]),
+    ...mapActions('snackbar', ['setSnackbar']),
     createCardInfoElements() {
       let baseStyle = {
         style: {
@@ -260,9 +262,9 @@ export default {
       });
     },
     async submit() {
-      if (!this.beforeSubmit() || !this.validCardDetails) {
-        return;
-      }
+      // if (!this.beforeSubmit() || !this.validCardDetails) {
+      //   return;
+      // }
       this.loadingUpdate(true);
       let cardData = {
         cardNumber: this.elements.getElement('cardNumber'),
@@ -283,30 +285,39 @@ export default {
         additionalData
       });
       if (this.getToken) {
-        this.addPaymentMethod({
-          params: {
-            tenantSlug: this.tenantSlug,
-            body: {
-              token: this.getToken.id
+        try {
+          await this.addPaymentMethod({
+            params: {
+              tenantSlug: this.tenantSlug,
+              body: {
+                token: this.getToken.id
+              }
             }
-          }
-        })
-          .then(() => {
-            this.$v.$reset();
-            this.cardNumber.clear();
-            this.cardExpiry.clear();
-            this.cardCvc.clear();
-            showOverlayAndRedirect({
-              title: 'Payment Methods',
-              message: 'Payment method added sucessfully'
-            });
-            this.loadingUpdate(false);
-          })
-          .catch(() => {
-            this.loadingUpdate(false);
           });
+          this.$v.$reset();
+          this.cardNumber.clear();
+          this.cardExpiry.clear();
+          this.cardCvc.clear();
+          this.setSnackbar({
+            type: 'success',
+            message: 'Card added successfully',
+            timeout: 2500
+          });
+        } catch (err) {
+          Rollbar.err("Couldn't add card info", err);
+          this.setSnackbar({
+            type: 'error',
+            message: "Couldn't add Card",
+            timeout: 2500
+          });
+        } finally {
+          this.loadingUpdate(false);
+          this.$emit('show-form', false);
+        }
       }
-      this.$emit('show-form', false);
+    },
+    showSnackbar(data) {
+      this.$emit('show-snackbar', data);
     }
   }
 };

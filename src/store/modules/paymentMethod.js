@@ -62,16 +62,18 @@ export default {
       });
     },
     generateToken({ commit }, payload) {
-      let { cardNumber, cardExpiry, cardCvc } = payload.cardData;
-      return payload.stripe
-        .createToken(cardNumber, cardExpiry, cardCvc, payload.additionalData)
-        .then(res => {
-          commit('updateToken', res.token);
-          return res;
-        })
-        .catch(err => {
-          throw err;
-        });
+      return new Promise((resolve, reject) => {
+        let { cardNumber, cardExpiry, cardCvc } = payload.cardData;
+        payload.stripe
+          .createToken(cardNumber, cardExpiry, cardCvc, payload.additionalData)
+          .then(res => {
+            commit('updateToken', res.token);
+            resolve(res);
+          })
+          .catch(err => {
+            reject(err);
+          });
+      });
     },
     fetchPaymentMethods({ commit }, { params }) {
       return new Promise((resolve, reject) => {
@@ -92,8 +94,8 @@ export default {
             commit('addPaymentMethod', res);
             resolve(res);
           })
-          .catch(e => {
-            reject(e);
+          .catch(err => {
+            reject(err);
           });
       });
     },
@@ -103,8 +105,8 @@ export default {
           .then(res => {
             resolve(res);
           })
-          .catch(e => {
-            reject(e);
+          .catch(err => {
+            reject(err);
           });
       });
     },

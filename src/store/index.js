@@ -12,6 +12,8 @@ import profile from './modules/profile';
 import alerter from './modules/alerter';
 import admin from './modules/admin';
 import paymentMethod from './modules/paymentMethod';
+import snackbar from './modules/snackbar';
+
 import VuexPersistence from 'vuex-persist';
 
 const vuexSession = new VuexPersistence({
@@ -43,6 +45,7 @@ export default new Vuex.Store({
     loading,
     uploader,
     admin,
-    paymentMethod
+    paymentMethod,
+    snackbar
   }
 });

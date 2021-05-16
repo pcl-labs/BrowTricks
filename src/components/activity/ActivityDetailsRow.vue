@@ -1,5 +1,8 @@
 <template functional>
-  <div class="w-full flex justify-around py-2 gap-2 text" v-on="listeners">
+  <div
+    class="w-full flex justify-around py-2 gap-2 text cursor-pointer"
+    v-on="listeners"
+  >
     <div>
       <slot />
     </div>

@@ -21,6 +21,7 @@
       <AddCardInfoForm
         :tenantSlug="tenantSlug"
         @show-form="showAddPaymentMethodForms"
+        @show-snackbar="showSnackBar"
       >
       </AddCardInfoForm>
     </div>
@@ -30,6 +31,7 @@
 <script>
 import PaymentMethodCard from '@/components/paymentMethods/PaymentMethodCard.vue';
 import AddCardInfoForm from '@/components/paymentMethods/AddCardInfoForm.vue';
+
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
@@ -48,7 +50,12 @@ export default {
     return {
       isFormVisible: false,
       paymentMethods: [],
-      infiniteId: +new Date()
+      infiniteId: +new Date(),
+      isSnackBarVisible: false,
+      snackbarMessage: {
+        type: '',
+        message: ''
+      }
     };
   },
   created() {
@@ -56,22 +63,28 @@ export default {
     this.fetchPaymentMethods({
       params: { tenantSlug: this.tenantSlug }
     })
-      .then(() => {
-        this.loadingUpdate(false);
-      })
-      .catch(() => {
+      .then(() => {})
+      .catch(() => {})
+      .finally(() => {
         this.loadingUpdate(false);
       });
+  },
+  computed: {
+    ...mapGetters('paymentMethod', ['getPaymentMethods'])
   },
   methods: {
     ...mapActions('paymentMethod', ['fetchPaymentMethods']),
     ...mapActions('loading', ['loadingUpdate']),
     showAddPaymentMethodForms(value) {
       this.isFormVisible = value;
+    },
+    showSnackBar(value) {
+      this.isSnackBarVisible = true;
+      this.snackbarMessage = value;
+    },
+    hideSnackbar() {
+      this.isSnackBarVisible = false;
     }
-  },
-  computed: {
-    ...mapGetters('paymentMethod', ['getPaymentMethods'])
   }
 };
 </script>
