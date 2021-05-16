@@ -54,7 +54,6 @@ import SplashOverlay from '@/components/splash/SplashOverlay.vue';
 import SnackBar from '@/components/SnackBar.vue';
 import { mapGetters, mapActions } from 'vuex';
 import vhFix from '@/mixins/vhFix.js';
-import store from './store';
 import { getFormattedMetaTitle } from './helpers';
 import { get } from 'lodash-es';
 const titleTemplate = process.env.VUE_APP_TITLE_TEMPLATE;
@@ -91,9 +90,6 @@ export default {
       overlayModel: 'model'
     })
   },
-  beforeCreate() {
-    store.dispatch('auth/refreshToken');
-  },
   beforeMount() {
     let showSnackBar = localStorage.getItem('privacy-snackbar');
     //if bannerCookie is true (or 1) that means user has seen the banner and dismissed it
@@ -104,7 +100,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions('auth', ['refreshToken']),
     ...mapActions('global', ['isDrawerOpenAuthUpdate']),
     setSnackBarCookie() {
       this.showPrivacySnackBar = false;
