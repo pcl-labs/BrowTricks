@@ -10,7 +10,7 @@ module.exports = {
     removeDeprecatedGapUtilities: true,
     purgeLayersByDefault: true
   },
-  purge: ['./public/**/*.html', './src/**/*.vue'],
+  purge: ['./public/**/*.html', './src/**/*.vue', './src/**/*.js'],
   theme: {
     extend: {
       boxShadow,

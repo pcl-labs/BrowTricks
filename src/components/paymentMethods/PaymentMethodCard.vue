@@ -22,8 +22,7 @@
         width="w-xs"
         padding="px-0"
         margin="mx-6"
-      >
-      </Button>
+      />
       <Button
         title="Remove"
         textColor="text-error"
@@ -32,8 +31,7 @@
         padding="px-0"
         margin="mx-6"
         @clicked="deletePaymentMethod"
-      >
-      </Button>
+      />
     </div>
   </BaseCard>
 </template>

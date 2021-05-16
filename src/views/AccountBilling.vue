@@ -8,8 +8,7 @@
             name: 'AccountActivity'
           })
         "
-      >
-      </ExpansionPanel>
+      />
       <ExpansionPanel
         title="Payment Methods"
         @click="
@@ -17,14 +16,12 @@
             name: 'PaymentMethods'
           })
         "
-      >
-      </ExpansionPanel>
+      />
       <ExpansionPanel
         title="Subscription"
         middleText="Standard"
         middleTextAlignment="text-right"
-      >
-      </ExpansionPanel>
+      />
     </div>
   </div>
 </template>

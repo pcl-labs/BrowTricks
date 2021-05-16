@@ -87,7 +87,6 @@ export const TenantPanelRoutes = [
     component: () => import('@/views/AccountBilling.vue'),
     meta: {
       layout: AppBarCardLayout,
-      pageBackground: 'bg-brand7',
       needsUserInfo: true,
       appBar: {
         title: 'Billing',
@@ -102,7 +101,6 @@ export const TenantPanelRoutes = [
     component: () => import('@/views/AccountActivity.vue'),
     meta: {
       layout: AppBarCardLayout,
-      pageBackground: 'bg-brand7',
       needsUserInfo: true,
       appBar: {
         title: 'Activity'
@@ -116,7 +114,6 @@ export const TenantPanelRoutes = [
     component: () => import('@/views/TransactionDetails.vue'),
     meta: {
       layout: AppBarCardLayout,
-      pageBackground: 'bg-brand7',
       needsUserInfo: true,
       appBar: {
         title: 'Transaction Details',
@@ -131,7 +128,6 @@ export const TenantPanelRoutes = [
     component: () => import('@/views/PaymentMethods.vue'),
     meta: {
       layout: AppBarCardLayout,
-      pageBackground: 'bg-brand7',
       needsUserInfo: true,
       appBar: {
         title: 'Payment Methods',

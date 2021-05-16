@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-4">
+  <div class="space-y-4 mb-4">
     <BaseCard className="flex-col gap-2">
       <MaterialInput
         label="First Name"
@@ -116,7 +116,7 @@
         </p>
       </MaterialInput>
     </BaseCard>
-    <Button title="Save" background="bg-white" @clicked="submit"> </Button>
+    <Button title="Save" background="bg-white" @clicked="submit" />
   </div>
 </template>
 
@@ -228,6 +228,7 @@ export default {
       'getStripePublishableKeys'
     ]),
     ...mapActions('snackbar', ['setSnackbar']),
+    ...mapActions('alerter', ['show', 'updateVisibility']),
     createCardInfoElements() {
       let baseStyle = {
         style: {
@@ -262,9 +263,9 @@ export default {
       });
     },
     async submit() {
-      // if (!this.beforeSubmit() || !this.validCardDetails) {
-      //   return;
-      // }
+      if (!this.beforeSubmit() || !this.validCardDetails) {
+        return;
+      }
       this.loadingUpdate(true);
       let cardData = {
         cardNumber: this.elements.getElement('cardNumber'),
@@ -298,18 +299,22 @@ export default {
           this.cardNumber.clear();
           this.cardExpiry.clear();
           this.cardCvc.clear();
-          this.setSnackbar({
-            type: 'success',
-            message: 'Card added successfully',
-            timeout: 2500
+          this.show({
+            text: 'Payment Method added successfully',
+            button: {
+              title: 'Okay',
+              action: () => this.updateVisibility(false)
+            }
           });
         } catch (err) {
-          Rollbar.err("Couldn't add card info", err);
-          this.setSnackbar({
-            type: 'error',
-            message: "Couldn't add Card",
-            timeout: 2500
+          this.show({
+            text: 'Error adding payment method. Please try again later',
+            button: {
+              title: 'Okay',
+              action: () => this.updateVisibility(false)
+            }
           });
+          Rollbar.err("Couldn't add card info", err);
         } finally {
           this.loadingUpdate(false);
           this.$emit('show-form', false);

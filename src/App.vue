@@ -31,7 +31,6 @@
         </p>
       </div>
     </SnackBar>
-    <BaseSnackbar> </BaseSnackbar>
 
     <!-- overlay message -->
     <transition name="fade">
@@ -53,7 +52,6 @@ import CssSafeArea from '@/components/CssSafeArea.vue';
 import Alerter from '@/components/Alerter.vue';
 import SplashOverlay from '@/components/splash/SplashOverlay.vue';
 import SnackBar from '@/components/SnackBar.vue';
-import BaseSnackbar from '@/components/BaseSnackbar.vue';
 import { mapGetters, mapActions } from 'vuex';
 import vhFix from '@/mixins/vhFix.js';
 import store from './store';
@@ -74,8 +72,7 @@ export default {
     SplashOverlay,
     Alerter,
     BaseOverlaySuccess,
-    SnackBar,
-    BaseSnackbar
+    SnackBar
   },
   metaInfo() {
     const title =
