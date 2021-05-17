@@ -94,7 +94,6 @@ export default {
                 resolve();
               }
               if (result.event === 'success') {
-                console.log('result', result);
                 this.$emit('uploaded', result);
               }
             }

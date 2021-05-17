@@ -43,6 +43,11 @@ export default {
       type: String
     }
   },
+  data() {
+    return {
+      updatedFiles: []
+    };
+  },
   methods: {
     onUploadError(error) {
       if (error.status.includes('not allowed')) {
@@ -53,8 +58,10 @@ export default {
     },
     onUpload(result) {
       if (result.event === 'success') {
-        let updatedFiles = [cloudinaryFileToMeredithFileAdapter(result.info)];
-        this.updateFiles([...this.files, ...updatedFiles]);
+        this.updatedFiles.push(
+          cloudinaryFileToMeredithFileAdapter(result.info)
+        );
+        this.updateFiles([...this.files, ...this.updatedFiles]);
       }
     },
     updateFiles(files) {

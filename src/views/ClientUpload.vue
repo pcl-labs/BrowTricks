@@ -50,8 +50,9 @@
                 aria-label="Deselect Client"
                 class="cursor-pointer select-none p-2 ml-4"
                 @click="onDeselectClient"
-                ><IconClose class="w-4 h-4"></IconClose
-              ></a>
+              >
+                <IconClose class="w-4 h-4" />
+              </a>
             </div>
 
             <p
@@ -99,7 +100,7 @@
             <a
               title="Delete"
               class="p-2 m-4 absolute bottom-0 right-0 bg-black bg-opacity-50 rounded-full cursor-pointer"
-              @click.stop="remove(file)"
+              @click.stop="remove(index)"
             >
               <DeleteIcon class="text-white w-6 h-6" />
             </a>
@@ -202,8 +203,8 @@ export default {
     selectFile(file) {
       this.selectedFile = file;
     },
-    remove(file) {
-      console.log(file);
+    remove(index) {
+      this.files.splice(index, 1);
     },
     checkUploadedFileExistance() {
       if (!this.uploadedFilesGet[0]) {
