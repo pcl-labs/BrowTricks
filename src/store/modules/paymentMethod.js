@@ -46,7 +46,7 @@ export default {
     }
   },
   actions: {
-    getStripePublishableKeys({ commit }, payload) {
+    getStripePublishableKeys({ commit }) {
       return new Promise((resolve, reject) => {
         const params = {
           companyId: process.env.VUE_APP_COMPANY_ID
@@ -99,7 +99,7 @@ export default {
           });
       });
     },
-    removePaymentMethod({ commit }, { params }) {
+    removePaymentMethod(context, { params }) {
       return new Promise((resolve, reject) => {
         PaymentMethodService.paymentmethods2(params)
           .then(res => {

@@ -136,8 +136,6 @@ import {
   maxLength
 } from 'vuelidate/lib/validators';
 import { mapActions, mapGetters } from 'vuex';
-import Rollbar from 'rollbar';
-import { da } from 'date-fns/locale';
 
 export default {
   name: 'AddCardInfoForm',
@@ -227,7 +225,6 @@ export default {
       'addPaymentMethod',
       'getStripePublishableKeys'
     ]),
-    ...mapActions('snackbar', ['setSnackbar']),
     ...mapActions('alerter', ['show', 'updateVisibility']),
     createCardInfoElements() {
       let baseStyle = {
@@ -295,10 +292,6 @@ export default {
               }
             }
           });
-          this.$v.$reset();
-          this.cardNumber.clear();
-          this.cardExpiry.clear();
-          this.cardCvc.clear();
           this.show({
             text: 'Payment Method added successfully',
             button: {
@@ -314,10 +307,14 @@ export default {
               action: () => this.updateVisibility(false)
             }
           });
-          Rollbar.err("Couldn't add card info", err);
         } finally {
+          this.$v.$reset();
+          this.cardNumber.clear();
+          this.cardExpiry.clear();
+          this.cardCvc.clear();
           this.loadingUpdate(false);
           this.$emit('show-form', false);
+          this.$emit('refetch-cards');
         }
       }
     },

@@ -6,6 +6,7 @@
         v-if="details"
         :key="details.id"
         :paymentMethod="details"
+        @refetch-cards="fetchAllPaymentMethods"
       ></PaymentMethodCard>
     </template>
     <Button
@@ -21,7 +22,7 @@
       <AddCardInfoForm
         :tenantSlug="tenantSlug"
         @show-form="showAddPaymentMethodForms"
-        @show-snackbar="showSnackBar"
+        @refetch-cards="fetchAllPaymentMethods"
       >
       </AddCardInfoForm>
     </div>
@@ -59,15 +60,7 @@ export default {
     };
   },
   created() {
-    this.loadingUpdate(true);
-    this.fetchPaymentMethods({
-      params: { tenantSlug: this.tenantSlug }
-    })
-      .then(() => {})
-      .catch(() => {})
-      .finally(() => {
-        this.loadingUpdate(false);
-      });
+    this.fetchAllPaymentMethods();
   },
   computed: {
     ...mapGetters('paymentMethod', ['getPaymentMethods'])
@@ -78,12 +71,16 @@ export default {
     showAddPaymentMethodForms(value) {
       this.isFormVisible = value;
     },
-    showSnackBar(value) {
-      this.isSnackBarVisible = true;
-      this.snackbarMessage = value;
-    },
-    hideSnackbar() {
-      this.isSnackBarVisible = false;
+    fetchAllPaymentMethods() {
+      this.loadingUpdate(true);
+      this.fetchPaymentMethods({
+        params: { tenantSlug: this.tenantSlug }
+      })
+        .then(() => {})
+        .catch(() => {})
+        .finally(() => {
+          this.loadingUpdate(false);
+        });
     }
   }
 };

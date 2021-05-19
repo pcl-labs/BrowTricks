@@ -64,13 +64,34 @@ export default {
   methods: {
     ...mapActions('paymentMethod', ['removePaymentMethod']),
     ...mapActions('loading', ['loadingUpdate']),
+    ...mapActions('alerter', ['show', 'updateVisibility']),
+
     async deletePaymentMethod() {
-      this.loadingUpdate(true);
-      let data = {
-        params: { tenantSlug: this.tenantSlug, id: this.paymentMethod.id }
-      };
-      await this.removePaymentMethod(data);
-      this.loadingUpdate(false);
+      try {
+        this.loadingUpdate(true);
+        let data = {
+          params: { tenantSlug: this.tenantSlug, id: this.paymentMethod.id }
+        };
+        await this.removePaymentMethod(data);
+        this.show({
+          text: 'Payment Method Deleted Successfully',
+          button: {
+            title: 'Okay',
+            action: () => this.updateVisibility(false)
+          }
+        });
+      } catch (err) {
+        this.show({
+          text: 'Error Deleting Payment Method',
+          button: {
+            title: 'Okay',
+            action: () => this.updateVisibility(false)
+          }
+        });
+      } finally {
+        this.loadingUpdate(false);
+        this.$emit('refetch-cards');
+      }
     }
   }
 };

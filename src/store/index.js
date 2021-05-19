@@ -12,6 +12,7 @@ import profile from './modules/profile';
 import alerter from './modules/alerter';
 import admin from './modules/admin';
 import paymentMethod from './modules/paymentMethod';
+import accountActivity from './modules/accountActivity';
 
 import VuexPersistence from 'vuex-persist';
 
@@ -44,6 +45,7 @@ export default new Vuex.Store({
     loading,
     uploader,
     admin,
-    paymentMethod
+    paymentMethod,
+    accountActivity
   }
 });

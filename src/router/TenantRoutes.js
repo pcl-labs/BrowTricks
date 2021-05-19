@@ -103,7 +103,8 @@ export const TenantPanelRoutes = [
       layout: AppBarCardLayout,
       needsUserInfo: true,
       appBar: {
-        title: 'Activity'
+        title: 'Activity',
+        backRoute: { name: 'AccountBilling' }
       }
     }
   },
