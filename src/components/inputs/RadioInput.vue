@@ -36,14 +36,14 @@ export default {
   },
   props: {
     selectedOption: {
-      type: [String, Number, Boolean]
+      type: [String, Number, Boolean, Object]
     },
     label: {
       type: [String, Number],
       default: 'Option'
     },
     value: {
-      type: [String, Number, Boolean],
+      type: [String, Number, Boolean, Object],
       default: 'Option'
     },
     disabled: {
