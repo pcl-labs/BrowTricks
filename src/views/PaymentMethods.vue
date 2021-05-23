@@ -91,7 +91,7 @@ export default {
       try {
         this.loadingUpdate(true);
         const paymentMethods = await PaymentMethodService.paymentmethods1({
-          tenantSlug: 'sdsdsdsd'
+          tenantSlug: this.tenantSlug
         });
         this.paymentMethods = [...paymentMethods];
       } catch {
