@@ -13,7 +13,7 @@
         <div>
           <Button
             title="Manage"
-            textColor="text-accent"
+            textColor="text-success underline"
             background="bg-none"
             width="w-xs"
             padding="px-0"
@@ -84,7 +84,7 @@
           </span>
           <Button
             title="Add Coupon"
-            textColor="text-accent"
+            textColor="text-success underline"
             background="bg-none"
             padding="px-0"
             width="w-xs"
@@ -114,7 +114,7 @@
         <Button
           :to="{ name: 'PaymentMethods' }"
           title="Add Credit Card"
-          textColor="text-accent"
+          textColor="text-success underline"
           background="bg-none"
           textJustify="justify-left"
         />
@@ -138,7 +138,7 @@
       <div class="text-center mt-2">
         <Button
           title=" View Transaction"
-          textColor="text-accent"
+          textColor="text-success underline"
           background="bg-none"
           width="w-xs"
           padding="px-0"
@@ -195,7 +195,7 @@
           <div class="text-center mt-6">
             <Button
               title="Apply Coupon"
-              textColor="text-accent"
+              textColor="text-success underline"
               background="bg-none"
               padding="px-0"
               @clicked="applyCouponCode"
@@ -215,7 +215,7 @@
         <div class="flex flex-row-reverse gap-8">
           <Button
             title="Agree"
-            textColor="text-accent"
+            textColor="text-success underline"
             background="bg-none"
             padding="px-0"
             margin="mx-0"
@@ -248,7 +248,10 @@ import RadioInput from '@/components/inputs/RadioInput.vue';
 import IconClear from '@/assets/icons/clear.svg';
 
 import { mapActions } from 'vuex';
-import { PaymentMethodService } from '@whynotearth/meredith-axios';
+import {
+  PaymentMethodService,
+  SubscriptionService
+} from '@whynotearth/meredith-axios';
 
 export default {
   name: 'Subscriptions',
