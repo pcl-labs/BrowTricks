@@ -75,9 +75,9 @@ export default {
           });
       });
     },
-    fetchPaymentMethods({ commit }, { params }) {
+    fetchPaymentMethods({ commit }, payload) {
       return new Promise((resolve, reject) => {
-        PaymentMethodService.paymentmethods1(params)
+        PaymentMethodService.paymentmethods1(payload)
           .then(res => {
             commit('updatePaymentMethods', res);
             resolve(res);

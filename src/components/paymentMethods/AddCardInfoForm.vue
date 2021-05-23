@@ -18,6 +18,7 @@
         label="Last Name"
         placeholder="Last Name"
         v-model="$v.userInfo.lastName.$model"
+        :validatorModel="$v.userInfo.lastName"
       >
         <p v-if="!$v.userInfo.lastName.required">
           Last Name is required
@@ -50,6 +51,7 @@
         placeholder="Street Address 1"
         label="Street Address 1"
         v-model="$v.billingInfo.address1.$model"
+        :validatorModel="$v.billingInfo.address1"
       >
         <p v-if="!$v.billingInfo.address1.required">
           Street Address 1 is required
@@ -62,6 +64,7 @@
         placeholder="Street Address 2"
         label="Street Address 2"
         v-model="$v.billingInfo.address2.$model"
+        :validatorModel="$v.billingInfo.address2"
       >
         <p v-if="!$v.billingInfo.address2.required">
           Street Address 2 is required
@@ -74,11 +77,12 @@
         placeholder="City"
         label="City"
         v-model="$v.billingInfo.city.$model"
+        :validatorModel="$v.billingInfo.city"
       >
-        <p v-if="!$v.billingInfo.state.required">
+        <p v-if="!$v.billingInfo.city.required">
           City is required
         </p>
-        <p v-if="!$v.billingInfo.state.alpha">
+        <p v-if="!$v.billingInfo.city.alpha">
           City should contain only Alphabets
         </p>
       </MaterialInput>
@@ -86,6 +90,7 @@
         placeholder="State"
         label="State"
         v-model="$v.billingInfo.state.$model"
+        :validatorModel="$v.billingInfo.state"
       >
         <p v-if="!$v.billingInfo.state.required">
           State is required
@@ -95,10 +100,11 @@
         </p>
       </MaterialInput>
       <MaterialInput
+        type="number"
         placeholder="Zip Code"
         label="Zip Code"
         v-model="$v.billingInfo.zipcode.$model"
-        type="number"
+        :validatorModel="$v.billingInfo.zipcode"
       >
         <p v-if="!$v.billingInfo.zipcode.required">
           Zipcode is required

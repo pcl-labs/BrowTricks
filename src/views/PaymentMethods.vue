@@ -40,8 +40,7 @@
         :tenantSlug="tenantSlug"
         @show-form="showAddPaymentMethodForms"
         @refetch-cards="fetchAllPaymentMethods"
-      >
-      </AddCardInfoForm>
+      />
     </div>
   </div>
 </template>
