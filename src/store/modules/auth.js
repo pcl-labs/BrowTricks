@@ -87,17 +87,12 @@ const actions = {
   updateToken({ commit }, payload = '') {
     if (payload) {
       localStorage.setItem('auth_token', payload);
-      ajax.defaults.headers.common['Authorization'] = `Bearer ${payload}`;
       commit('updateToken', payload);
     } else {
       localStorage.removeItem('auth_token');
       delete ajax.defaults.headers.common['Authorization'];
       commit('updateToken', '');
     }
-  },
-  refreshToken({ dispatch }) {
-    const token = localStorage.getItem('auth_token');
-    dispatch('updateToken', token);
   },
   // sms verification
   requestVerifyCode() {
