@@ -1,7 +1,7 @@
 <template>
   <div class="p-4 space-y-4">
     <BaseCard
-      v-for="details in getPaymentMethods"
+      v-for="details in paymentMethods"
       className="flex-col gap-2"
       padding="px-4 py-4"
       :key="details.id"
@@ -50,7 +50,8 @@ import PaymentMethodCard from '@/components/paymentMethods/PaymentMethodCard.vue
 import AddCardInfoForm from '@/components/paymentMethods/AddCardInfoForm.vue';
 import BaseCard from '@/components/BaseCard.vue';
 
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions } from 'vuex';
+import { PaymentMethodService } from '@whynotearth/meredith-axios';
 
 export default {
   name: 'PaymentMethods',
@@ -80,37 +81,38 @@ export default {
   created() {
     this.fetchAllPaymentMethods();
   },
-  computed: {
-    ...mapGetters('paymentMethod', ['getPaymentMethods'])
-  },
   methods: {
-    ...mapActions('paymentMethod', [
-      'fetchPaymentMethods',
-      'removePaymentMethod'
-    ]),
     ...mapActions('alerter', ['show', 'updateVisibility']),
     ...mapActions('loading', ['loadingUpdate']),
     showAddPaymentMethodForms(value) {
       this.isFormVisible = value;
     },
-    fetchAllPaymentMethods() {
-      this.loadingUpdate(true);
-      this.fetchPaymentMethods({
-        params: { tenantSlug: this.tenantSlug }
-      })
-        .then(() => {})
-        .catch(() => {})
-        .finally(() => {
-          this.loadingUpdate(false);
+    async fetchAllPaymentMethods() {
+      try {
+        this.loadingUpdate(true);
+        const paymentMethods = await PaymentMethodService.paymentmethods1({
+          tenantSlug: 'sdsdsdsd'
         });
+        this.paymentMethods = [...paymentMethods];
+      } catch {
+        this.show({
+          text: 'Error fetching details, refreshing may help',
+          button: {
+            title: 'Okay',
+            action: () => this.updateVisibility(false)
+          }
+        });
+      } finally {
+        this.loadingUpdate(false);
+      }
     },
     async deletePaymentMethod(id) {
       try {
         this.loadingUpdate(true);
-        let data = {
-          params: { tenantSlug: this.tenantSlug, id: id }
-        };
-        await this.removePaymentMethod(data);
+        await PaymentMethodService.paymentmethods2({
+          tenantSlug: this.tenantSlug,
+          id: id
+        });
         this.show({
           text: 'Payment Method Deleted Successfully',
           button: {

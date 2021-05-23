@@ -142,6 +142,7 @@ import {
   maxLength
 } from 'vuelidate/lib/validators';
 import { mapActions, mapGetters } from 'vuex';
+import { PaymentMethodService } from '@whynotearth/meredith-axios';
 
 export default {
   name: 'AddCardInfoForm',
@@ -228,7 +229,6 @@ export default {
     ...mapActions('loading', ['loadingUpdate']),
     ...mapActions('paymentMethod', [
       'generateToken',
-      'addPaymentMethod',
       'getStripePublishableKeys'
     ]),
     ...mapActions('alerter', ['show', 'updateVisibility']),
@@ -290,12 +290,10 @@ export default {
       });
       if (this.getToken) {
         try {
-          await this.addPaymentMethod({
-            params: {
-              tenantSlug: this.tenantSlug,
-              body: {
-                token: this.getToken.id
-              }
+          await PaymentMethodService.paymentmethods({
+            tenantSlug: this.tenantSlug,
+            body: {
+              token: this.getToken.id
             }
           });
           this.show({

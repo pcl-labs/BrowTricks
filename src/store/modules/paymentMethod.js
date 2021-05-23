@@ -1,7 +1,4 @@
-import {
-  PaymentMethodService,
-  CompanyService
-} from '@whynotearth/meredith-axios';
+import { CompanyService } from '@whynotearth/meredith-axios';
 
 export default {
   namespaced: true,
@@ -37,12 +34,6 @@ export default {
     },
     updateStripeKey(state, payload) {
       state.stripeKey = payload;
-    },
-    updatePaymentMethods(state, payload) {
-      state.paymentMethods = payload;
-    },
-    addPaymentMethod(state, payload) {
-      state.paymentMethods.push(payload);
     }
   },
   actions: {
@@ -75,41 +66,6 @@ export default {
           });
       });
     },
-    fetchPaymentMethods({ commit }, { params }) {
-      return new Promise((resolve, reject) => {
-        PaymentMethodService.paymentmethods1(params)
-          .then(res => {
-            commit('updatePaymentMethods', res);
-            resolve(res);
-          })
-          .catch(err => {
-            reject(err);
-          });
-      });
-    },
-    addPaymentMethod({ commit }, { params }) {
-      return new Promise((resolve, reject) => {
-        PaymentMethodService.paymentmethods(params)
-          .then(res => {
-            commit('addPaymentMethod', res);
-            resolve(res);
-          })
-          .catch(err => {
-            reject(err);
-          });
-      });
-    },
-    removePaymentMethod(context, { params }) {
-      return new Promise((resolve, reject) => {
-        PaymentMethodService.paymentmethods2(params)
-          .then(res => {
-            resolve(res);
-          })
-          .catch(err => {
-            reject(err);
-          });
-      });
-    },
     updateCardElements({ commit }, payload) {
       commit('cardInfoUpdate', payload);
     }
@@ -120,9 +76,6 @@ export default {
     },
     getStripeKey: state => {
       return state.stripeKey;
-    },
-    getPaymentMethods: state => {
-      return state.paymentMethods;
     }
   }
 };
