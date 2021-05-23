@@ -111,9 +111,10 @@
             />
           </template>
         </RadioInput>
+        <hr class="divide-on-background-image p-0 px-4 mt-2" />
         <Button
           :to="{ name: 'PaymentMethods' }"
-          title="Add Credit Card"
+          title="Add another card"
           textColor="text-success underline"
           background="bg-none"
           textJustify="justify-left"
