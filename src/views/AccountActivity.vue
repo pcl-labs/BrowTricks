@@ -52,7 +52,6 @@ export default {
       this.accountActivityDetails = await this.getPaymentDetails({
         tenantSlug: this.tenantSlug
       });
-      console.log(this.accountActivityDetails.length);
     } catch (error) {
       this.show({
         text: 'Error fetching details. Please try again later',

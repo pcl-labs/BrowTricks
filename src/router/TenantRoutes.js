@@ -135,5 +135,19 @@ export const TenantPanelRoutes = [
         backRoute: { name: 'AccountBilling' }
       }
     }
+  },
+  {
+    path: '/tenant/:tenantSlug/subscriptions',
+    name: 'Subscriptions',
+    props: true,
+    component: () => import('@/views/Subscriptions.vue'),
+    meta: {
+      layout: AppBarCardLayout,
+      needsUserInfo: true,
+      appBar: {
+        title: 'Subscription',
+        backRoute: { name: 'AccountBilling' }
+      }
+    }
   }
 ];

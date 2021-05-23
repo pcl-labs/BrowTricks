@@ -308,11 +308,8 @@ export default {
             }
           });
         } finally {
-          this.$v.$reset();
-          this.cardNumber.clear();
-          this.cardExpiry.clear();
-          this.cardCvc.clear();
           this.loadingUpdate(false);
+          this.resetForm();
           this.$emit('show-form', false);
           this.$emit('refetch-cards');
         }
@@ -320,6 +317,17 @@ export default {
     },
     showSnackbar(data) {
       this.$emit('show-snackbar', data);
+    },
+    resetForm() {
+      this.cardNumber.clear();
+      this.cardExpiry.clear();
+      this.cardCvc.clear();
+      for (const obj in this.userInfo) {
+        this.userInfo[obj] = '';
+      }
+      for (const obj in this.billingInfo) {
+        this.billingInfo[obj] = '';
+      }
     }
   }
 };

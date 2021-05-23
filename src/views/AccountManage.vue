@@ -72,8 +72,8 @@
 <script>
 import ExpansionPanel from '@/components/ExpansionPanel.vue';
 import BaseDrawerActions from '@/components/BaseDrawerActions.vue';
-
 import PlanPriceCards from '@/components/plans/PlanPriceCards.vue';
+
 export default {
   name: 'AccountSettings',
   components: {

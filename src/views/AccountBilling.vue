@@ -21,6 +21,11 @@
         title="Subscription"
         middleText="Standard"
         middleTextAlignment="text-right"
+        @click="
+          $router.push({
+            name: 'Subscriptions'
+          })
+        "
       />
     </div>
   </div>

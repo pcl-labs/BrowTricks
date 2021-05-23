@@ -8,8 +8,11 @@
     @keyup.space="selectOption"
   >
     <div
-      class="rounded-full h-5 w-5 p-1 border-2 border-accent mr-4"
-      :class="{ 'border-accent': selectedOption === value }"
+      :class="[
+        { 'border-accent': selectedOption === value },
+        marginRight,
+        'rounded-full h-5 w-5 p-1 border-2 border-accent'
+      ]"
     >
       <div
         class="h-full w-full rounded-full"
@@ -49,6 +52,10 @@ export default {
     className: {
       type: String,
       default: ''
+    },
+    marginRight: {
+      type: String,
+      default: 'mr-4'
     }
   },
   methods: {
