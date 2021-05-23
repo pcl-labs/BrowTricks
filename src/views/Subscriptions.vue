@@ -4,7 +4,7 @@
       <div class="flex w-full">
         <div class="flex-grow text-left">
           <p class="tg-body-mobile">
-            $20/YEAR
+            $0/YEAR
           </p>
           <p class="tg-caption-mobile text-on-background text-opacity-50">
             Standard Subscription

@@ -9,7 +9,7 @@
           v-model="selected"
         />
         <h3>
-          Upgrade to Pro for video cloud storage up to 500mg and unlimited PMU
+          Upgrade to Pro for video cloud storage up to 500MB and unlimited PMU
           custom form builder
         </h3>
         <hr class="divide-on-background-image" />
