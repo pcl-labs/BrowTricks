@@ -21,6 +21,21 @@
           />
         </div>
       </div>
+      <div class="flex justify-between" v-show="couponcode">
+        <div
+          class="text-left tg-caption-mobile text-on-background text-opacity-50"
+        >
+          <p>First Year (Ends 4 August, 2020)</p>
+          <p class="tg-body-mobile">
+            <strike>20.00</strike>
+            <span class="text-on-background"> $15.00</span>
+          </p>
+          <p>Code {{ couponcode }}: Ends 28 June, 2020</p>
+        </div>
+        <div class="self-center">
+          <IconClear @click="isRemoveCouponModalOpen = true" />
+        </div>
+      </div>
       <hr class="divide-on-background-image p-0 px-4" />
       <div class="space-y-4 mt-4">
         <div class="flex justify-between">
@@ -75,13 +90,13 @@
             width="w-xs"
             margin="mx-0"
             textJustify="text-right"
-            @clicked="isCouponModalOpen = true"
+            @clicked="isAddCouponModalOpen = true"
           />
         </div>
       </div>
     </BaseCard>
     <BaseCard>
-      <div class="flex flex-col">
+      <div class="flex flex-col w-full">
         <RadioInput
           v-for="method in paymentMethods"
           :key="method.id"
@@ -96,6 +111,13 @@
             />
           </template>
         </RadioInput>
+        <Button
+          :to="{ name: 'PaymentMethods' }"
+          title="Add Credit Card"
+          textColor="text-accent"
+          background="bg-none"
+          textJustify="justify-left"
+        />
       </div>
     </BaseCard>
     <BaseCard className="flex-col gap-2">
@@ -152,24 +174,63 @@
             width="w-full"
             radius="rounded-none"
             background="bg-accent"
-          >
-          </Button>
+          />
         </div>
       </BaseDrawerActions>
     </div>
 
     <BaseDialog
-      v-if="isCouponModalOpen"
-      @close="isCouponModalOpen = false"
+      v-if="isAddCouponModalOpen"
+      @close="isAddCouponModalOpen = false"
       title="Add Coupon Code"
     >
       <template #content>
-        <MaterialInput label="Coupon Code" placeholder="Coupon Code" />
-        <hr class="divide-on-background-image p-0 px-4 mt-6" />
-        <div class="text-center mt-6">
-          <a href="#" class="text-accent tg-color-label-mobile">
-            Apply Code
-          </a>
+        <div>
+          <MaterialInput
+            label="Coupon Code"
+            placeholder="Coupon Code"
+            v-model="couponcode"
+          />
+          <hr class="divide-on-background-image p-0 px-4 mt-6" />
+          <div class="text-center mt-6">
+            <Button
+              title="Apply Coupon"
+              textColor="text-accent"
+              background="bg-none"
+              padding="px-0"
+              @clicked="applyCouponCode"
+            />
+          </div>
+        </div>
+        <div v-show="couponcode"></div>
+      </template>
+    </BaseDialog>
+    <BaseDialog
+      v-if="isRemoveCouponModalOpen"
+      @close="isRemoveCouponModalOpen = false"
+      title="Remove Coupon Code"
+    >
+      <template #content>
+        <p>This will revert your subscription to its original price.</p>
+        <div class="flex flex-row-reverse gap-8">
+          <Button
+            title="Agree"
+            textColor="text-accent"
+            background="bg-none"
+            padding="px-0"
+            margin="mx-0"
+            width="w-xs"
+            @clicked="removeCouponCode"
+          />
+          <Button
+            title="Cancel"
+            textColor="text-error"
+            background="bg-none"
+            padding="px-0"
+            margin="mx-0"
+            width="w-xs"
+            @clicked="isCouponModalOpen = false"
+          />
         </div>
       </template>
     </BaseDialog>
@@ -184,6 +245,7 @@ import BaseDialog from '@/components/BaseDialog.vue';
 import MaterialInput from '@/components/inputs/MaterialInput.vue';
 import PaymentMethodCard from '@/components/paymentMethods/PaymentMethodCard.vue';
 import RadioInput from '@/components/inputs/RadioInput.vue';
+import IconClear from '@/assets/icons/clear.svg';
 
 import { mapActions } from 'vuex';
 import { PaymentMethodService } from '@whynotearth/meredith-axios';
@@ -203,19 +265,30 @@ export default {
     BaseDialog,
     MaterialInput,
     PaymentMethodCard,
-    RadioInput
+    RadioInput,
+    IconClear
   },
   data() {
     return {
       isOpen: false,
       selectedPlan: 'free',
-      isCouponModalOpen: false,
+      isAddCouponModalOpen: false,
+      isRemoveCouponModalOpen: false,
       paymentMethods: [],
-      selectedPaymentMethod: {}
+      selectedPaymentMethod: {},
+      couponcode: ''
     };
   },
   created() {
     this.init();
+  },
+  computed: {
+    getTitle() {
+      return `Upgrade to ${this.selectedPlan} Now`;
+    },
+    getCouponDialogTitle() {
+      return this.couponcode ? 'Remove ' : 'Add ' + 'Coupon Code';
+    }
   },
   methods: {
     ...mapActions('loading', ['loadingUpdate']),
