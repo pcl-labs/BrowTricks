@@ -83,7 +83,7 @@
     <BaseCard>
       <div class="flex flex-col">
         <RadioInput
-          v-for="method in getPaymentMethods"
+          v-for="method in paymentMethods"
           :key="method.id"
           v-model="selectedPaymentMethod"
           :value="method"
@@ -148,7 +148,7 @@
         </div>
         <div class="w-full fixed bottom-0">
           <Button
-            :title="getTitle"
+            :title="`Upgrade to ${selectedPlan} Now`"
             width="w-full"
             radius="rounded-none"
             background="bg-accent"
@@ -185,7 +185,8 @@ import MaterialInput from '@/components/inputs/MaterialInput.vue';
 import PaymentMethodCard from '@/components/paymentMethods/PaymentMethodCard.vue';
 import RadioInput from '@/components/inputs/RadioInput.vue';
 
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions } from 'vuex';
+import { PaymentMethodService } from '@whynotearth/meredith-axios';
 
 export default {
   name: 'Subscriptions',
@@ -209,34 +210,38 @@ export default {
       isOpen: false,
       selectedPlan: 'free',
       isCouponModalOpen: false,
+      paymentMethods: [],
       selectedPaymentMethod: {}
     };
   },
   created() {
-    this.fetchAllPaymentMethods();
-  },
-  computed: {
-    ...mapGetters('paymentMethod', ['getPaymentMethods']),
-    getTitle() {
-      return `Upgrade to ${this.selectedPlan} Now`;
-    }
+    this.init();
   },
   methods: {
-    ...mapActions('paymentMethod', ['fetchPaymentMethods']),
     ...mapActions('loading', ['loadingUpdate']),
+
+    async init() {
+      try {
+        this.loadingUpdate(true);
+        const paymentMethods = await PaymentMethodService.paymentmethods1({
+          tenantSlug: this.tenantSlug
+        });
+        this.paymentMethods = [...paymentMethods];
+        this.selectedPaymentMethod = paymentMethods[0];
+      } catch {
+        this.show({
+          text: 'Error fetching details, refreshing may help',
+          button: {
+            title: 'Okay',
+            action: () => this.updateVisibility(false)
+          }
+        });
+      } finally {
+        this.loadingUpdate(false);
+      }
+    },
     selectPlan(value) {
       this.selectedPlan = value;
-    },
-    fetchAllPaymentMethods() {
-      this.loadingUpdate(true);
-      this.fetchPaymentMethods({
-        params: { tenantSlug: this.tenantSlug }
-      })
-        .then(() => {})
-        .catch(() => {})
-        .finally(() => {
-          this.loadingUpdate(false);
-        });
     }
   }
 };

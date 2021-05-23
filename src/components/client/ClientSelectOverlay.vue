@@ -109,7 +109,7 @@ export default {
           }
         })
         .catch(() => {
-          $state.error();
+          $state.error(); // To trigger the error function of the infinite loader
         });
     },
     reset: debounce(
