@@ -33,7 +33,10 @@
     </template>
 
     <template #error>
-      <div class="text-error tg-body-mobile mt-2" v-if="validatorModel.$error">
+      <div
+        class="text-left text-error tg-body-mobile mt-2"
+        v-if="validatorModel.$error"
+      >
         <slot />
       </div>
     </template>
