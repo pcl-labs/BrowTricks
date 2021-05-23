@@ -80,32 +80,22 @@
         </div>
       </div>
     </BaseCard>
-    <BaseCard
-      className="flex-col gap-2"
-      v-for="methods in getPaymentMethods"
-      :key="methods.id"
-    >
-      <div class="flex">
-        <div class="self-center mb-8">
-          <RadioInput marginRight="mr-0" :value="methods.id">
-            <template #title>
-              <span> </span>
-            </template>
-          </RadioInput>
-        </div>
-        <PaymentMethodCard :paymentMethod="methods" :tenantSlug="tenantSlug">
-          <hr class="divide-on-background-image -mx-2 w-full" />
-          <div class="flex justify-center mt-2">
-            <Button
-              title="Change Payment Method"
-              textColor="text-accent"
-              background="bg-none"
-              width="w-xs"
-              padding="px-0"
-              margin="mx-6"
+    <BaseCard>
+      <div class="flex flex-col">
+        <RadioInput
+          v-for="method in getPaymentMethods"
+          :key="method.id"
+          v-model="selectedPaymentMethod"
+          :value="method"
+          marginRight="mr-0"
+        >
+          <template #title>
+            <PaymentMethodCard
+              :paymentMethod="method"
+              :tenantSlug="tenantSlug"
             />
-          </div>
-        </PaymentMethodCard>
+          </template>
+        </RadioInput>
       </div>
     </BaseCard>
     <BaseCard className="flex-col gap-2">
@@ -146,7 +136,10 @@
             Upgrade Your Plan now!
           </h4>
           <div class="flex justify-center tg-body-mobile">
-            <p>Paying with Visa 1234</p>
+            <p>
+              Paying with {{ selectedPaymentMethod.brand }}
+              {{ selectedPaymentMethod.last4 }}
+            </p>
             <span class="text-error ml-1">Edit</span>
           </div>
         </div>
@@ -215,7 +208,8 @@ export default {
     return {
       isOpen: false,
       selectedPlan: 'free',
-      isCouponModalOpen: false
+      isCouponModalOpen: false,
+      selectedPaymentMethod: {}
     };
   },
   created() {
