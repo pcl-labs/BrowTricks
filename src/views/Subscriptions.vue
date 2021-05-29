@@ -32,9 +32,9 @@
           </p>
           <p>Code {{ couponcode }}: Ends 28 June, 2020</p>
         </div>
-        <div class="self-center">
-          <IconClear @click="isRemoveCouponModalOpen = true" />
-        </div>
+        <button class="self-center" @click="isRemoveCouponModalOpen = true">
+          <IconClear />
+        </button>
       </div>
       <hr class="divide-on-background-image p-0 px-4" />
       <div class="space-y-4 mt-4">
@@ -185,25 +185,21 @@
       title="Add Coupon Code"
     >
       <template #content>
-        <div>
-          <MaterialInput
-            label="Coupon Code"
-            placeholder="Coupon Code"
-            v-model="couponcode"
-          />
-          <hr class="divide-on-background-image p-0 px-4 mt-6" />
-          <div class="text-center mt-6">
-            <Button
-              title="Apply Coupon"
-              textColor="text-success underline"
-              :background="null"
-              padding="px-0"
-              @clicked="applyCouponCode"
-            />
-          </div>
-        </div>
-        <div v-show="couponcode"></div>
+        <MaterialInput
+          label="Coupon Code"
+          placeholder="Coupon Code"
+          v-model="couponcode"
+        />
       </template>
+      <Button
+        title="Apply Coupon"
+        textColor="text-success"
+        :background="null"
+        padding="px-0"
+        width="w-xs"
+        margin="mx-0"
+        @clicked="applyCouponCode"
+      />
     </BaseDialog>
     <BaseDialog
       v-if="isRemoveCouponModalOpen"
@@ -212,27 +208,27 @@
     >
       <template #content>
         <p>This will revert your subscription to its original price.</p>
-        <div class="flex flex-row-reverse gap-8">
-          <Button
-            title="Agree"
-            textColor="text-success underline"
-            :background="null"
-            padding="px-0"
-            margin="mx-0"
-            width="w-xs"
-            @clicked="removeCouponCode"
-          />
-          <Button
-            title="Cancel"
-            textColor="text-error"
-            :background="null"
-            padding="px-0"
-            margin="mx-0"
-            width="w-xs"
-            @clicked="isCouponModalOpen = false"
-          />
-        </div>
       </template>
+      <div class="flex gap-8">
+        <Button
+          title="Cancel"
+          textColor="text-error"
+          :background="null"
+          padding="px-0"
+          margin="mx-0"
+          width="w-xs"
+          @clicked="isRemoveCouponModalOpen = false"
+        />
+        <Button
+          title="Agree"
+          textColor="text-success"
+          :background="null"
+          padding="px-0"
+          margin="mx-0"
+          width="w-xs"
+          @clicked="removeCouponCode"
+        />
+      </div>
     </BaseDialog>
   </div>
 </template>
