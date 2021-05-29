@@ -112,7 +112,7 @@
         </p>
 
         <div>
-          <Button class="mb-4" type="submit" title="Save" />
+          <Button type="submit" title="Save" class="mb-4" />
           <Button
             title="Logout"
             :background="null"

@@ -46,7 +46,12 @@
         </p>
 
         <div>
-          <Button type="submit" title="Create" />
+          <Button type="submit" title="Create" class="mb-4" />
+          <Button
+            title="Logout"
+            :background="null"
+            :to="{ name: 'AuthLogout' }"
+          />
         </div>
       </form>
     </div>
