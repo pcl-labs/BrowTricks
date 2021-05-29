@@ -14,7 +14,7 @@
           <Button
             title="Manage"
             textColor="text-success underline"
-            background="bg-none"
+            :background="null"
             width="w-xs"
             padding="px-0"
             @clicked="isOpen = true"
@@ -85,7 +85,7 @@
           <Button
             title="Add Coupon"
             textColor="text-success underline"
-            background="bg-none"
+            :background="null"
             padding="px-0"
             width="w-xs"
             margin="mx-0"
@@ -116,7 +116,7 @@
           :to="{ name: 'PaymentMethods' }"
           title="Add another card"
           textColor="text-success underline"
-          background="bg-none"
+          :background="null"
           textJustify="justify-left"
         />
       </div>
@@ -138,9 +138,9 @@
       <hr class="divide-on-background-image p-0 px-4 mt-2" />
       <div class="text-center mt-2">
         <Button
-          title=" View Transaction"
+          title="View Transaction"
           textColor="text-success underline"
-          background="bg-none"
+          :background="null"
           width="w-xs"
           padding="px-0"
           :to="{ name: 'AccountActivity' }"
@@ -196,7 +196,7 @@
             <Button
               title="Apply Coupon"
               textColor="text-success underline"
-              background="bg-none"
+              :background="null"
               padding="px-0"
               @clicked="applyCouponCode"
             />
@@ -216,7 +216,7 @@
           <Button
             title="Agree"
             textColor="text-success underline"
-            background="bg-none"
+            :background="null"
             padding="px-0"
             margin="mx-0"
             width="w-xs"
@@ -225,7 +225,7 @@
           <Button
             title="Cancel"
             textColor="text-error"
-            background="bg-none"
+            :background="null"
             padding="px-0"
             margin="mx-0"
             width="w-xs"
