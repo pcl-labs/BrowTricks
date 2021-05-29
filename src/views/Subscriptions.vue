@@ -318,6 +318,15 @@ export default {
     },
     selectPlan(value) {
       this.selectedPlan = value;
+    },
+    applyCouponCode() {
+      if (this.couponcode) {
+        this.isAddCouponModalOpen = false;
+      }
+    },
+    removeCouponCode() {
+      this.couponcode = '';
+      this.isRemoveCouponModalOpen = false;
     }
   }
 };
