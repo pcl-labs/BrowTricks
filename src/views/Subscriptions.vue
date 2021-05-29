@@ -143,7 +143,6 @@
           background="bg-none"
           width="w-xs"
           padding="px-0"
-          margin="mx-6"
           :to="{ name: 'AccountActivity' }"
         />
       </div>
