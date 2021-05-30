@@ -123,29 +123,38 @@
     </BaseCard>
     <BaseCard className="flex-col gap-2">
       <p class="tg-h2-mobile text-left">
-        Transaction
+        Transactions
       </p>
-      <div class="space-y-4 mt-4">
-        <div class="flex justify-between">
-          <span class="text-on-background text-opacity-50 tg-body-mobile">
-            28 May, 2020
-          </span>
-          <span class="text-on-background tg-body-bold-mobile">
-            $20.20
-          </span>
+      <template v-if="transactions.length">
+        <div
+          v-for="transaction in transactions"
+          :key="transaction.id"
+          class="space-y-4 mt-4"
+        >
+          <div class="flex justify-between">
+            <span class="text-on-background text-opacity-50 tg-body-mobile">
+              28 May, 2020
+            </span>
+            <span class="text-on-background tg-body-bold-mobile">
+              $20.20
+            </span>
+          </div>
         </div>
-      </div>
-      <hr class="divide-on-background-image p-0 px-4 mt-2" />
-      <div class="text-center mt-2">
-        <Button
-          title="View Transaction"
-          textColor="text-success underline"
-          :background="null"
-          width="w-xs"
-          padding="px-0"
-          :to="{ name: 'AccountActivity' }"
-        />
-      </div>
+        <hr class="divide-on-background-image p-0 px-4 mt-2" />
+        <div class="text-center mt-2">
+          <Button
+            title="View Transaction"
+            textColor="text-success underline"
+            :background="null"
+            width="w-xs"
+            padding="px-0"
+            :to="{ name: 'AccountActivity' }"
+          />
+        </div>
+      </template>
+      <template v-else>
+        No transactions found.
+      </template>
     </BaseCard>
     <div class="w-full">
       <BaseDrawerActions
@@ -154,26 +163,30 @@
         drawerClasses="flex-col overflow-y-auto"
       >
         <div class="p-4 space-y-2">
-          <h4 class="title text-opacity-high text-left tg-h2-mobile">
+          <h2 class="title mb-4 text-opacity-high tg-h2-mobile">
             Upgrade Your Plan now!
-          </h4>
+          </h2>
           <div class="flex justify-center tg-body-mobile">
             <p>
-              Paying with {{ selectedPaymentMethod.brand }}
-              {{ selectedPaymentMethod.last4 }}
+              Paying with
+              <b>
+                {{ selectedPaymentMethod.brand }}
+                {{ selectedPaymentMethod.last4 }}
+              </b>
             </p>
-            <span class="text-error ml-1">Edit</span>
+            <!-- <span class="text-error ml-1">Edit</span> -->
           </div>
         </div>
         <div class="space-y-4 p-4 pb-16">
-          <PlanPriceCards @selected="selectPlan" :selectedPlan="selectedPlan" />
+          <PlanPriceCards v-model="selectedPlan" />
         </div>
         <div class="w-full fixed bottom-0">
           <Button
-            :title="`Upgrade to ${selectedPlan} Now`"
+            :title="`Upgrade to ${selectedPlan.name} Now`"
             width="w-full"
             radius="rounded-none"
             background="bg-accent"
+            @clicked="subscribe"
           />
         </div>
       </BaseDrawerActions>
@@ -242,7 +255,6 @@ import MaterialInput from '@/components/inputs/MaterialInput.vue';
 import PaymentMethodCard from '@/components/paymentMethods/PaymentMethodCard.vue';
 import RadioInput from '@/components/inputs/RadioInput.vue';
 import IconClear from '@/assets/icons/clear.svg';
-
 import { mapActions } from 'vuex';
 import {
   PaymentMethodService,
@@ -270,36 +282,33 @@ export default {
   data() {
     return {
       isOpen: false,
-      selectedPlan: 'free',
+      selectedPlan: {},
       isAddCouponModalOpen: false,
       isRemoveCouponModalOpen: false,
       paymentMethods: [],
       selectedPaymentMethod: {},
-      couponcode: ''
+      couponcode: '',
+      transactions: []
     };
   },
   created() {
     this.init();
   },
   computed: {
-    getTitle() {
-      return `Upgrade to ${this.selectedPlan} Now`;
-    },
     getCouponDialogTitle() {
       return this.couponcode ? 'Remove ' : 'Add ' + 'Coupon Code';
     }
   },
   methods: {
     ...mapActions('loading', ['loadingUpdate']),
+    ...mapActions('alerter', ['show', 'updateVisibility']),
 
     async init() {
       try {
         this.loadingUpdate(true);
-        const paymentMethods = await PaymentMethodService.paymentmethods1({
-          tenantSlug: this.tenantSlug
-        });
-        this.paymentMethods = [...paymentMethods];
-        this.selectedPaymentMethod = paymentMethods[0];
+        await Promise.all[
+          (this.loadPaymentMethods(), this.loadSubscriptionPayments())
+        ];
       } catch {
         this.show({
           text: 'Error fetching details, refreshing may help',
@@ -312,8 +321,20 @@ export default {
         this.loadingUpdate(false);
       }
     },
-    selectPlan(value) {
-      this.selectedPlan = value;
+    async loadPaymentMethods() {
+      const paymentMethods = await PaymentMethodService.paymentmethods1({
+        tenantSlug: this.tenantSlug
+      });
+      this.paymentMethods = [...paymentMethods];
+      this.selectedPaymentMethod = paymentMethods[0];
+      return paymentMethods;
+    },
+    async loadSubscriptionPayments() {
+      const payments = await SubscriptionService.payments({
+        tenantSlug: this.tenantSlug
+      });
+      this.transactions = [...payments];
+      return payments;
     },
     applyCouponCode() {
       if (this.couponcode) {
@@ -323,6 +344,35 @@ export default {
     removeCouponCode() {
       this.couponcode = '';
       this.isRemoveCouponModalOpen = false;
+    },
+    async subscribe() {
+      try {
+        this.loadingUpdate(true);
+        const payload = {
+          tenantSlug: this.tenantSlug,
+          body: {
+            planId: this.selectedPlan.id,
+            cardId: this.selectedPaymentMethod.id,
+            couponCode: this.couponcode
+          }
+        };
+        const response = await SubscriptionService.subscriptions(payload);
+        console.log(response);
+      } catch (error) {
+        this.show({
+          text: 'Error subscribing, try again or contact us.',
+          button: {
+            title: 'Contact Us',
+            action: () => {
+              window.open('https://browtricksproductsorg.zendesk.com/');
+              this.updateVisibility(false);
+            }
+          }
+        });
+      } finally {
+        this.isOpen = false;
+        this.loadingUpdate(false);
+      }
     }
   }
 };
