@@ -27,6 +27,7 @@
 import ActivityDetailsRow from '@/components/activity/ActivityDetailsRow.vue';
 import IconRectangle from '@/assets/icons/Rectangle.svg';
 import { mapActions } from 'vuex';
+import { SubscriptionService } from '@whynotearth/meredith-axios';
 
 export default {
   name: 'AccountActivity',
@@ -42,16 +43,13 @@ export default {
   },
   data() {
     return {
-      // replace mockData with data coming from api
       accountActivityDetails: []
     };
   },
   async created() {
     try {
       this.loadingUpdate(true);
-      this.accountActivityDetails = await this.getPaymentDetails({
-        tenantSlug: this.tenantSlug
-      });
+      this.loadSubscriptionPayments();
     } catch (error) {
       this.show({
         text: 'Error fetching details. Please try again later',
@@ -65,9 +63,16 @@ export default {
     }
   },
   methods: {
-    ...mapActions('accountActivity', ['getPaymentDetails']),
     ...mapActions('loading', ['loadingUpdate']),
-    ...mapActions('alerter', ['show', 'updateVisibility'])
+    ...mapActions('alerter', ['show', 'updateVisibility']),
+
+    async loadSubscriptionPayments() {
+      const payments = await SubscriptionService.payments({
+        tenantSlug: this.tenantSlug
+      });
+      this.transactions = [...payments];
+      return payments;
+    }
   }
 };
 </script>
