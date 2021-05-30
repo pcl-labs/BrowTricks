@@ -110,8 +110,8 @@ export default {
       try {
         this.loadingUpdate(true);
         await PaymentMethodService.paymentmethods2({
-          tenantSlug: this.tenantSlug,
-          id: id
+          id,
+          tenantSlug: this.tenantSlug
         });
         this.show({
           text: 'Payment Method Deleted Successfully',

@@ -118,6 +118,7 @@ export default {
           domain: 'browtricks.com'
         });
         this.plans = [...plans];
+        this.selectedPlan = plans[0]; // TODO: Replace this with active subscription of the user.
       } catch {
         this.show({
           text: 'Error fetching plans, refreshing may help',
