@@ -112,6 +112,29 @@
         >
         </ExpansionPanel>
       </div>
+      <div class="pb-4">
+        <h3 class="tg-caption-mobile text-on-surface mb-6">Support</h3>
+
+        <!-- <ExpansionPanel
+        title="Terms Of Use"
+        @click="
+          $router.push({
+            name: 'TermsOfUse'
+          })
+        "
+      >
+      </ExpansionPanel> -->
+
+        <ExpansionPanel
+          title="Help Center"
+          @click="
+            $router.push({
+              name: 'HelpCenter'
+            })
+          "
+        >
+        </ExpansionPanel>
+      </div>
     </div>
   </PageContentBoard>
 </template>

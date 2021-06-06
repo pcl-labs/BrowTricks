@@ -79,5 +79,19 @@ export const TenantPanelRoutes = [
         backRoute: { name: 'AccountSettings' }
       }
     }
+  },
+  {
+    path: '/tenant/:tenantSlug/help-center',
+    name: 'HelpCenter',
+    props: true,
+    component: () => import('@/views/HelpCenter.vue'),
+    meta: {
+      layout: AppBarCardLayout,
+      needsUserInfo: true,
+      appBar: {
+        title: 'Help',
+        backRoute: { name: 'AccountSettings' }
+      }
+    }
   }
 ];
