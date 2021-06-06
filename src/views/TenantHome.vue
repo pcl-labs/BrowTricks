@@ -87,6 +87,48 @@
 
       <!-- content -->
 
+      <div class="bg-accent p-4 space-y-2">
+        <h2 class="tg-caption tg-h2-mobile text-on-background">Tutorials</h2>
+        <div class="flex overflow-x-scroll space-x-2">
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/deextA_8GAI"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/IbKukl8CHYM"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/o8nOU01QZew"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/2nnryrDD2SU"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+
       <!-- Tutorials dialog -->
       <BaseDialog
         v-if="isTutorialsModalOpen"
