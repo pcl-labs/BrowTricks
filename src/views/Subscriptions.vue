@@ -43,26 +43,22 @@
             Subscription Status
           </span>
           <span class="text-on-background tg-body-bold-mobile">
-            Active
-          </span>
-        </div>
-        <div class="flex justify-between">
-          <span class="text-on-background text-opacity-50 tg-body-mobile">
-            Payments
-          </span>
-          <span class="text-on-background tg-body-bold-mobile">
-            Automatic
+            {{ activeSubscription.status }}
           </span>
         </div>
         <div class="flex justify-between">
           <span class="text-on-background text-opacity-50 tg-body-mobile">
             Last Payment Date
           </span>
-          <span class="text-on-background tg-body-bold-mobile">
-            28 May, 2020
+          <span
+            v-if="transactions.length"
+            class="text-on-background tg-body-bold-mobile"
+          >
+            {{ formatDate(transactions[0].paymentDate) }}
           </span>
+          <span v-else>-</span>
         </div>
-        <div class="flex justify-between">
+        <!-- <div class="flex justify-between">
           <span class="text-on-background text-opacity-50 tg-body-mobile">
             Last Repayment Amount
           </span>
@@ -77,8 +73,8 @@
           <span class="text-on-background tg-body-bold-mobile">
             28 June, 2020
           </span>
-        </div>
-        <div class="flex justify-between">
+        </div> -->
+        <!-- <div class="flex justify-between">
           <span class="text-on-background text-opacity-50 tg-body-mobile">
             Coupon Code
           </span>
@@ -92,7 +88,7 @@
             textJustify="text-right"
             @clicked="isAddCouponModalOpen = true"
           />
-        </div>
+        </div> -->
       </div>
     </BaseCard>
     <BaseCard>
@@ -133,10 +129,10 @@
         >
           <div class="flex justify-between">
             <span class="text-on-background text-opacity-50 tg-body-mobile">
-              28 May, 2020
+              {{ formatDate(transaction.paymentDate) }}
             </span>
             <span class="text-on-background tg-body-bold-mobile">
-              $20.20
+              ${{ transaction.total }}
             </span>
           </div>
         </div>
@@ -256,6 +252,7 @@ import PaymentMethodCard from '@/components/paymentMethods/PaymentMethodCard.vue
 import RadioInput from '@/components/inputs/RadioInput.vue';
 import IconClear from '@/assets/icons/clear.svg';
 import { mapActions } from 'vuex';
+import { format } from 'date-fns';
 import {
   PaymentMethodService,
   SubscriptionService
@@ -288,16 +285,12 @@ export default {
       paymentMethods: [],
       selectedPaymentMethod: {},
       couponcode: '',
-      transactions: []
+      transactions: [],
+      activeSubscription: {}
     };
   },
   created() {
     this.init();
-  },
-  computed: {
-    getCouponDialogTitle() {
-      return this.couponcode ? 'Remove ' : 'Add ' + 'Coupon Code';
-    }
   },
   methods: {
     ...mapActions('loading', ['loadingUpdate']),
@@ -307,7 +300,9 @@ export default {
       try {
         this.loadingUpdate(true);
         await Promise.all[
-          (this.loadPaymentMethods(), this.loadSubscriptionPayments())
+          (this.loadPaymentMethods(),
+          this.loadSubscriptionPayments(),
+          this.fetchActiveSubscription())
         ];
       } catch {
         this.show({
@@ -320,6 +315,9 @@ export default {
       } finally {
         this.loadingUpdate(false);
       }
+    },
+    formatDate(date) {
+      return format(new Date(date), 'dd MMM, yyyy');
     },
     async loadPaymentMethods() {
       const paymentMethods = await PaymentMethodService.paymentmethods1({
@@ -344,6 +342,12 @@ export default {
     removeCouponCode() {
       this.couponcode = '';
       this.isRemoveCouponModalOpen = false;
+    },
+    async fetchActiveSubscription() {
+      const subscription = await SubscriptionService.subscriptions1({
+        tenantSlug: this.tenantSlug
+      });
+      this.activeSubscription = { ...subscription };
     },
     async subscribe() {
       try {
