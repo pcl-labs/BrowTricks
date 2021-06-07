@@ -3,7 +3,7 @@
     :href="details.statementLink"
     target="_blank"
     title="View transaction invoice"
-    class="w-full flex justify-around py-2 gap-2 hover:bg-brand8 hover:bg-opacity-50 cursor-pointer"
+    class="w-full flex justify-around py-2 gap-2 rounded-lg hover:bg-brand8 hover:bg-opacity-50 cursor-pointer"
   >
     <AttachMoney class="fill-current flex-shrink-0 text-brand3" />
     <div class="flex-1 flex flex-col items-start">

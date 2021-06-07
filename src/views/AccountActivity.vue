@@ -2,9 +2,9 @@
   <div class="p-4">
     <div v-if="transactions.length">
       <ActivityDetailsRow
-        v-for="(data, index) in transactions"
+        v-for="(transaction, index) in transactions"
         :key="index"
-        :details="data"
+        :details="transaction"
       />
     </div>
     <div v-else class="tg-body-mobile">

@@ -4,16 +4,25 @@
       <div class="flex w-full">
         <div class="flex-grow text-left">
           <p class="tg-body-mobile">
-            <span v-if="activeSubscription.status === 'Cancelled'">
-              Free
-            </span>
-            <span v-else-if="transactions.length">
+            <template v-if="activeSubscriptions.length && transactions.length">
               ${{ transactions[0].total }}/Year
-            </span>
+              <br />
+              <span
+                class="tg-caption-mobile text-on-background text-opacity-50"
+              >
+                Pro Subscription
+              </span>
+            </template>
+            <template v-else-if="transactions.length">
+              Free
+              <br />
+              <span
+                class="tg-caption-mobile text-on-background text-opacity-50"
+              >
+                Standard Subscription
+              </span>
+            </template>
           </p>
-          <span class="tg-caption-mobile text-on-background text-opacity-50">
-            Standard Subscription
-          </span>
         </div>
         <div>
           <Button
@@ -48,7 +57,12 @@
             Subscription Status
           </span>
           <span class="text-on-background tg-body-bold-mobile">
-            {{ activeSubscription.status }}
+            <template v-if="activeSubscriptions.length">
+              {{ activeSubscriptions[0].status }}
+            </template>
+            <template v-else>
+              No active subscription
+            </template>
           </span>
         </div>
         <div class="flex justify-between">
@@ -130,31 +144,11 @@
         Transactions
       </p>
       <template v-if="transactions.length">
-        <div
-          v-for="transaction in transactions"
-          :key="transaction.id"
-          class="space-y-4 mt-4"
-        >
-          <div class="flex justify-between">
-            <span class="text-on-background text-opacity-50 tg-body-mobile">
-              {{ formatDate(transaction.paymentDate) }}
-            </span>
-            <span class="text-on-background tg-body-bold-mobile">
-              ${{ transaction.total }}
-            </span>
-          </div>
-        </div>
-        <hr class="divide-on-background-image p-0 px-4 mt-2" />
-        <div class="text-center mt-2">
-          <Button
-            title="View Transaction"
-            textColor="text-success underline"
-            :background="null"
-            width="w-xs"
-            padding="px-0"
-            :to="{ name: 'AccountActivity' }"
-          />
-        </div>
+        <ActivityDetailsRow
+          v-for="(transaction, index) in transactions"
+          :key="index"
+          :details="transaction"
+        />
       </template>
       <template v-else>
         No transactions found.
@@ -259,6 +253,7 @@ import MaterialInput from '@/components/inputs/MaterialInput.vue';
 import PaymentMethodCard from '@/components/paymentMethods/PaymentMethodCard.vue';
 import RadioInput from '@/components/inputs/RadioInput.vue';
 import IconClear from '@/assets/icons/clear.svg';
+import ActivityDetailsRow from '@/components/activity/ActivityDetailsRow.vue';
 import { mapActions } from 'vuex';
 import { format } from 'date-fns';
 import {
@@ -282,7 +277,8 @@ export default {
     MaterialInput,
     PaymentMethodCard,
     RadioInput,
-    IconClear
+    IconClear,
+    ActivityDetailsRow
   },
   data() {
     return {
@@ -294,7 +290,7 @@ export default {
       selectedPaymentMethod: {},
       couponcode: null,
       transactions: [],
-      activeSubscription: {}
+      activeSubscriptions: []
     };
   },
   created() {
@@ -352,10 +348,10 @@ export default {
       this.isRemoveCouponModalOpen = false;
     },
     async fetchActiveSubscription() {
-      const subscription = await SubscriptionService.subscriptions1({
+      const subscriptions = await SubscriptionService.subscriptions1({
         tenantSlug: this.tenantSlug
       });
-      this.activeSubscription = { ...subscription };
+      this.activeSubscriptions = [...subscriptions];
     },
     async subscribe() {
       try {
@@ -368,8 +364,8 @@ export default {
             couponCode: this.couponcode
           }
         };
-        const response = await SubscriptionService.subscriptions(payload);
-        console.log(response);
+        await SubscriptionService.subscriptions(payload);
+        await this.init();
       } catch (error) {
         this.show({
           text: 'Error subscribing, try again or contact us.',
