@@ -65,7 +65,7 @@
         </div>
         <div class="flex justify-between">
           <span class="text-on-background text-opacity-50 tg-body-mobile">
-            Last Repayment Amount
+            Last Payment Amount
           </span>
           <span
             v-if="transactions.length"
