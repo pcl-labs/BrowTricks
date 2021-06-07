@@ -4,11 +4,16 @@
       <div class="flex w-full">
         <div class="flex-grow text-left">
           <p class="tg-body-mobile">
-            $0/YEAR
+            <span v-if="activeSubscription.status === 'Cancelled'">
+              Free
+            </span>
+            <span v-else-if="transactions.length">
+              ${{ transactions[0].total }}/Year
+            </span>
           </p>
-          <p class="tg-caption-mobile text-on-background text-opacity-50">
+          <span class="tg-caption-mobile text-on-background text-opacity-50">
             Standard Subscription
-          </p>
+          </span>
         </div>
         <div>
           <Button
@@ -58,15 +63,18 @@
           </span>
           <span v-else>-</span>
         </div>
-        <!-- <div class="flex justify-between">
+        <div class="flex justify-between">
           <span class="text-on-background text-opacity-50 tg-body-mobile">
             Last Repayment Amount
           </span>
-          <span class="text-on-background tg-body-bold-mobile">
-            $10.00
+          <span
+            v-if="transactions.length"
+            class="text-on-background tg-body-bold-mobile"
+          >
+            ${{ transactions[0].total }}
           </span>
         </div>
-        <div class="flex justify-between">
+        <!-- <div class="flex justify-between">
           <span class="text-on-background text-opacity-50 tg-body-mobile">
             Renews On
           </span>
@@ -284,7 +292,7 @@ export default {
       isRemoveCouponModalOpen: false,
       paymentMethods: [],
       selectedPaymentMethod: {},
-      couponcode: '',
+      couponcode: null,
       transactions: [],
       activeSubscription: {}
     };
@@ -299,11 +307,11 @@ export default {
     async init() {
       try {
         this.loadingUpdate(true);
-        await Promise.all[
-          (this.loadPaymentMethods(),
+        await Promise.all([
+          this.loadPaymentMethods(),
           this.loadSubscriptionPayments(),
-          this.fetchActiveSubscription())
-        ];
+          this.fetchActiveSubscription()
+        ]);
       } catch {
         this.show({
           text: 'Error fetching details, refreshing may help',
