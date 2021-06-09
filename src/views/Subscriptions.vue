@@ -89,16 +89,25 @@
           </span>
         </div>
         <div class="flex justify-between">
-          <span class="text-on-background text-opacity-50 tg-body-mobile">
+          <span
+            class="flex-shrink-0 text-on-background text-opacity-50 tg-body-mobile"
+          >
             Renews On
           </span>
-          <span
-            v-if="activeSubscriptions.length && activeSubscriptions[0].card"
-            class="text-on-background tg-body-bold-mobile"
-          >
-            {{ renewalDate(transactions[0].paymentDate) }}
-          </span>
-          <span v-else>Set a payment method for automatic renewal</span>
+          <p class="text-on-background tg-body-bold-mobile">
+            <span
+              v-if="
+                activeSubscriptions.length &&
+                  transactions.length &&
+                  activePaymentMethod
+              "
+            >
+              {{ renewalDate(transactions[0].paymentDate) }}
+            </span>
+            <span v-else class="text-right">
+              No payment method set
+            </span>
+          </p>
         </div>
         <!-- <div class="flex justify-between">
           <span class="text-on-background text-opacity-50 tg-body-mobile">
@@ -121,9 +130,9 @@
       <h2 class="tg-h2-mobile text-left">
         Payment Method
       </h2>
-      <template v-if="!showChangePaymentMethod && selectedPaymentMethod">
+      <template v-if="!showChangePaymentMethod && activePaymentMethod">
         <PaymentMethodCard
-          :paymentMethod="selectedPaymentMethod"
+          :paymentMethod="activePaymentMethod"
           :tenantSlug="tenantSlug"
           class="-ml-4"
         />
@@ -135,7 +144,8 @@
           padding="px-0"
           width="w-xs"
           margin="mx-0"
-          @clicked="showChangePaymentMethod = true"
+          radius="rounded-none"
+          @clicked="renderChangePayment"
         />
       </template>
       <template v-else>
@@ -160,19 +170,31 @@
           <IconAdd class="h-4 my-auto mr-2 inline-block" />
           Add Credit Card
         </router-link>
-        <template v-if="showChangePaymentMethod">
-          <!-- When there is no card available, there would be no subscription, allow the user to select a card -->
-          <hr class="divide-on-background-image p-0 px-4 my-2" />
+        <hr class="divide-on-background-image p-0 px-4 my-2" />
+        <div class="grid grid-flow-col divide-x">
           <Button
-            title="Save payment Method"
+            title="Cancel"
+            textColor="text-error underline"
+            :background="null"
+            padding="px-0"
+            width="w-xs"
+            margin="mx-0"
+            radius="rounded-none"
+            @clicked="showChangePaymentMethod = false"
+          />
+          <!-- When there is no card available, there would be no subscription, allow the user to select a card -->
+          <Button
+            v-if="showChangePaymentMethod"
+            title="Save"
             textColor="text-success underline"
             :background="null"
             padding="px-0"
             width="w-xs"
             margin="mx-0"
+            radius="rounded-none"
             @clicked="changePaymentMethod"
           />
-        </template>
+        </div>
       </template>
     </BaseCard>
     <BaseCard className="flex-col gap-2" padding="p-6">
@@ -329,6 +351,7 @@ export default {
       couponcode: null,
       transactions: [],
       activeSubscriptions: [],
+      activePaymentMethod: null,
       showChangePaymentMethod: false
     };
   },
@@ -371,12 +394,16 @@ export default {
         tenantSlug: this.tenantSlug
       });
       this.paymentMethods = [...paymentMethods];
-      this.selectedPaymentMethod = this.activeSubscriptions[0]?.card;
-      if (!this.selectedPaymentMethod) {
-        this.showChangePaymentMethod = true;
-        this.selectedPaymentMethod = paymentMethods[0];
-      }
+      this.activePaymentMethod = this.activeSubscriptions[0]?.card;
+      if (!this.activePaymentMethod) this.renderChangePayment();
       return paymentMethods;
+    },
+    renderChangePayment() {
+      this.showChangePaymentMethod = true;
+      this.selectedPaymentMethod =
+        this.paymentMethods.find(
+          method => method.id === this.activePaymentMethod.id
+        ) || this.paymentMethods[0];
     },
     async loadSubscriptionPayments() {
       const payments = await SubscriptionService.payments({
