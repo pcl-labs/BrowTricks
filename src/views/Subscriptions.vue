@@ -1,6 +1,6 @@
 <template>
   <div class="px-4 py-6 space-y-6 w-full mb-16">
-    <BaseCard className="flex-col gap-2">
+    <BaseCard className="flex-col gap-2" padding="p-6">
       <div class="flex w-full">
         <div class="flex-grow text-left">
           <p class="tg-body-mobile">
@@ -113,8 +113,28 @@
         </div> -->
       </div>
     </BaseCard>
-    <BaseCard>
-      <div class="flex flex-col w-full">
+    <BaseCard className="flex-col gap-2" padding="p-6">
+      <h2 class="tg-h2-mobile text-left">
+        Payment Method
+      </h2>
+      <template v-if="!showChangePaymentMethod && selectedPaymentMethod">
+        <PaymentMethodCard
+          :paymentMethod="selectedPaymentMethod"
+          :tenantSlug="tenantSlug"
+          class="-ml-4"
+        />
+        <hr class="divide-on-background-image p-0 px-4 my-2" />
+        <Button
+          title="Change payment Method"
+          textColor="text-success underline"
+          :background="null"
+          padding="px-0"
+          width="w-xs"
+          margin="mx-0"
+          @clicked="showChangePaymentMethod = true"
+        />
+      </template>
+      <template v-else>
         <RadioInput
           v-for="method in paymentMethods"
           :key="method.id"
@@ -129,20 +149,32 @@
             />
           </template>
         </RadioInput>
-        <hr class="divide-on-background-image p-0 px-4 mt-2" />
-        <Button
+        <router-link
           :to="{ name: 'PaymentMethods' }"
-          title="Add another card"
-          textColor="text-success underline"
-          :background="null"
-          textJustify="justify-left"
-        />
-      </div>
+          class="my-1 w-auto text-left underline"
+        >
+          <IconAdd class="h-4 my-auto mr-2 inline-block" />
+          Add Credit Card
+        </router-link>
+        <template v-if="showChangePaymentMethod">
+          <!-- When there is no card available, there would be no subscription, allow the user to select a card -->
+          <hr class="divide-on-background-image p-0 px-4 my-2" />
+          <Button
+            title="Save payment Method"
+            textColor="text-success underline"
+            :background="null"
+            padding="px-0"
+            width="w-xs"
+            margin="mx-0"
+            @clicked="changePaymentMethod"
+          />
+        </template>
+      </template>
     </BaseCard>
-    <BaseCard className="flex-col gap-2">
-      <p class="tg-h2-mobile text-left">
+    <BaseCard className="flex-col gap-2" padding="p-6">
+      <h2 class="tg-h2-mobile text-left">
         Transactions
-      </p>
+      </h2>
       <template v-if="transactions.length">
         <ActivityDetailsRow
           v-for="(transaction, index) in transactions"
@@ -164,15 +196,15 @@
           <h2 class="title mb-4 text-opacity-high tg-h2-mobile">
             Upgrade Your Plan now!
           </h2>
-          <div class="flex justify-center tg-body-mobile">
-            <p>
-              Paying with
-              <b>
-                {{ selectedPaymentMethod.brand }}
-                {{ selectedPaymentMethod.last4 }}
-              </b>
-            </p>
-            <!-- <span class="text-error ml-1">Edit</span> -->
+          <div
+            v-if="selectedPaymentMethod"
+            class="flex justify-center tg-body-mobile"
+          >
+            Paying with
+            <b>
+              {{ selectedPaymentMethod.brand }}
+              {{ selectedPaymentMethod.last4 }}
+            </b>
           </div>
         </div>
         <div class="space-y-4 p-4 pb-16">
@@ -245,6 +277,7 @@
 </template>
 
 <script>
+import IconAdd from '@/assets/icons/add.svg';
 import BaseCard from '@/components/BaseCard.vue';
 import PlanPriceCards from '@/components/plans/PlanPriceCards.vue';
 import BaseDrawerActions from '@/components/BaseDrawerActions.vue';
@@ -270,6 +303,7 @@ export default {
     }
   },
   components: {
+    IconAdd,
     BaseCard,
     PlanPriceCards,
     BaseDrawerActions,
@@ -287,10 +321,11 @@ export default {
       isAddCouponModalOpen: false,
       isRemoveCouponModalOpen: false,
       paymentMethods: [],
-      selectedPaymentMethod: {},
+      selectedPaymentMethod: null,
       couponcode: null,
       transactions: [],
-      activeSubscriptions: []
+      activeSubscriptions: [],
+      showChangePaymentMethod: false
     };
   },
   created() {
@@ -303,10 +338,10 @@ export default {
     async init() {
       try {
         this.loadingUpdate(true);
+        await this.fetchActiveSubscription();
         await Promise.all([
           this.loadPaymentMethods(),
-          this.loadSubscriptionPayments(),
-          this.fetchActiveSubscription()
+          this.loadSubscriptionPayments()
         ]);
       } catch {
         this.show({
@@ -328,7 +363,11 @@ export default {
         tenantSlug: this.tenantSlug
       });
       this.paymentMethods = [...paymentMethods];
-      this.selectedPaymentMethod = paymentMethods[0];
+      this.selectedPaymentMethod = this.activeSubscriptions[0]?.card;
+      if (!this.selectedPaymentMethod) {
+        this.showChangePaymentMethod = true;
+        this.selectedPaymentMethod = paymentMethods[0];
+      }
       return paymentMethods;
     },
     async loadSubscriptionPayments() {
@@ -360,15 +399,24 @@ export default {
           tenantSlug: this.tenantSlug,
           body: {
             planId: this.selectedPlan.id,
-            cardId: this.selectedPaymentMethod.id,
+            cardId: this.selectedPaymentMethod?.id,
             couponCode: this.couponcode
           }
         };
         await SubscriptionService.subscriptions(payload);
         await this.init();
+        this.show({
+          text: 'Subscription successful!',
+          button: {
+            title: 'Okay',
+            action: () => this.updateVisibility(false)
+          }
+        });
       } catch (error) {
         this.show({
-          text: 'Error subscribing, try again or contact us.',
+          text:
+            error.response?.data?.message ||
+            'Error subscribing, try again or contact us.',
           button: {
             title: 'Contact Us',
             action: () => {
@@ -379,6 +427,42 @@ export default {
         });
       } finally {
         this.isOpen = false;
+        this.loadingUpdate(false);
+      }
+    },
+    async changePaymentMethod() {
+      try {
+        this.loadingUpdate(true);
+        const payload = {
+          tenantSlug: this.tenantSlug,
+          body: {
+            cardId: this.selectedPaymentMethod?.id
+          }
+        };
+        await SubscriptionService.changepaymentmethod(payload);
+        await this.init();
+        this.showChangePaymentMethod = false;
+        this.show({
+          text: 'Successfully updated payment method!',
+          button: {
+            title: 'Okay',
+            action: () => this.updateVisibility(false)
+          }
+        });
+      } catch (error) {
+        this.show({
+          text:
+            error.response?.data ||
+            'Error changing payment method, try again or contact us.',
+          button: {
+            title: 'Contact Us',
+            action: () => {
+              window.open('https://browtricksproductsorg.zendesk.com/');
+              this.updateVisibility(false);
+            }
+          }
+        });
+      } finally {
         this.loadingUpdate(false);
       }
     }
