@@ -88,14 +88,18 @@
             ${{ transactions[0].total }}
           </span>
         </div>
-        <!-- <div class="flex justify-between">
+        <div class="flex justify-between">
           <span class="text-on-background text-opacity-50 tg-body-mobile">
             Renews On
           </span>
-          <span class="text-on-background tg-body-bold-mobile">
-            28 June, 2020
+          <span
+            v-if="activeSubscriptions.length && activeSubscriptions[0].card"
+            class="text-on-background tg-body-bold-mobile"
+          >
+            {{ renewalDate(transactions[0].paymentDate) }}
           </span>
-        </div> -->
+          <span v-else>Set a payment method for automatic renewal</span>
+        </div>
         <!-- <div class="flex justify-between">
           <span class="text-on-background text-opacity-50 tg-body-mobile">
             Coupon Code
@@ -288,7 +292,7 @@ import RadioInput from '@/components/inputs/RadioInput.vue';
 import IconClear from '@/assets/icons/clear.svg';
 import ActivityDetailsRow from '@/components/activity/ActivityDetailsRow.vue';
 import { mapActions } from 'vuex';
-import { format } from 'date-fns';
+import { format, add } from 'date-fns';
 import {
   PaymentMethodService,
   SubscriptionService
@@ -357,6 +361,10 @@ export default {
     },
     formatDate(date) {
       return format(new Date(date), 'dd MMM, yyyy');
+    },
+    renewalDate(date) {
+      const renewalDate = add(new Date(date), { years: 1 });
+      return format(renewalDate, 'dd MMM, yyyy');
     },
     async loadPaymentMethods() {
       const paymentMethods = await PaymentMethodService.paymentmethods1({
