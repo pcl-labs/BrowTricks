@@ -32,8 +32,8 @@ export default {
   },
   computed: {
     getCardBrandIcon() {
-      let brand = this.paymentMethod.brand;
-      return require(`@/assets/pm-icons/${brand.toLowerCase()}.png`);
+      let brand = this.paymentMethod?.brand;
+      return require(`@/assets/pm-icons/${brand?.toLowerCase()}.png`);
     }
   }
 };
