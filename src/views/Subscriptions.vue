@@ -143,7 +143,7 @@
           :background="null"
           padding="px-0"
           width="w-xs"
-          margin="mx-0"
+          margin="mx-auto"
           radius="rounded-none"
           @clicked="renderChangePayment"
         />
@@ -234,7 +234,7 @@
           </div>
         </div>
         <div class="space-y-4 p-4 pb-16">
-          <PlanPriceCards v-model="selectedPlan" />
+          <PlanPriceCards v-model="selectedPlan" :plans="plans" />
         </div>
         <div class="w-full fixed bottom-0">
           <Button
@@ -352,7 +352,8 @@ export default {
       transactions: [],
       activeSubscriptions: [],
       activePaymentMethod: null,
-      showChangePaymentMethod: false
+      showChangePaymentMethod: false,
+      plans: []
     };
   },
   created() {
@@ -368,7 +369,8 @@ export default {
         await this.fetchActiveSubscription();
         await Promise.all([
           this.loadPaymentMethods(),
-          this.loadSubscriptionPayments()
+          this.loadSubscriptionPayments(),
+          this.loadPlans()
         ]);
       } catch {
         this.show({
@@ -426,6 +428,13 @@ export default {
         tenantSlug: this.tenantSlug
       });
       this.activeSubscriptions = [...subscriptions];
+      this.selectedPlan = { ...subscriptions[0]?.plan };
+    },
+    async loadPlans() {
+      const plans = await SubscriptionService.domain({
+        domain: 'browtricks.com'
+      });
+      this.plans = [...plans];
     },
     async subscribe() {
       try {
