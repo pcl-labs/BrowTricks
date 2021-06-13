@@ -37,12 +37,20 @@ function isRouteChangingUpdate(value) {
   store.dispatch('loading/loadingUpdate', value);
 }
 
+function loadActiveSubscription(tenantSlug) {
+  if (!store.getters['subscription/getActiveSubscription'] && tenantSlug) {
+    store.dispatch('subscription/fetchActiveSubscription', tenantSlug);
+  }
+  return;
+}
+
 router.beforeEach((to, from, next) => {
   isRouteChangingUpdate(true);
 
   store
     .dispatch('auth/ping')
-    .then(response => {
+    .then(async response => {
+      await loadActiveSubscription(to.params?.tenantSlug);
       if (to.meta.admin) {
         if (response.isAdmin) return next();
         else return next({ name: 'PanelRedirector' });

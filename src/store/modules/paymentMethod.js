@@ -19,8 +19,7 @@ export default {
       zipcode: ''
     },
     token: '',
-    stripeKey: '',
-    paymentMethods: []
+    stripeKey: ''
   },
   mutations: {
     cardInfoUpdate(state, payload) {

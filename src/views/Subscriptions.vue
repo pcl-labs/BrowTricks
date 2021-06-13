@@ -4,7 +4,7 @@
       <div class="flex w-full">
         <div class="flex-grow text-left">
           <p class="tg-body-mobile">
-            <template v-if="activeSubscriptions.length && transactions.length">
+            <template v-if="activeSubscription && transactions.length">
               ${{ transactions[0].total }}/Year
               <br />
               <span
@@ -57,8 +57,8 @@
             Subscription Status
           </span>
           <span class="text-on-background tg-body-bold-mobile">
-            <template v-if="activeSubscriptions.length">
-              {{ activeSubscriptions[0].status }}
+            <template v-if="activeSubscription">
+              {{ activeSubscription.status }}
             </template>
             <template v-else>
               No active subscription
@@ -97,9 +97,7 @@
           <p class="text-on-background tg-body-bold-mobile">
             <span
               v-if="
-                activeSubscriptions.length &&
-                  transactions.length &&
-                  activePaymentMethod
+                activeSubscription && transactions.length && activePaymentMethod
               "
             >
               {{ renewalDate(transactions[0].paymentDate) }}
@@ -313,7 +311,7 @@ import PaymentMethodCard from '@/components/paymentMethods/PaymentMethodCard.vue
 import RadioInput from '@/components/inputs/RadioInput.vue';
 import IconClear from '@/assets/icons/clear.svg';
 import ActivityDetailsRow from '@/components/activity/ActivityDetailsRow.vue';
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import { format, add } from 'date-fns';
 import {
   PaymentMethodService,
@@ -350,11 +348,13 @@ export default {
       selectedPaymentMethod: null,
       couponcode: null,
       transactions: [],
-      activeSubscriptions: [],
       activePaymentMethod: null,
       showChangePaymentMethod: false,
       plans: []
     };
+  },
+  computed: {
+    ...mapGetters({ activeSubscription: 'subscription/getActiveSubscription' })
   },
   created() {
     this.init();
@@ -366,13 +366,14 @@ export default {
     async init() {
       try {
         this.loadingUpdate(true);
-        await this.fetchActiveSubscription();
         await Promise.all([
           this.loadPaymentMethods(),
           this.loadSubscriptionPayments(),
           this.loadPlans()
         ]);
-      } catch {
+        this.selectedPlan = this.activeSubscription?.plan;
+      } catch (error) {
+        console.error(error);
         this.show({
           text: 'Error fetching details, refreshing may help',
           button: {
@@ -396,7 +397,7 @@ export default {
         tenantSlug: this.tenantSlug
       });
       this.paymentMethods = [...paymentMethods];
-      this.activePaymentMethod = this.activeSubscriptions[0]?.card;
+      this.activePaymentMethod = this.activeSubscription?.card;
       if (!this.activePaymentMethod) this.renderChangePayment();
       return paymentMethods;
     },
@@ -404,7 +405,7 @@ export default {
       this.showChangePaymentMethod = true;
       this.selectedPaymentMethod =
         this.paymentMethods.find(
-          method => method.id === this.activePaymentMethod.id
+          method => method.id === this.activePaymentMethod?.id
         ) || this.paymentMethods[0];
     },
     async loadSubscriptionPayments() {
@@ -422,13 +423,6 @@ export default {
     removeCouponCode() {
       this.couponcode = '';
       this.isRemoveCouponModalOpen = false;
-    },
-    async fetchActiveSubscription() {
-      const subscriptions = await SubscriptionService.subscriptions1({
-        tenantSlug: this.tenantSlug
-      });
-      this.activeSubscriptions = [...subscriptions];
-      this.selectedPlan = { ...subscriptions[0]?.plan };
     },
     async loadPlans() {
       const plans = await SubscriptionService.domain({
