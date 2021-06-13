@@ -317,11 +317,26 @@ function _getUserTimeZone() {
 }
 
 export async function formTemplateAdd() {
-  const newForm = await store.dispatch('formTemplate/currentTemplateReset');
-  router.push({
-    name: 'FormTemplateItemEdit',
-    params: { formId: newForm.id }
-  });
+  const activeSubscription =
+    store.getters['subscription/getActiveSubscription'];
+  if (activeSubscription) {
+    const newForm = await store.dispatch('formTemplate/currentTemplateReset');
+    router.push({
+      name: 'FormTemplateItemEdit',
+      params: { formId: newForm.id }
+    });
+  } else {
+    store.dispatch('alerter/show', {
+      text:
+        'Upgrade your subscription now to enjoy this feature, and many more!',
+      button: {
+        title: 'Upgrade Now!',
+        action() {
+          router.push({ name: 'Subscriptions' });
+        }
+      }
+    });
+  }
 }
 
 export function isEmail(value) {
