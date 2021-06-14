@@ -1,20 +1,34 @@
 <template>
   <div class="px-4 py-6 space-y-6 w-full mb-16">
-    <BaseCard className="flex-col gap-2">
+    <BaseCard className="flex-col gap-2" padding="p-6">
       <div class="flex w-full">
         <div class="flex-grow text-left">
           <p class="tg-body-mobile">
-            $20/YEAR
-          </p>
-          <p class="tg-caption-mobile text-on-background text-opacity-50">
-            Standard Subscription
+            <template v-if="activeSubscription && transactions.length">
+              ${{ transactions[0].total }}/Year
+              <br />
+              <span
+                class="tg-caption-mobile text-on-background text-opacity-50"
+              >
+                Pro Subscription
+              </span>
+            </template>
+            <template v-else-if="transactions.length">
+              Free
+              <br />
+              <span
+                class="tg-caption-mobile text-on-background text-opacity-50"
+              >
+                Standard Subscription
+              </span>
+            </template>
           </p>
         </div>
         <div>
           <Button
             title="Manage"
-            textColor="text-accent"
-            background="bg-none"
+            textColor="text-success underline"
+            :background="null"
             width="w-xs"
             padding="px-0"
             @clicked="isOpen = true"
@@ -32,9 +46,9 @@
           </p>
           <p>Code {{ couponcode }}: Ends 28 June, 2020</p>
         </div>
-        <div class="self-center">
-          <IconClear @click="isRemoveCouponModalOpen = true" />
-        </div>
+        <button class="self-center" @click="isRemoveCouponModalOpen = true">
+          <IconClear />
+        </button>
       </div>
       <hr class="divide-on-background-image p-0 px-4" />
       <div class="space-y-4 mt-4">
@@ -43,60 +57,94 @@
             Subscription Status
           </span>
           <span class="text-on-background tg-body-bold-mobile">
-            Active
-          </span>
-        </div>
-        <div class="flex justify-between">
-          <span class="text-on-background text-opacity-50 tg-body-mobile">
-            Payments
-          </span>
-          <span class="text-on-background tg-body-bold-mobile">
-            Automatic
+            <template v-if="activeSubscription">
+              {{ activeSubscription.status }}
+            </template>
+            <template v-else>
+              Standard (Free)
+            </template>
           </span>
         </div>
         <div class="flex justify-between">
           <span class="text-on-background text-opacity-50 tg-body-mobile">
             Last Payment Date
           </span>
-          <span class="text-on-background tg-body-bold-mobile">
-            28 May, 2020
+          <span
+            v-if="transactions.length"
+            class="text-on-background tg-body-bold-mobile"
+          >
+            {{ formatDate(transactions[0].paymentDate) }}
           </span>
+          <span v-else>-</span>
         </div>
         <div class="flex justify-between">
           <span class="text-on-background text-opacity-50 tg-body-mobile">
-            Last Repayment Amount
+            Last Payment Amount
           </span>
-          <span class="text-on-background tg-body-bold-mobile">
-            $10.00
+          <span
+            v-if="transactions.length"
+            class="text-on-background tg-body-bold-mobile"
+          >
+            ${{ transactions[0].total }}
           </span>
         </div>
-        <div class="flex justify-between">
-          <span class="text-on-background text-opacity-50 tg-body-mobile">
+        <div v-if="activeSubscription" class="flex justify-between">
+          <span
+            class="flex-shrink-0 text-on-background text-opacity-50 tg-body-mobile"
+          >
             Renews On
           </span>
-          <span class="text-on-background tg-body-bold-mobile">
-            28 June, 2020
-          </span>
+          <p class="text-on-background tg-body-bold-mobile text-right">
+            <span v-if="transactions.length">
+              <template v-if="activePaymentMethod">
+                {{ renewalDate(transactions[0].paymentDate) }}
+              </template>
+              <template v-else>
+                No payment method set
+              </template>
+            </span>
+          </p>
         </div>
-        <div class="flex justify-between">
+        <!-- <div class="flex justify-between">
           <span class="text-on-background text-opacity-50 tg-body-mobile">
             Coupon Code
           </span>
           <Button
             title="Add Coupon"
-            textColor="text-accent"
-            background="bg-none"
+            textColor="text-success underline"
+            :background="null"
             padding="px-0"
             width="w-xs"
             margin="mx-0"
             textJustify="text-right"
             @clicked="isAddCouponModalOpen = true"
           />
-        </div>
+        </div> -->
       </div>
     </BaseCard>
-    <BaseCard>
-      <div class="flex flex-col w-full">
+    <BaseCard className="flex-col gap-2" padding="p-6">
+      <h2 class="tg-h2-mobile text-left">
+        Payment Method
+      </h2>
+      <template v-if="!showChangePaymentMethod && activePaymentMethod">
+        <PaymentMethodCard
+          :paymentMethod="activePaymentMethod"
+          :tenantSlug="tenantSlug"
+          class="-ml-4"
+        />
+        <hr class="divide-on-background-image p-0 px-4 my-2" />
+        <Button
+          title="Change payment Method"
+          textColor="text-success underline"
+          :background="null"
+          padding="px-0"
+          width="w-xs"
+          margin="mx-auto"
+          radius="rounded-none"
+          @clicked="renderChangePayment"
+        />
+      </template>
+      <template v-else>
         <RadioInput
           v-for="method in paymentMethods"
           :key="method.id"
@@ -111,41 +159,55 @@
             />
           </template>
         </RadioInput>
-        <Button
+        <router-link
           :to="{ name: 'PaymentMethods' }"
-          title="Add Credit Card"
-          textColor="text-accent"
-          background="bg-none"
-          textJustify="justify-left"
-        />
-      </div>
+          class="my-1 w-auto text-left underline"
+        >
+          <IconAdd class="h-4 my-auto mr-2 inline-block" />
+          Add Credit Card
+        </router-link>
+        <template v-if="activeSubscription">
+          <hr class="divide-on-background-image p-0 px-4 my-2" />
+          <div class="grid grid-flow-col divide-x">
+            <Button
+              title="Cancel"
+              textColor="text-error underline"
+              :background="null"
+              padding="px-0"
+              width="w-xs"
+              margin="mx-0"
+              radius="rounded-none"
+              @clicked="showChangePaymentMethod = false"
+            />
+            <Button
+              v-if="showChangePaymentMethod"
+              title="Save"
+              textColor="text-success underline"
+              :background="null"
+              padding="px-0"
+              width="w-xs"
+              margin="mx-0"
+              radius="rounded-none"
+              @clicked="changePaymentMethod"
+            />
+          </div>
+        </template>
+      </template>
     </BaseCard>
-    <BaseCard className="flex-col gap-2">
-      <p class="tg-h2-mobile text-left">
-        Transaction
-      </p>
-      <div class="space-y-4 mt-4">
-        <div class="flex justify-between">
-          <span class="text-on-background text-opacity-50 tg-body-mobile">
-            28 May, 2020
-          </span>
-          <span class="text-on-background tg-body-bold-mobile">
-            $20.20
-          </span>
-        </div>
-      </div>
-      <hr class="divide-on-background-image p-0 px-4 mt-2" />
-      <div class="text-center mt-2">
-        <Button
-          title=" View Transaction"
-          textColor="text-accent"
-          background="bg-none"
-          width="w-xs"
-          padding="px-0"
-          margin="mx-6"
-          :to="{ name: 'AccountActivity' }"
+    <BaseCard className="flex-col gap-2" padding="p-6">
+      <h2 class="tg-h2-mobile text-left">
+        Transactions
+      </h2>
+      <template v-if="transactions.length">
+        <ActivityDetailsRow
+          v-for="(transaction, index) in transactions"
+          :key="index"
+          :details="transaction"
         />
-      </div>
+      </template>
+      <template v-else>
+        No transactions found.
+      </template>
     </BaseCard>
     <div class="w-full">
       <BaseDrawerActions
@@ -154,26 +216,31 @@
         drawerClasses="flex-col overflow-y-auto"
       >
         <div class="p-4 space-y-2">
-          <h4 class="title text-opacity-high text-left tg-h2-mobile">
+          <h2 class="title mb-4 text-opacity-high tg-h2-mobile">
             Upgrade Your Plan now!
-          </h4>
-          <div class="flex justify-center tg-body-mobile">
-            <p>
-              Paying with {{ selectedPaymentMethod.brand }}
+          </h2>
+          <div
+            v-if="selectedPaymentMethod"
+            class="flex justify-center tg-body-mobile"
+          >
+            Paying with
+            <b>
+              {{ selectedPaymentMethod.brand }}
               {{ selectedPaymentMethod.last4 }}
-            </p>
-            <span class="text-error ml-1">Edit</span>
+            </b>
           </div>
         </div>
         <div class="space-y-4 p-4 pb-16">
-          <PlanPriceCards @selected="selectPlan" :selectedPlan="selectedPlan" />
+          <PlanPriceCards v-model="selectedPlan" :plans="plans" />
         </div>
         <div class="w-full fixed bottom-0">
           <Button
-            :title="`Upgrade to ${selectedPlan} Now`"
+            v-if="selectedPlan"
+            :title="`Upgrade to ${selectedPlan.name} Now`"
             width="w-full"
             radius="rounded-none"
             background="bg-accent"
+            @clicked="handleSubmission"
           />
         </div>
       </BaseDrawerActions>
@@ -185,25 +252,21 @@
       title="Add Coupon Code"
     >
       <template #content>
-        <div>
-          <MaterialInput
-            label="Coupon Code"
-            placeholder="Coupon Code"
-            v-model="couponcode"
-          />
-          <hr class="divide-on-background-image p-0 px-4 mt-6" />
-          <div class="text-center mt-6">
-            <Button
-              title="Apply Coupon"
-              textColor="text-accent"
-              background="bg-none"
-              padding="px-0"
-              @clicked="applyCouponCode"
-            />
-          </div>
-        </div>
-        <div v-show="couponcode"></div>
+        <MaterialInput
+          label="Coupon Code"
+          placeholder="Coupon Code"
+          v-model="couponcode"
+        />
       </template>
+      <Button
+        title="Apply Coupon"
+        textColor="text-success"
+        :background="null"
+        padding="px-0"
+        width="w-xs"
+        margin="mx-0"
+        @clicked="applyCouponCode"
+      />
     </BaseDialog>
     <BaseDialog
       v-if="isRemoveCouponModalOpen"
@@ -212,32 +275,33 @@
     >
       <template #content>
         <p>This will revert your subscription to its original price.</p>
-        <div class="flex flex-row-reverse gap-8">
-          <Button
-            title="Agree"
-            textColor="text-accent"
-            background="bg-none"
-            padding="px-0"
-            margin="mx-0"
-            width="w-xs"
-            @clicked="removeCouponCode"
-          />
-          <Button
-            title="Cancel"
-            textColor="text-error"
-            background="bg-none"
-            padding="px-0"
-            margin="mx-0"
-            width="w-xs"
-            @clicked="isCouponModalOpen = false"
-          />
-        </div>
       </template>
+      <div class="flex gap-8">
+        <Button
+          title="Cancel"
+          textColor="text-error"
+          :background="null"
+          padding="px-0"
+          margin="mx-0"
+          width="w-xs"
+          @clicked="isRemoveCouponModalOpen = false"
+        />
+        <Button
+          title="Agree"
+          textColor="text-success"
+          :background="null"
+          padding="px-0"
+          margin="mx-0"
+          width="w-xs"
+          @clicked="removeCouponCode"
+        />
+      </div>
     </BaseDialog>
   </div>
 </template>
 
 <script>
+import IconAdd from '@/assets/icons/add.svg';
 import BaseCard from '@/components/BaseCard.vue';
 import PlanPriceCards from '@/components/plans/PlanPriceCards.vue';
 import BaseDrawerActions from '@/components/BaseDrawerActions.vue';
@@ -246,9 +310,13 @@ import MaterialInput from '@/components/inputs/MaterialInput.vue';
 import PaymentMethodCard from '@/components/paymentMethods/PaymentMethodCard.vue';
 import RadioInput from '@/components/inputs/RadioInput.vue';
 import IconClear from '@/assets/icons/clear.svg';
-
-import { mapActions } from 'vuex';
-import { PaymentMethodService } from '@whynotearth/meredith-axios';
+import ActivityDetailsRow from '@/components/activity/ActivityDetailsRow.vue';
+import { mapActions, mapGetters } from 'vuex';
+import { format, add } from 'date-fns';
+import {
+  PaymentMethodService,
+  SubscriptionService
+} from '@whynotearth/meredith-axios';
 
 export default {
   name: 'Subscriptions',
@@ -259,6 +327,7 @@ export default {
     }
   },
   components: {
+    IconAdd,
     BaseCard,
     PlanPriceCards,
     BaseDrawerActions,
@@ -266,42 +335,45 @@ export default {
     MaterialInput,
     PaymentMethodCard,
     RadioInput,
-    IconClear
+    IconClear,
+    ActivityDetailsRow
   },
   data() {
     return {
       isOpen: false,
-      selectedPlan: 'free',
+      selectedPlan: {},
       isAddCouponModalOpen: false,
       isRemoveCouponModalOpen: false,
       paymentMethods: [],
-      selectedPaymentMethod: {},
-      couponcode: ''
+      selectedPaymentMethod: null,
+      couponcode: null,
+      transactions: [],
+      activePaymentMethod: null,
+      showChangePaymentMethod: false,
+      plans: []
     };
+  },
+  computed: {
+    ...mapGetters({ activeSubscription: 'subscription/getActiveSubscription' })
   },
   created() {
     this.init();
   },
-  computed: {
-    getTitle() {
-      return `Upgrade to ${this.selectedPlan} Now`;
-    },
-    getCouponDialogTitle() {
-      return this.couponcode ? 'Remove ' : 'Add ' + 'Coupon Code';
-    }
-  },
   methods: {
     ...mapActions('loading', ['loadingUpdate']),
+    ...mapActions('alerter', ['show', 'updateVisibility']),
+    ...mapActions('subscription', ['fetchActiveSubscriptions']),
 
     async init() {
       try {
         this.loadingUpdate(true);
-        const paymentMethods = await PaymentMethodService.paymentmethods1({
-          tenantSlug: this.tenantSlug
-        });
-        this.paymentMethods = [...paymentMethods];
-        this.selectedPaymentMethod = paymentMethods[0];
-      } catch {
+        await Promise.all([
+          this.loadPaymentMethods(),
+          this.loadSubscriptionPayments(),
+          this.loadPlans()
+        ]);
+      } catch (error) {
+        console.error(error);
         this.show({
           text: 'Error fetching details, refreshing may help',
           button: {
@@ -313,8 +385,36 @@ export default {
         this.loadingUpdate(false);
       }
     },
-    selectPlan(value) {
-      this.selectedPlan = value;
+    formatDate(date) {
+      return format(new Date(date), 'dd MMM, yyyy');
+    },
+    renewalDate(date) {
+      const renewalDate = add(new Date(date), { years: 1 });
+      return format(renewalDate, 'dd MMM, yyyy');
+    },
+    async loadPaymentMethods() {
+      const paymentMethods = await PaymentMethodService.paymentmethods1({
+        tenantSlug: this.tenantSlug
+      });
+      this.paymentMethods = [...paymentMethods];
+      this.activePaymentMethod = this.activeSubscription?.card;
+      this.renderChangePayment();
+      if (this.activePaymentMethod) this.showChangePaymentMethod = false;
+      return paymentMethods;
+    },
+    renderChangePayment() {
+      this.showChangePaymentMethod = true;
+      this.selectedPaymentMethod =
+        this.paymentMethods.find(
+          method => method.id === this.activePaymentMethod?.id
+        ) || this.paymentMethods[0];
+    },
+    async loadSubscriptionPayments() {
+      const payments = await SubscriptionService.payments({
+        tenantSlug: this.tenantSlug
+      });
+      this.transactions = [...payments];
+      return payments;
     },
     applyCouponCode() {
       if (this.couponcode) {
@@ -324,6 +424,101 @@ export default {
     removeCouponCode() {
       this.couponcode = '';
       this.isRemoveCouponModalOpen = false;
+    },
+    async loadPlans() {
+      const plans = await SubscriptionService.domain({
+        domain: 'browtricks.com'
+      });
+      this.plans = [...plans];
+    },
+    async handleSubmission() {
+      try {
+        this.loadingUpdate(true);
+        if (this.selectedPlan?.id === 'free') await this.cancelSubscription();
+        else await this.subscribe();
+        await this.fetchActiveSubscriptions(this.tenantSlug);
+        await this.init();
+        this.show({
+          text: 'Subscription successful!',
+          button: {
+            title: 'Okay',
+            action: () => this.updateVisibility(false)
+          }
+        });
+      } catch (error) {
+        this.show({
+          text:
+            error.response?.data?.message ||
+            error.message ||
+            'Error subscribing, try again or contact us.',
+          button: {
+            title: 'Contact Us',
+            action: () => {
+              window.open('https://browtricksproductsorg.zendesk.com/');
+              this.updateVisibility(false);
+            }
+          }
+        });
+      } finally {
+        this.isOpen = false;
+        this.loadingUpdate(false);
+      }
+    },
+    subscribe() {
+      if (!this.selectedPaymentMethod)
+        throw new Error('Please select a payment method first.');
+      const payload = {
+        tenantSlug: this.tenantSlug,
+        body: {
+          planId: this.selectedPlan?.id,
+          cardId: this.selectedPaymentMethod?.id,
+          couponCode: this.couponcode
+        }
+      };
+      return SubscriptionService.subscriptions(payload);
+    },
+    cancelSubscription() {
+      if (!this.activeSubscription) return;
+      return SubscriptionService.cancel({
+        tenantSlug: this.tenantSlug
+      });
+    },
+    async changePaymentMethod() {
+      try {
+        this.loadingUpdate(true);
+        const payload = {
+          tenantSlug: this.tenantSlug,
+          body: {
+            cardId: this.selectedPaymentMethod?.id
+          }
+        };
+        await SubscriptionService.changepaymentmethod(payload);
+        await this.fetchActiveSubscriptions(this.tenantSlug);
+        await this.init();
+        this.showChangePaymentMethod = false;
+        this.show({
+          text: 'Successfully updated payment method!',
+          button: {
+            title: 'Okay',
+            action: () => this.updateVisibility(false)
+          }
+        });
+      } catch (error) {
+        this.show({
+          text:
+            error.response?.data ||
+            'Error changing payment method, try again or contact us.',
+          button: {
+            title: 'Contact Us',
+            action: () => {
+              window.open('https://browtricksproductsorg.zendesk.com/');
+              this.updateVisibility(false);
+            }
+          }
+        });
+      } finally {
+        this.loadingUpdate(false);
+      }
     }
   }
 };

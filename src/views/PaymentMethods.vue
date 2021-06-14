@@ -1,27 +1,40 @@
 <template>
   <div class="p-4 space-y-4">
+    <Button
+      v-if="paymentMethods.length"
+      :to="{ name: 'Subscriptions' }"
+      title="Go to Subscriptions"
+      width="w-full"
+      textColor="underline"
+      :background="null"
+    />
     <BaseCard
-      v-for="details in paymentMethods"
+      v-for="method in paymentMethods"
       className="flex-col gap-2"
       padding="px-4 py-4"
-      :key="details.id"
+      :key="method.id"
     >
       <PaymentMethodCard
         :tenantSlug="tenantSlug"
-        v-if="details"
-        :paymentMethod="details"
+        v-if="method"
+        :paymentMethod="method"
         @refetch-cards="fetchAllPaymentMethods"
       >
         <hr class="divide-on-background-image p-0 px-4" />
         <div class="flex flex-row-reverse justify-start mt-2">
           <Button
-            title="Remove"
-            textColor="text-error"
+            :title="preventDelete(method) ? 'Primary method' : 'Remove'"
+            :textColor="
+              preventDelete(method)
+                ? 'text-on-background text-opacity-50'
+                : 'text-error'
+            "
             background="bg-none"
             width="w-xs"
             padding="px-0"
             margin="mx-6"
-            @clicked="deletePaymentMethod(details.id)"
+            :disabled="preventDelete(method)"
+            @clicked="deletePaymentMethod(method.id)"
           />
         </div>
       </PaymentMethodCard>
@@ -33,8 +46,7 @@
       textColor="text-brand6 text-opacity-50"
       @clicked="showAddPaymentMethodForms(true)"
       v-show="!isFormVisible"
-    >
-    </Button>
+    />
     <div class="pb-16 space-y-4" v-show="isFormVisible">
       <AddCardInfoForm
         :tenantSlug="tenantSlug"
@@ -50,7 +62,7 @@ import PaymentMethodCard from '@/components/paymentMethods/PaymentMethodCard.vue
 import AddCardInfoForm from '@/components/paymentMethods/AddCardInfoForm.vue';
 import BaseCard from '@/components/BaseCard.vue';
 
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import { PaymentMethodService } from '@whynotearth/meredith-axios';
 
 export default {
@@ -78,14 +90,21 @@ export default {
       }
     };
   },
+  computed: {
+    ...mapGetters('subscription', ['getActiveSubscription'])
+  },
   created() {
     this.fetchAllPaymentMethods();
   },
   methods: {
     ...mapActions('alerter', ['show', 'updateVisibility']),
     ...mapActions('loading', ['loadingUpdate']),
+
     showAddPaymentMethodForms(value) {
       this.isFormVisible = value;
+    },
+    preventDelete(method) {
+      return method.id === this.getActiveSubscription?.card?.id;
     },
     async fetchAllPaymentMethods() {
       try {
@@ -96,7 +115,7 @@ export default {
         this.paymentMethods = [...paymentMethods];
       } catch {
         this.show({
-          text: 'Error fetching details, refreshing may help',
+          text: 'Error fetching method, refreshing may help',
           button: {
             title: 'Okay',
             action: () => this.updateVisibility(false)
@@ -110,8 +129,8 @@ export default {
       try {
         this.loadingUpdate(true);
         await PaymentMethodService.paymentmethods2({
-          tenantSlug: this.tenantSlug,
-          id: id
+          id,
+          tenantSlug: this.tenantSlug
         });
         this.show({
           text: 'Payment Method Deleted Successfully',

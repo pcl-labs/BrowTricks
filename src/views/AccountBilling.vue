@@ -19,7 +19,7 @@
       />
       <ExpansionPanel
         title="Subscription"
-        middleText="Standard"
+        :middleText="planName"
         middleTextAlignment="text-right"
         @click="
           $router.push({
@@ -33,10 +33,18 @@
 
 <script>
 import ExpansionPanel from '@/components/ExpansionPanel.vue';
+import { mapGetters } from 'vuex';
 
 export default {
+  name: 'AccountBilling',
   components: {
     ExpansionPanel
+  },
+  computed: {
+    ...mapGetters('subscription', ['getActiveSubscription']),
+    planName() {
+      return this.getActiveSubscription?.plan?.name || 'Standard';
+    }
   }
 };
 </script>
