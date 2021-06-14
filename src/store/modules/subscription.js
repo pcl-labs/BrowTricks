@@ -9,7 +9,7 @@ export default {
     getActiveSubscription: state => state.activeSubscriptions[0]
   },
   actions: {
-    fetchActiveSubscription({ commit }, tenantSlug) {
+    fetchActiveSubscriptions({ commit }, tenantSlug) {
       return new Promise((resolve, reject) => {
         SubscriptionService.subscriptions1({ tenantSlug })
           .then(response => {

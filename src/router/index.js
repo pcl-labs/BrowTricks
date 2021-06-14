@@ -39,7 +39,7 @@ function isRouteChangingUpdate(value) {
 
 function loadActiveSubscription(tenantSlug) {
   if (!store.getters['subscription/getActiveSubscription'] && tenantSlug) {
-    store.dispatch('subscription/fetchActiveSubscription', tenantSlug);
+    store.dispatch('subscription/fetchActiveSubscriptions', tenantSlug);
   }
   return;
 }
