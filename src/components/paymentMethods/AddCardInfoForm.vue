@@ -10,9 +10,6 @@
         <p v-if="!$v.userInfo.firstName.required">
           First Name is required
         </p>
-        <p v-if="!$v.userInfo.firstName.alpha">
-          First Name should contain only Alphabets
-        </p>
       </MaterialInput>
       <MaterialInput
         label="Last Name"
@@ -22,9 +19,6 @@
       >
         <p v-if="!$v.userInfo.lastName.required">
           Last Name is required
-        </p>
-        <p v-if="!$v.userInfo.lastName.alpha">
-          Last Name should contain only Alphabets
         </p>
       </MaterialInput>
       <div class="text-left">
@@ -45,6 +39,12 @@
         </label>
         <div ref="cardCvc" class="card-info-elements"></div>
       </div>
+      <span
+        v-if="!validCardDetails"
+        class="text-left text-error tg-body-mobile mt-2"
+      >
+        Please enter valid card details.
+      </span>
     </BaseCard>
     <BaseCard className="flex-col gap-2">
       <MaterialInput
@@ -56,23 +56,12 @@
         <p v-if="!$v.billingInfo.address1.required">
           Street Address 1 is required
         </p>
-        <p v-if="!$v.billingInfo.address1.alpha">
-          Street Address 1 should contain only AlphaNumeric
-        </p>
       </MaterialInput>
       <MaterialInput
         placeholder="Street Address 2"
         label="Street Address 2"
-        v-model="$v.billingInfo.address2.$model"
-        :validatorModel="$v.billingInfo.address2"
-      >
-        <p v-if="!$v.billingInfo.address2.required">
-          Street Address 2 is required
-        </p>
-        <p v-if="!$v.billingInfo.address2.alpha">
-          Street Address 2 should contain only AlphaNumeric
-        </p>
-      </MaterialInput>
+        v-model="billingInfo.address2"
+      />
       <MaterialInput
         placeholder="City"
         label="City"
@@ -81,9 +70,6 @@
       >
         <p v-if="!$v.billingInfo.city.required">
           City is required
-        </p>
-        <p v-if="!$v.billingInfo.city.alpha">
-          City should contain only Alphabets
         </p>
       </MaterialInput>
       <MaterialInput
@@ -95,15 +81,16 @@
         <p v-if="!$v.billingInfo.state.required">
           State is required
         </p>
-        <p v-if="!$v.billingInfo.state.alpha">
-          State should contain only Alphabets
-        </p>
       </MaterialInput>
       <MaterialInput
         type="number"
         placeholder="Zip Code"
         label="Zip Code"
         v-model="$v.billingInfo.zipcode.$model"
+        :attrs="{
+          min: 0,
+          max: 99999
+        }"
         :validatorModel="$v.billingInfo.zipcode"
       >
         <p v-if="!$v.billingInfo.zipcode.required">
@@ -135,8 +122,6 @@ import formGeneralUtils from '@/mixins/formGeneralUtils.js';
 
 import {
   required,
-  alpha,
-  alphaNum,
   numeric,
   minLength,
   maxLength
@@ -183,30 +168,21 @@ export default {
   validations: {
     userInfo: {
       firstName: {
-        required,
-        alpha
+        required
       },
       lastName: {
-        required,
-        alpha
+        required
       }
     },
     billingInfo: {
       address1: {
-        required,
-        alphaNum
-      },
-      address2: {
-        required,
-        alphaNum
+        required
       },
       city: {
-        required,
-        alpha
+        required
       },
       state: {
-        required,
-        alpha
+        required
       },
       zipcode: {
         required,
