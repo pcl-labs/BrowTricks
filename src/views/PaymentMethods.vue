@@ -1,5 +1,13 @@
 <template>
   <div class="p-4 space-y-4">
+    <Button
+      v-if="paymentMethods.length"
+      :to="{ name: 'Subscriptions' }"
+      title="Go to Subscriptions"
+      width="w-full"
+      textColor="underline"
+      :background="null"
+    />
     <BaseCard
       v-for="method in paymentMethods"
       className="flex-col gap-2"
@@ -38,8 +46,7 @@
       textColor="text-brand6 text-opacity-50"
       @clicked="showAddPaymentMethodForms(true)"
       v-show="!isFormVisible"
-    >
-    </Button>
+    />
     <div class="pb-16 space-y-4" v-show="isFormVisible">
       <AddCardInfoForm
         :tenantSlug="tenantSlug"
