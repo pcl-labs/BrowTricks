@@ -61,7 +61,7 @@
               {{ activeSubscription.status }}
             </template>
             <template v-else>
-              No active subscription
+              Standard (Free)
             </template>
           </span>
         </div>
@@ -88,22 +88,20 @@
             ${{ transactions[0].total }}
           </span>
         </div>
-        <div class="flex justify-between">
+        <div v-if="activeSubscription" class="flex justify-between">
           <span
             class="flex-shrink-0 text-on-background text-opacity-50 tg-body-mobile"
           >
             Renews On
           </span>
-          <p class="text-on-background tg-body-bold-mobile">
-            <span
-              v-if="
-                activeSubscription && transactions.length && activePaymentMethod
-              "
-            >
-              {{ renewalDate(transactions[0].paymentDate) }}
-            </span>
-            <span v-else class="text-right">
-              No payment method set
+          <p class="text-on-background tg-body-bold-mobile text-right">
+            <span v-if="transactions.length">
+              <template v-if="activePaymentMethod">
+                {{ renewalDate(transactions[0].paymentDate) }}
+              </template>
+              <template v-else>
+                No payment method set
+              </template>
             </span>
           </p>
         </div>
@@ -168,31 +166,32 @@
           <IconAdd class="h-4 my-auto mr-2 inline-block" />
           Add Credit Card
         </router-link>
-        <hr class="divide-on-background-image p-0 px-4 my-2" />
-        <div class="grid grid-flow-col divide-x">
-          <Button
-            title="Cancel"
-            textColor="text-error underline"
-            :background="null"
-            padding="px-0"
-            width="w-xs"
-            margin="mx-0"
-            radius="rounded-none"
-            @clicked="showChangePaymentMethod = false"
-          />
-          <!-- When there is no card available, there would be no subscription, allow the user to select a card -->
-          <Button
-            v-if="showChangePaymentMethod"
-            title="Save"
-            textColor="text-success underline"
-            :background="null"
-            padding="px-0"
-            width="w-xs"
-            margin="mx-0"
-            radius="rounded-none"
-            @clicked="changePaymentMethod"
-          />
-        </div>
+        <template v-if="activeSubscription">
+          <hr class="divide-on-background-image p-0 px-4 my-2" />
+          <div class="grid grid-flow-col divide-x">
+            <Button
+              title="Cancel"
+              textColor="text-error underline"
+              :background="null"
+              padding="px-0"
+              width="w-xs"
+              margin="mx-0"
+              radius="rounded-none"
+              @clicked="showChangePaymentMethod = false"
+            />
+            <Button
+              v-if="showChangePaymentMethod"
+              title="Save"
+              textColor="text-success underline"
+              :background="null"
+              padding="px-0"
+              width="w-xs"
+              margin="mx-0"
+              radius="rounded-none"
+              @clicked="changePaymentMethod"
+            />
+          </div>
+        </template>
       </template>
     </BaseCard>
     <BaseCard className="flex-col gap-2" padding="p-6">
@@ -236,11 +235,12 @@
         </div>
         <div class="w-full fixed bottom-0">
           <Button
+            v-if="selectedPlan"
             :title="`Upgrade to ${selectedPlan.name} Now`"
             width="w-full"
             radius="rounded-none"
             background="bg-accent"
-            @clicked="subscribe"
+            @clicked="handleSubmission"
           />
         </div>
       </BaseDrawerActions>
@@ -362,6 +362,7 @@ export default {
   methods: {
     ...mapActions('loading', ['loadingUpdate']),
     ...mapActions('alerter', ['show', 'updateVisibility']),
+    ...mapActions('subscription', ['fetchActiveSubscriptions']),
 
     async init() {
       try {
@@ -371,7 +372,6 @@ export default {
           this.loadSubscriptionPayments(),
           this.loadPlans()
         ]);
-        this.selectedPlan = this.activeSubscription?.plan;
       } catch (error) {
         console.error(error);
         this.show({
@@ -398,7 +398,8 @@ export default {
       });
       this.paymentMethods = [...paymentMethods];
       this.activePaymentMethod = this.activeSubscription?.card;
-      if (!this.activePaymentMethod) this.renderChangePayment();
+      this.renderChangePayment();
+      if (this.activePaymentMethod) this.showChangePaymentMethod = false;
       return paymentMethods;
     },
     renderChangePayment() {
@@ -430,18 +431,12 @@ export default {
       });
       this.plans = [...plans];
     },
-    async subscribe() {
+    async handleSubmission() {
       try {
         this.loadingUpdate(true);
-        const payload = {
-          tenantSlug: this.tenantSlug,
-          body: {
-            planId: this.selectedPlan.id,
-            cardId: this.selectedPaymentMethod?.id,
-            couponCode: this.couponcode
-          }
-        };
-        await SubscriptionService.subscriptions(payload);
+        if (this.selectedPlan?.id === 'free') await this.cancelSubscription();
+        else await this.subscribe();
+        await this.fetchActiveSubscriptions(this.tenantSlug);
         await this.init();
         this.show({
           text: 'Subscription successful!',
@@ -454,6 +449,7 @@ export default {
         this.show({
           text:
             error.response?.data?.message ||
+            error.message ||
             'Error subscribing, try again or contact us.',
           button: {
             title: 'Contact Us',
@@ -468,6 +464,25 @@ export default {
         this.loadingUpdate(false);
       }
     },
+    subscribe() {
+      if (!this.selectedPaymentMethod)
+        throw new Error('Please select a payment method first.');
+      const payload = {
+        tenantSlug: this.tenantSlug,
+        body: {
+          planId: this.selectedPlan?.id,
+          cardId: this.selectedPaymentMethod?.id,
+          couponCode: this.couponcode
+        }
+      };
+      return SubscriptionService.subscriptions(payload);
+    },
+    cancelSubscription() {
+      if (!this.activeSubscription) return;
+      return SubscriptionService.cancel({
+        tenantSlug: this.tenantSlug
+      });
+    },
     async changePaymentMethod() {
       try {
         this.loadingUpdate(true);
@@ -478,6 +493,7 @@ export default {
           }
         };
         await SubscriptionService.changepaymentmethod(payload);
+        await this.fetchActiveSubscriptions(this.tenantSlug);
         await this.init();
         this.showChangePaymentMethod = false;
         this.show({
