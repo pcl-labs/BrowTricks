@@ -11,6 +11,9 @@ import formTemplate from './modules/formTemplate';
 import profile from './modules/profile';
 import alerter from './modules/alerter';
 import admin from './modules/admin';
+import paymentMethod from './modules/paymentMethod';
+import subscription from './modules/subscription';
+
 import VuexPersistence from 'vuex-persist';
 
 const vuexSession = new VuexPersistence({
@@ -41,6 +44,8 @@ export default new Vuex.Store({
     overlay,
     loading,
     uploader,
-    admin
+    admin,
+    paymentMethod,
+    subscription
   }
 });

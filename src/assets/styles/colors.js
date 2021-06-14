@@ -28,7 +28,6 @@ const colors = {
   // brand6 is the new primary
   brand6: '#000000',
   'on-brand6': '#ffffff',
-  brand7: '#E9CFC4',
   brand8: '#F1DFD1',
   brand9: '#EDBBAE',
   'home-pink-light': '#FFF3F2',

@@ -15,7 +15,8 @@
       width,
       background,
       textColor,
-      padding
+      padding,
+      border
     ]"
     v-bind="attrs"
     v-on="eventListeners"
@@ -98,6 +99,10 @@ export default {
     loading: {
       type: Boolean,
       default: false
+    },
+    border: {
+      type: String,
+      default: ''
     }
   },
   computed: {
