@@ -105,7 +105,7 @@ module.exports = {
     // for local browserstack
     disableHostCheck: true
     // enable localhost https
-    // https: true
+    // https: true,
   },
 
   chainWebpack: config => {

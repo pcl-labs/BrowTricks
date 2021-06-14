@@ -34,7 +34,10 @@
         >
           <!-- middle text -->
           <div
-            class="text-on-surface text-opacity-medium text-left capitalize tg-caption-mobile"
+            :class="[
+              middleTextAlignment,
+              `w-full text-on-surface text-opacity-medium capitalize tg-caption-mobile`
+            ]"
           >
             <slot name="middleText">{{ middleText }}</slot>
           </div>
@@ -83,6 +86,10 @@ export default {
     headingColor: {
       type: String,
       default: 'text-on-surface'
+    },
+    middleTextAlignment: {
+      type: String,
+      default: 'text-left'
     }
   },
   computed: {

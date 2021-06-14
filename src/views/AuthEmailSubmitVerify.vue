@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     ...mapActions('loading', ['loadingUpdate']),
-    ...mapActions('auth', ['submitVerifyEmail']),
+    ...mapActions('auth', ['submitVerifyEmail', 'updateToken']),
     async init() {
       const token = this.$route.query.email_confirm_token;
       if (!token) {
@@ -41,20 +41,15 @@ export default {
         .then(this.onSuccess)
         .catch(error => {
           console.log('error', error.response);
-
-          const status = get(error, 'response.status', null);
-          if (status === 401) {
-            this.errorMessage = 'Please login before verifying your email.';
-          } else {
-            this.errorMessage = get(
-              error,
-              'response.data[0].description',
-              'Something went wrong'
-            );
-          }
+          this.errorMessage = get(
+            error,
+            'response.data[0].description',
+            'Something went wrong'
+          );
         });
     },
-    onSuccess() {
+    onSuccess(token) {
+      this.updateToken(token);
       showOverlayAndRedirect({
         timeout: 2500,
         title: 'Success!',

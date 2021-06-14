@@ -29,7 +29,7 @@ ajax.interceptors.response.use(
         `Incorrect permissions! If you think something is wrong, please contact ${process.env.VUE_APP_ADMINISTRATOR_CONTACT_EMAIL}`
       );
     }
-    rollbar.error('API error:', error);
+    if (process.env.VUE_APP_ROLLBAR) rollbar.error('API error:', error);
     return Promise.reject(error);
   }
 );

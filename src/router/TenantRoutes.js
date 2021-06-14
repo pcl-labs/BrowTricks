@@ -65,7 +65,7 @@ export const TenantPanelRoutes = [
     }
   },
   {
-    path: '/manage-account',
+    path: '/tenant/:tenantSlug/manage-account',
     name: 'AccountManage',
     props: true,
     component: () => import('@/views/AccountManage.vue'),
@@ -77,6 +77,76 @@ export const TenantPanelRoutes = [
       appBar: {
         title: 'Manage Account',
         backRoute: { name: 'AccountSettings' }
+      }
+    }
+  },
+  {
+    path: '/tenant/:tenantSlug/billing',
+    name: 'AccountBilling',
+    props: true,
+    component: () => import('@/views/AccountBilling.vue'),
+    meta: {
+      layout: AppBarCardLayout,
+      needsUserInfo: true,
+      appBar: {
+        title: 'Billing',
+        backRoute: { name: 'AccountSettings' }
+      }
+    }
+  },
+  {
+    path: '/tenant/:tenantSlug/activity',
+    name: 'AccountActivity',
+    props: true,
+    component: () => import('@/views/AccountActivity.vue'),
+    meta: {
+      layout: AppBarCardLayout,
+      needsUserInfo: true,
+      appBar: {
+        title: 'Activity',
+        backRoute: { name: 'AccountBilling' }
+      }
+    }
+  },
+  {
+    path: '/tenant/:tenantSlug/transaction-details',
+    name: 'TransactionDetails',
+    props: true,
+    component: () => import('@/views/TransactionDetails.vue'),
+    meta: {
+      layout: AppBarCardLayout,
+      needsUserInfo: true,
+      appBar: {
+        title: 'Transaction Details',
+        backRoute: { name: 'AccountActivity' }
+      }
+    }
+  },
+  {
+    path: '/tenant/:tenantSlug/payment-methods',
+    name: 'PaymentMethods',
+    props: true,
+    component: () => import('@/views/PaymentMethods.vue'),
+    meta: {
+      layout: AppBarCardLayout,
+      needsUserInfo: true,
+      appBar: {
+        title: 'Payment Methods',
+        backRoute: { name: 'AccountBilling' }
+      }
+    }
+  },
+  {
+    path: '/tenant/:tenantSlug/subscriptions',
+    name: 'Subscriptions',
+    props: true,
+    component: () => import('@/views/Subscriptions.vue'),
+    meta: {
+      layout: AppBarCardLayout,
+      needsUserInfo: true,
+      appBar: {
+        title: 'Subscription',
+        backRoute: { name: 'AccountBilling' }
       }
     }
   }

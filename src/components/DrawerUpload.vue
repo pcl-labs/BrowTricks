@@ -15,7 +15,9 @@
             tabindex="0"
             class="flex justify-between w-full p-4 cursor-pointer"
             aria-labelledby="link-upload-image"
-            :class="[!cloudinaryWidgetImageIsLoaded ? 'opacity-disabled' : '']"
+            :class="{
+              'opacity-disabled': !cloudinaryWidgetImageIsLoaded
+            }"
           >
             <span class="flex items-center">
               <IconImages
@@ -24,26 +26,31 @@
               <span
                 id="link-upload-image"
                 class="text-on-background text-opacity-high"
-                >Image</span
               >
+                Image
+              </span>
             </span>
           </a>
         </MediaUploader>
       </li>
       <li>
-        <MediaUploader
+        <component
+          :is="getActiveSubscription ? 'MediaUploader' : 'div'"
           max-files="unlimited"
           id="video_uploader"
           :files="currentFiles"
           @change="updateFiles"
           :uploadPreset="uploadPresetVideo"
           @widget-ready="cloudinaryWidgetVideoIsLoaded = true"
+          @click="showPremiumModal"
         >
           <a
             tabindex="0"
             class="flex justify-between w-full p-4 cursor-pointer"
             aria-labelledby="link-upload-video"
-            :class="[!cloudinaryWidgetVideoIsLoaded ? 'opacity-disabled' : '']"
+            :class="{
+              'opacity-disabled': !cloudinaryWidgetVideoIsLoaded
+            }"
           >
             <span class="flex items-center">
               <IconVideos
@@ -52,11 +59,12 @@
               <span
                 id="link-upload-video"
                 class="text-on-background text-opacity-high"
-                >Video</span
               >
+                Video
+              </span>
             </span>
           </a>
-        </MediaUploader>
+        </component>
       </li>
     </ul>
   </BaseDrawerActions>
@@ -67,7 +75,7 @@ import IconImages from '@/assets/icons/images.svg';
 import IconVideos from '@/assets/icons/videos.svg';
 import BaseDrawerActions from '@/components/BaseDrawerActions';
 import MediaUploader from '@/components/uploader/MediaUploader';
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import { get } from 'lodash-es';
 
 export default {
@@ -89,6 +97,8 @@ export default {
     }
   },
   computed: {
+    ...mapGetters('subscription', ['getActiveSubscription']),
+
     currentFiles() {
       return [
         ...get(this.client, 'images', []).map(item => ({
@@ -105,6 +115,8 @@ export default {
   methods: {
     ...mapActions('client', ['updateClient', 'fetchClient']),
     ...mapActions('uploader', ['uploadedFilesUpdate']),
+    ...mapActions('alerter', ['show', 'updateVisibility']),
+
     updateFiles(files) {
       const optionalClientId = this.$route.params.clientId;
       const filesAdapted = files.map(item => ({
@@ -117,6 +129,22 @@ export default {
         name: 'ClientUpload',
         query: { clientId: optionalClientId }
       });
+    },
+    showPremiumModal() {
+      if (this.getActiveSubscription) return;
+      else {
+        this.$emit('close');
+        this.show({
+          text:
+            'Upgrade your subscription now to enjoy this feature, and many more!',
+          button: {
+            title: 'Upgrade Now!',
+            action() {
+              this.$router.push({ name: 'Subscriptions' });
+            }
+          }
+        });
+      }
     }
   }
 };
