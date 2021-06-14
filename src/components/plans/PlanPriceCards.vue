@@ -154,9 +154,15 @@ export default {
     }
   },
   created() {
-    this.selectedPlan = this.plans.find(
-      plan => plan.id === this.getActiveSubscription?.plan?.id
-    );
+    this.init();
+  },
+  methods: {
+    init() {
+      this.selectedPlan =
+        this.plans.find(
+          plan => plan.id === this.getActiveSubscription?.plan?.id
+        ) || this.plans[0];
+    }
   }
 };
 </script>
