@@ -36,12 +36,17 @@ export default {
       default: parseInt(process.env.VUE_APP_UPLOADER_MAX_IMAGE_WIDTH)
     },
     maxFiles: {
-      type: Number,
+      type: [Number, String],
       default: parseInt(process.env.VUE_APP_UPLOADER_MAX_FILES)
     },
     id: {
       type: String
     }
+  },
+  data() {
+    return {
+      updatedFiles: []
+    };
   },
   methods: {
     onUploadError(error) {
@@ -53,8 +58,10 @@ export default {
     },
     onUpload(result) {
       if (result.event === 'success') {
-        let updatedFiles = [cloudinaryFileToMeredithFileAdapter(result.info)];
-        this.updateFiles([...this.files, ...updatedFiles]);
+        this.updatedFiles.push(
+          cloudinaryFileToMeredithFileAdapter(result.info)
+        );
+        this.updateFiles([...this.files, ...this.updatedFiles]);
       }
     },
     updateFiles(files) {

@@ -4,7 +4,7 @@
     <ul class="text-on-background text-opacity-high tg-body-mobile">
       <li>
         <MediaUploader
-          :maxFiles="1"
+          max-files="unlimited"
           id="image_uploader"
           :files="currentFiles"
           @change="updateFiles"
@@ -36,7 +36,7 @@
       <li>
         <component
           :is="getActiveSubscription ? 'MediaUploader' : 'div'"
-          :maxFiles="1"
+          max-files="unlimited"
           id="video_uploader"
           :files="currentFiles"
           @change="updateFiles"

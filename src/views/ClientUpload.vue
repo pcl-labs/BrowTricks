@@ -11,7 +11,7 @@
             v-model="$v.description.$model"
             :validatorModel="$v.description"
             label="Description"
-            rows="5"
+            rows="8"
           >
             <p v-if="!$v.description.required">
               Description is required
@@ -50,8 +50,9 @@
                 aria-label="Deselect Client"
                 class="cursor-pointer select-none p-2 ml-4"
                 @click="onDeselectClient"
-                ><IconClose class="w-4 h-4"></IconClose
-              ></a>
+              >
+                <IconClose class="w-4 h-4" />
+              </a>
             </div>
 
             <p
@@ -62,36 +63,65 @@
             </p>
           </div>
         </div>
+      </div>
 
-        <!-- media -->
-        <div class="px-2">
-          <div class="image-wrapper max-w-full" v-if="file">
+      <Button
+        title="Upload"
+        @clicked="submit"
+        background="bg-brand2"
+        class="m-4"
+      />
+
+      <span class="m-4 tg-body-bold-mobile">
+        Files that will be uploaded:
+      </span>
+
+      <!-- media -->
+      <div class="p-2 flex flex-wrap items-center">
+        <div
+          v-for="(file, index) in files"
+          :key="index"
+          class="relative m-2 w-full sm:w-48"
+        >
+          <template v-if="file">
             <BaseImagePreview
               v-if="file.resourceType === 'image'"
-              :selectFile="() => {}"
               :file="{ ...file }"
+              :selectFile="selectFile"
             />
             <BaseVideoPreview
               v-if="file.resourceType === 'video'"
-              :selectFile="() => {}"
+              :selectFile="selectFile"
               :file="{
                 ...file,
                 thumbnail: getCloudinaryVideoThumbnail(file.url)
               }"
             />
-          </div>
+            <a
+              title="Delete"
+              class="p-2 m-4 absolute bottom-0 right-0 bg-black bg-opacity-50 rounded-full cursor-pointer"
+              @click.stop="remove(index)"
+            >
+              <DeleteIcon class="text-white w-6 h-6" />
+            </a>
+          </template>
         </div>
       </div>
 
-      <div class="px-4 my-4">
-        <div>
-          <Button
-            title="Upload"
-            @clicked="submit"
-            background="bg-brand2"
-          ></Button>
-        </div>
-      </div>
+      <template v-if="selectedFile">
+        <ImagePreviewModal
+          v-if="selectedFile.resourceType === 'image'"
+          :file="selectedFile"
+          @remove="remove"
+          @close="selectFile(null)"
+        />
+        <VideoPreviewModal
+          v-if="selectedFile.resourceType === 'video'"
+          :file="selectedFile"
+          @remove="remove"
+          @close="selectFile(null)"
+        />
+      </template>
 
       <ClientSelectOverlay
         :tenantSlug="tenantSlug"
@@ -109,10 +139,13 @@ import ClientSelectOverlay from '@/components/client/ClientSelectOverlay';
 import PageContentBoard from '@/components/PageContentBoard';
 import BaseImagePreview from '@/components/uploader/BaseImagePreview';
 import BaseVideoPreview from '@/components/uploader/BaseVideoPreview';
+import ImagePreviewModal from '@/components/uploader/ImagePreviewModal.vue';
+import VideoPreviewModal from '@/components/uploader/VideoPreviewModal.vue';
 import BaseChip from '@/components/BaseChip';
 import IconUser from '@/assets/icons/person.svg';
 import IconCheck from '@/assets/icons/check.svg';
 import IconClose from '@/assets/icons/close.svg';
+import DeleteIcon from '@/assets/icons/delete.svg';
 import { mapGetters, mapActions } from 'vuex';
 import {
   share,
@@ -127,7 +160,8 @@ export default {
   data: () => ({
     isOpenClientSelect: false,
     description: '',
-    file: null,
+    files: [],
+    selectedFile: null,
     selectedClientId: undefined,
     clientName: 'Select client'
   }),
@@ -147,12 +181,15 @@ export default {
   components: {
     PageContentBoard,
     ClientSelectOverlay,
+    ImagePreviewModal,
+    VideoPreviewModal,
     IconUser,
     IconClose,
     IconCheck,
     BaseChip,
     BaseImagePreview,
-    BaseVideoPreview
+    BaseVideoPreview,
+    DeleteIcon
   },
   beforeMount() {
     this.checkUploadedFileExistance();
@@ -163,13 +200,19 @@ export default {
     ...mapActions('uploader', ['openDrawerUploadUpdate']),
     share,
     getCloudinaryVideoThumbnail,
+    selectFile(file) {
+      this.selectedFile = file;
+    },
+    remove(index) {
+      this.files.splice(index, 1);
+    },
     checkUploadedFileExistance() {
       if (!this.uploadedFilesGet[0]) {
         alert('No uploaded file.');
         this.$router.push({ name: 'TenantHome' });
         return;
       }
-      this.file = this.uploadedFilesGet[0];
+      this.files = this.uploadedFilesGet;
     },
     async setDefaultSelectedClient() {
       if (!this.$route.query.clientId) {
@@ -266,9 +309,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.image-wrapper {
-  width: 160px;
-}
-</style>
