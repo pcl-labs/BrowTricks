@@ -21,8 +21,8 @@
           them like never before.
         </p>
 
-        <div class="flex flex-wrap items-center">
-          <!-- <Button
+        <!-- <div class="flex flex-wrap items-center">
+          <Button
             class="cta-button mb-4 sm:mb-0"
             margin="mr-4"
             :width="null"
@@ -43,10 +43,10 @@
             radius="rounded-md"
             title="Log in"
             :to="{ name: 'AuthLogin' }"
-          /> -->
+          />
           <ButtonAppleStore className="mr-4" />
           <ButtonGooglePlay className="mr-4" />
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
