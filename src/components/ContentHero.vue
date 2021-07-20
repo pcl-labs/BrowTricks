@@ -51,11 +51,11 @@
 </template>
 
 <script>
-import ButtonGooglePlay from '@/components/inputs/ButtonGooglePlay';
-import ButtonAppleStore from '@/components/inputs/ButtonAppleStore';
+// import ButtonGooglePlay from '@/components/inputs/ButtonGooglePlay';
+// import ButtonAppleStore from '@/components/inputs/ButtonAppleStore';
 export default {
   name: 'ContentCtaSignupOrDownload',
-  components: { ButtonGooglePlay, ButtonAppleStore },
+  // components: { ButtonGooglePlay, ButtonAppleStore },
   computed: {
     APPNAME() {
       return process.env.VUE_APP_NAME;
