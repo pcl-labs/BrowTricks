@@ -38,13 +38,13 @@
             :to="{ name: 'AuthLogin' }"
           />
         </div>
-        <hr
+        <!-- <hr
           class="mx-20 my-10 w-1/4 border-on-background border-opacity-divider"
         />
         <div class="flex flex-wrap items-center">
           <ButtonAppleStore className="mr-4" />
           <ButtonGooglePlay className="mr-4" />
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
